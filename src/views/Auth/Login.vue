@@ -126,7 +126,7 @@ export default {
         name: this.userName,
       }
       await this.loginBackend(formData);
-      await this.$router.push({name: "Home"})
+      await this.$router.replace({path: '/'})
     },
 
     async loginBackend(formData) {
@@ -168,7 +168,7 @@ export default {
         const res = await Api().post('/login', formData)
         console.log(res.data)
         localStorage.setItem('token', res.data.token);
-        await this.$router.push({name: "Home"})
+        await this.$router.replace({path: '/'})
       } catch (e) {
         console.log(e.response.data)
         this.error = e.response.data
