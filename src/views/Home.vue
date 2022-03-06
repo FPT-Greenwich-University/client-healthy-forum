@@ -1,7 +1,7 @@
 <template>
   <section>
     Home page
-    Hello thang {{ userInfo.name }}
+    <p class="text-center text-xl-subtitle-1">Hello {{ userInfo.name }}!</p>
   </section>
 </template>
 

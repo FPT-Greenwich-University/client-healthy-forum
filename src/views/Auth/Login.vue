@@ -74,17 +74,7 @@
 
           </v-card>
         </v-col>
-        <!-- Demo-->
         <v-col>
-          <div v-if="isLogin">User login success
-            <button @click="logoutGoogle">Logout</button>
-          </div>
-
-          <div>{{ userName }}</div>
-          <template v-if="error">
-            {{ error.email }}
-            {{ error.password }}
-          </template>
         </v-col>
       </v-row>
     </v-container>
@@ -109,26 +99,26 @@ export default {
   methods: {
     async googleLogin() {
       const googleUser = await this.$gAuth.signIn();
-      // console.log("googleUser", googleUser);
-      // console.log("getId", googleUser.getId());
-      const demo = googleUser.getBasicProfile();
-      console.log(demo);
-      this.email = demo.tv;
-      this.userName = demo.tf;
-      // console.log("getAuthResponse", googleUser.getAuthResponse());
-      // console.log(
-      //   "getAuthResponse$G",
-      //   this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse()
-      // );
+      const basicProfile = googleUser.getBasicProfile();
+      this.email = basicProfile.tv;
+      this.userName = basicProfile.tf;
       this.isLogin = this.$gAuth.isAuthorized;
       let formData = {
         email: this.email,
         name: this.userName,
       }
       await this.loginBackend(formData);
-      await this.$router.replace({path: '/'})
+      this.$store.commit('AUTH/UPDATE_AUTH', true)
+      let previousUrl = this.$router.history._startLocation
+
+      if (previousUrl !== '/login') {
+        await this.$router.replace({path: previousUrl})
+      } else {
+        await this.$router.replace({path: '/'})
+      }
     },
 
+    // Login to backend with Google information
     async loginBackend(formData) {
       try {
         const res = await Api().post('/login/google', formData)
@@ -138,27 +128,8 @@ export default {
       }
     },
 
-    async logoutGoogle() {
-      const response = await this.$gAuth.signOut()
-      this.isLogin = false
-      this.email = ''
-      this.userName = ''
-      await this.logoutBackend()
-    },
 
-
-    async logoutBackend() {
-      try {
-        const res = await Api().post('/logout/google')
-        console.log('res backend', res)
-        localStorage.removeItem('token')
-        this.isLogin = true
-      } catch (e) {
-        console.log('Backend login error', e)
-      }
-    },
-
-    // Api login
+    // Normal Api login  with sanctum token
     async apiLogin() {
       let formData = new FormData()
       formData.append('email', this.email)
@@ -168,15 +139,19 @@ export default {
         const res = await Api().post('/login', formData)
         console.log(res.data)
         localStorage.setItem('token', res.data.token);
-        await this.$router.replace({path: '/'})
+        this.$store.commit('AUTH/UPDATE_AUTH', true)
+        let previousUrl = this.$router.history._startLocation
+
+        if (previousUrl !== '/login') {
+          await this.$router.replace({path: previousUrl})
+        } else {
+          await this.$router.replace({path: '/'})
+        }
       } catch (e) {
         console.log(e.response.data)
         this.error = e.response.data
       }
     }
   },
-
-
 }
 </script>
-<style></style>

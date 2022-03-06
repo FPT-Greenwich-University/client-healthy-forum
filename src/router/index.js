@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AuthRoutes from "@/router/modules/AuthRoutes";
+import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
 
 Vue.use(VueRouter);
 
@@ -30,7 +31,13 @@ const routes = [
         name: "Books",
         component: () => import("../components/Books.vue"),
     },
-    ...AuthRoutes,
+    ...AuthRoutes(),
+    ...ProfileRoutes(),
+    {
+        path: "*",
+        name: "NotFounds",
+        component: () => import("@/views/NotFound")
+    }
 ];
 
 const router = new VueRouter({

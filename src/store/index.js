@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import Auth from "@/store/modules/Auth";
 
 Vue.use(Vuex);
 
@@ -69,5 +70,7 @@ export default new Vuex.Store({
       }
     },
   },
-  modules: {},
+  modules: {
+    AUTH: Auth,
+  },
 });

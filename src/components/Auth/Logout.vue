@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-show="isLogged" @click="logoutGoogle">Logout</p>
+    <v-btn plain block text @click="logoutGoogle">Logout</v-btn>
   </div>
 </template>
 
@@ -9,25 +9,9 @@ import Api from "@/Apis/Api";
 
 export default {
   name: "Logout",
-
-  watch: {
-    isLogged: {
-      handler(newValue) {
-        this.isLogged = !!localStorage.getItem('token');
-      },
-      immediate: true,
-    }
-  },
-
-  data() {
-    return {
-      isLogged: false,
-    }
-  },
   methods: {
     async logoutGoogle() {
       const response = await this.$gAuth.signOut()
-      // console.log(response)
       await this.logoutBackend()
     },
 
