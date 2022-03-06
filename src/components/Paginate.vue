@@ -38,7 +38,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["setCurrentPage", "fetchUsers"]),
+    ...mapMutations(["setCurrentPage"]),
 
     handleSetCurrentPage(page) {
       this.setCurrentPage(page);

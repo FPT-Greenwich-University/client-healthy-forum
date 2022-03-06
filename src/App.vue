@@ -27,35 +27,7 @@
 
       <v-spacer></v-spacer>
 
-      <div class="text-center">
-        <v-menu offset-y transition="slide-x-transition">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                color="primary"
-                dark
-                v-bind="attrs"
-                v-on="on"
-            >
-              Menu
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item
-            >
-              <v-list-item-title>Item 1</v-list-item-title>
-            </v-list-item>
-          </v-list>
-          <!-- Logout -->
-          <v-list>
-            <v-list-item
-            >
-              <v-list-item-title>
-                <Logout/>
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
+      <ItemMenu/>
     </v-app-bar>
 
     <v-main>
@@ -66,17 +38,12 @@
 
 <script>
 // Components
-import Logout from "@/components/Auth/Logout";
+import ItemMenu from "@/components/TopNav/ItemMenu";
 
 export default {
   name: 'App',
   components: {
-    Logout
+    ItemMenu
   },
-
-  data: () => ({
-    //
-  }),
-
 };
 </script>
