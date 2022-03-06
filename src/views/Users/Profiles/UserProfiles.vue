@@ -25,11 +25,19 @@
 
           <v-card-actions>
             <v-list-item class="grow">
-              <v-list-item-avatar color="grey darken-3">
+              <!--  if user is google account-->
+              <v-list-item-avatar v-if="userInfo.provider_id !== null" color="grey darken-3">
                 <v-img
+                    :src="userInfo.image_url"
                     alt=""
                     class="elevation-6"
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                ></v-img>
+              </v-list-item-avatar>
+              <v-list-item-avatar color="grey darken-3" v-else>
+                <v-img
+                    src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
+                    alt=""
+                    class="elevation-6"
                 ></v-img>
               </v-list-item-avatar>
 
@@ -158,7 +166,7 @@ export default {
     async fetchProfile() {
       try {
         const response = await Api().get('/users/profiles')
-        console.log('user profile:', response.data);
+        // console.log('user profile:', response.data);
         this.userInfo = response.data
       } catch (error) {
         console.log(error)

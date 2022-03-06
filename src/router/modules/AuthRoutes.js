@@ -1,4 +1,5 @@
-import {checkAuthenticated } from "@/router/guards";
+import {checkAuthenticated} from "@/router/guards";
+import router from "@/router";
 
 const AuthRoutes = () => {
     return [
@@ -13,8 +14,17 @@ const AuthRoutes = () => {
         {
             path: '/register',
             name: "Register",
-            component: () => import("@/views/Auth/Register.vue")
+            component: () => import("@/views/Auth/Register.vue"),
+            beforeEnter: (to, from, next) => {
+                // console.log(to)
+                if (localStorage.getItem('token') && to.name === "Register") {
+                    router.go(-1)
+                } else {
+                    next()
+                }
+            }
         },
+
         // Forgot password form page
         {
             path: '/forgot-password',

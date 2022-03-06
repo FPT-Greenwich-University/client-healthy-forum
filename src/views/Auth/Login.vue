@@ -90,31 +90,43 @@ export default {
     return {
       isLogin: false,
       email: "",
+      idToken: "",
       password: "",
       userName: "",
+      imageUrl: "",
       error: {},
       show1: false,
     };
   },
   methods: {
     async googleLogin() {
-      const googleUser = await this.$gAuth.signIn();
-      const basicProfile = googleUser.getBasicProfile();
-      this.email = basicProfile.tv;
-      this.userName = basicProfile.tf;
-      this.isLogin = this.$gAuth.isAuthorized;
-      let formData = {
-        email: this.email,
-        name: this.userName,
-      }
-      await this.loginBackend(formData);
-      this.$store.commit('AUTH/UPDATE_AUTH', true)
-      let previousUrl = this.$router.history._startLocation
+      try {
+        const googleUser = await this.$gAuth.signIn()
+        const profile = googleUser.getBasicProfile();
+        this.idToken = googleUser.getAuthResponse().id_token
+        this.email = profile.getEmail();
+        this.userName = profile.getName();
+        this.imageUrl = profile.getImageUrl()
+        console.log(this.imageUrl)
+        this.isLogin = this.$gAuth.isAuthorized;
+        let formData = {
+          email: this.email,
+          name: this.userName,
+          image_url: this.imageUrl,
+          provider_id: this.idToken
+        }
 
-      if (previousUrl !== '/login') {
-        await this.$router.replace({path: previousUrl})
-      } else {
-        await this.$router.replace({path: '/'})
+        await this.loginBackend(formData);
+        this.$store.commit('AUTH/UPDATE_AUTH', true)
+        let previousUrl = this.$router.history._startLocation
+
+        if (previousUrl !== '/login') {
+          await this.$router.replace({path: previousUrl})
+        } else {
+          await this.$router.replace({path: '/'})
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
 
@@ -122,8 +134,10 @@ export default {
     async loginBackend(formData) {
       try {
         const res = await Api().post('/login/google', formData)
+        // console.log('res data google log', res)
         localStorage.setItem('token', res.data.token);
       } catch (e) {
+        //TODO: handle error
         console.log('Backend login error', e)
       }
     },
@@ -137,7 +151,7 @@ export default {
 
       try {
         const res = await Api().post('/login', formData)
-        console.log(res.data)
+        // console.log(res.data)
         localStorage.setItem('token', res.data.token);
         this.$store.commit('AUTH/UPDATE_AUTH', true)
         let previousUrl = this.$router.history._startLocation
@@ -148,6 +162,7 @@ export default {
           await this.$router.replace({path: '/'})
         }
       } catch (e) {
+        // TODO: fix error.response.status = 422
         console.log(e.response.data)
         this.error = e.response.data
       }
