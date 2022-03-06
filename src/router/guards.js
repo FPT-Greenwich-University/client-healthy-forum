@@ -1,7 +1,7 @@
 import router from "@/router/index";
 
 export const checkAuthenticated = (to, from, next) => {
-    if (!localStorage.getItem('token') && to.name !== 'Login') { // if user no authenticated and try to go route isn't login
+    if (!localStorage.getItem('token') && to.name !== 'Login') { // if user not authenticated and try to go route isn't login
         next({name: 'Login'})
     } else if (localStorage.getItem('token') && to.name === 'Login') {  // if user has login and try to redirect route login
         router.go(-1)

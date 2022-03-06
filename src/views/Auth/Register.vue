@@ -20,12 +20,14 @@
                 v-model="formRegister.email"
                 label="E-mail"
             ></v-text-field>
+            <small v-if="errorResponse.email" class="red--text">{{ errorResponse.email[0] }}</small>
 
             <!--User name-->
             <v-text-field
                 v-model="formRegister.name"
                 label="Your name"
             ></v-text-field>
+            <small v-if="errorResponse.name" class="red--text">{{ errorResponse.name[0] }}</small>
 
             <!-- Password-->
             <v-text-field
@@ -38,6 +40,7 @@
                 name="input-10-1"
                 @click:append="show1 = !show1"
             ></v-text-field>
+            <small v-if="errorResponse.password" class="red--text">{{ errorResponse.password[0] }}</small>
 
             <!-- Password confirm-->
             <v-text-field
@@ -51,6 +54,7 @@
                 @click:append="show1 = !show1"
             ></v-text-field>
           </v-form>
+
           <div class="text-center">
             <v-btn
                 class="white--text"
@@ -62,6 +66,8 @@
               Register now
             </v-btn>
           </div>
+
+          <!-- Show link redirect to login form if register success-->
           <v-alert
               v-show="isSuccess"
               outlined
@@ -72,7 +78,7 @@
           >
             Register successful. Click
             <router-link :to="{name: 'Login'}">here</router-link>
-            to return login page
+            to return login page. The browser also auto redirect to login page after 5 seconds.
           </v-alert>
         </v-card>
       </v-col>
@@ -94,7 +100,7 @@ export default {
         ...initState
       },
 
-      error: {},
+      errorResponse: {},
       isSuccess: false,
       show1: false,
     }
@@ -106,9 +112,15 @@ export default {
         const res = await Api().post('/register', this.formRegister)
         console.log(res.data)
         this.isSuccess = true
-        this.formRegister = {...initState}
-      } catch (e) {
-        console.log(e.response.data)
+        this.errorResponse = {}
+        this.formRegister = {...initState} // reset state form register
+        setTimeout(() => {
+          this.$router.push({name: "Login"})
+        }, 5000)
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.errorResponse = error.response.data
+        }
       }
     }
   }

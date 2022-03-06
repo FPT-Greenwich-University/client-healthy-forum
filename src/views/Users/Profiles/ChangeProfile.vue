@@ -11,14 +11,27 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn
               block
-              class="text-caption text-xl-subtitle-1 text-lg-subtitle-1"
+              class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
               color="primary"
               dark
-              elevation="4"
+              elevation="2"
               v-bind="attrs"
               v-on="on"
           >
             Change Information
+          </v-btn>
+          <v-btn
+              class="mx-2 d-block d-xl-none d-lg-none d-md-none d-sm-none"
+              color="cyan"
+              dark
+              fab
+              v-bind="attrs"
+              x-small
+              v-on="on"
+          >
+            <v-icon dark>
+              mdi-pencil
+            </v-icon>
           </v-btn>
         </template>
         <v-card>
@@ -96,7 +109,7 @@
                       required
                   ></v-select>
                   {{ city }}
-                  <small v-if="errorResponse.phone" class="red--text">{{ errorResponse.city[0] }}</small>
+                  <small v-if="errorResponse.city" class="red--text">{{ errorResponse.city[0] }}</small>
                 </v-col>
                 <v-col cols="12" md="4" sm="6">
                   <v-select
@@ -107,7 +120,7 @@
                       label="District*"
                       required
                   ></v-select>
-                  <small v-if="errorResponse.phone" class="red--text" cols="12">{{ errorResponse.district[0] }}</small>
+                  <small v-if="errorResponse.district" class="red--text" cols="12">{{ errorResponse.district[0] }}</small>
                 </v-col>
                 <v-col cols="12" md="4" sm="6">
                   <v-select
@@ -207,8 +220,9 @@ export default {
       district: "",
       ward: "",
       street: "",
+
       dialog: false,  // dialog component
-      errorResponse: {},
+      errorResponse: {}, // Response data error object
     }
   },
   computed: {
@@ -311,7 +325,7 @@ export default {
         await Api().put('users/profiles', formData)
         this.dialog = false
         this.errorResponse = {},
-        this.$emit('update-profile')
+            this.$emit('update-profile')
       } catch (error) {
         if (error.response.status === 422) {
           this.errorResponse = error.response.data
