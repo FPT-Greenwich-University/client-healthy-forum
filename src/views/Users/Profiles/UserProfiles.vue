@@ -33,11 +33,11 @@
                     class="elevation-6"
                 ></v-img>
               </v-list-item-avatar>
-              <v-list-item-avatar color="grey darken-3" v-else>
+              <v-list-item-avatar v-else color="grey darken-3">
                 <v-img
-                    src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
                     alt=""
                     class="elevation-6"
+                    src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
                 ></v-img>
               </v-list-item-avatar>
 
@@ -77,7 +77,7 @@
           </v-card-actions>
           <!--          <v-divider class="m-4"></v-divider>-->
           <v-card-text v-if="userInfo.profile !== null">
-            <p>Live at <span class="font-weight-bold">{{ fullAddress }}</span></p>
+            <p>Live at <span class="font-weight-bold">{{ getFullName }}</span></p>
             <p>Join at <span class="font-weight-bold">{{ userInfo.created_at }}</span></p>
             <p>Have <span class="font-weight-bold">1K</span> follower</p>
           </v-card-text>
@@ -133,7 +133,7 @@
 // Change profile form component
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 // Api
-import Api from "@/Apis/Api";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
   name: "UserProfile",
@@ -142,17 +142,19 @@ export default {
   },
   data() {
     return {
-      userInfo: {},
+      // userInfo: {},
     }
   },
   computed: {
-    fullAddress() {
-      if (this.userInfo.profile) {
-        return `${this.userInfo.profile.city}, ${this.userInfo.profile.district}, ${this.userInfo.profile.ward}`
-      } else {
-        return ''
-      }
-    }
+    ...mapState("AUTH", ["userInfo"]),
+    ...mapGetters("AUTH", ["getFullName"]),
+    // fullAddress() {
+    //   if (this.userInfo.profile) {
+    //     return `${this.userInfo.profile.city}, ${this.userInfo.profile.district}, ${this.userInfo.profile.ward}`
+    //   } else {
+    //     return ''
+    //   }
+    // }
   },
   watch: {
     handleFetchProfile: {
@@ -163,15 +165,16 @@ export default {
     }
   },
   methods: {
-    async fetchProfile() {
-      try {
-        const response = await Api().get('/users/profiles')
-        // console.log('user profile:', response.data);
-        this.userInfo = response.data
-      } catch (error) {
-        console.log(error)
-      }
-    }
+    ...mapActions("AUTH", ["fetchProfile"])
+    // async fetchProfile() {
+    //   try {
+    //     const response = await Api().get('/users/profiles')
+    //     // console.log('user profile:', response.data);
+    //     this.userInfo = response.data
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }
   }
 }
 </script>

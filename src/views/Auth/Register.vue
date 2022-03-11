@@ -12,7 +12,6 @@
       >
         <v-card
             class="pa-5"
-            shaped
         >
           <v-form>
             <!--Email-->
@@ -59,7 +58,6 @@
             <v-btn
                 class="white--text"
                 color="light-green darken-1 mb-3"
-                elevation="10"
                 rounded
                 @click="handleRegister"
             >

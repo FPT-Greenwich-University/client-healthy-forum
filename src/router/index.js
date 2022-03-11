@@ -13,6 +13,11 @@ const routes = [
         component: Home,
     },
     {
+        path: "/home",
+        name: "HomePage",
+        component: () => import("@/views/HomePage")
+    },
+    {
         path: "/about",
         name: "About",
         // route level code-splitting
