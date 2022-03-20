@@ -148,13 +148,7 @@ export default {
   computed: {
     ...mapState("AUTH", ["userInfo"]),
     ...mapGetters("AUTH", ["getFullName"]),
-    // fullAddress() {
-    //   if (this.userInfo.profile) {
-    //     return `${this.userInfo.profile.city}, ${this.userInfo.profile.district}, ${this.userInfo.profile.ward}`
-    //   } else {
-    //     return ''
-    //   }
-    // }
+
   },
   watch: {
     handleFetchProfile: {
@@ -166,15 +160,6 @@ export default {
   },
   methods: {
     ...mapActions("AUTH", ["fetchProfile"])
-    // async fetchProfile() {
-    //   try {
-    //     const response = await Api().get('/users/profiles')
-    //     // console.log('user profile:', response.data);
-    //     this.userInfo = response.data
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
   }
 }
 </script>

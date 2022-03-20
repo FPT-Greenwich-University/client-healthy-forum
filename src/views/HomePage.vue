@@ -9,9 +9,7 @@
           :color="$vuetify.breakpoint.smAndDown ? 'grey darken-1' : 'transparent'"
           size="32"
       >
-        <template v-if="userInfo">
-          <img :src="userInfo.image_url"/>
-        </template>
+        <img v-if="userInfo.provider_id !== null" :src="userInfo.image_url" alt="avatar"/>
       </v-avatar>
 
       <v-tabs
@@ -24,6 +22,9 @@
             :key="link"
         >
           {{ link }}
+        </v-tab>
+        <v-tab>
+          <router-link :to="{name: 'UserProfiles'}">Profile</router-link>
         </v-tab>
       </v-tabs>
 

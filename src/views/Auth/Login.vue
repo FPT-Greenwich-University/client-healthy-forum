@@ -129,8 +129,8 @@ export default {
         this.idToken = googleUser.getAuthResponse().id_token
         this.email = profile.getEmail();
         this.userName = profile.getName();
-        this.imageUrl = profile.getImageUrl()
-        console.log(this.imageUrl)
+        this.imageUrl = profile.getImageUrl();
+        // console.log('image url', this.imageUrl)
         this.isLogin = this.$gAuth.isAuthorized;
         let formData = {
           email: this.email,
@@ -139,6 +139,7 @@ export default {
           provider_id: this.idToken
         }
 
+        // console.log('form', formData)
         await this.loginBackend(formData);
         this.$store.commit('AUTH/UPDATE_AUTH', true)
         let previousUrl = this.$router.history._startLocation

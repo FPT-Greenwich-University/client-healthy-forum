@@ -20,7 +20,7 @@ const Auth = {
         async fetchProfile({commit}) {
             try {
                 const response = await Api().get('/users/profiles')
-                // console.log('user profile:', response.data);
+                console.log('user profile:', response.data);
                 // this.userInfo = response.data
                 commit(UPDATE_USER_INFO, response.data)
             } catch (error) {

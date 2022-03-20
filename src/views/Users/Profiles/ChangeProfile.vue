@@ -3,7 +3,6 @@
     <v-row justify="center">
       <v-dialog
           v-model="dialog"
-          dark
           max-width="800px"
           persistent
           scrollable
