@@ -7,7 +7,6 @@
           <v-card
               :loading="isLoading"
               class="pa-5"
-              shaped
           >
             <v-form>
               <v-text-field v-model="email" label="Email" placeholder="Enter your email want to reset new password"/>

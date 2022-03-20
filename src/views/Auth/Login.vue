@@ -7,36 +7,35 @@
           no-gutters
           style="height: 150px;"
       >
-        <v-col></v-col>
+        <v-col/>
         <v-col
-            class="col-12 col-xl-5 col-lg-5 col-md-12 col-sm-12"
+            class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10"
         >
           <v-card
               class="pa-5"
-              shaped
           >
             <v-form>
               <v-text-field
                   v-model="email"
+                  counter
                   label="E-mail"
               ></v-text-field>
+              <small v-if="error.email" class="red--text">{{ error.email[0] }}</small>
               <v-text-field
                   v-model="password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show1 ? 'text' : 'password'"
                   counter
-                  hint="At least 8 characters"
                   label="Password"
-                  name="input-10-1"
                   @click:append="show1 = !show1"
               ></v-text-field>
+              <small v-if="error.password" class="red--text">{{ error.password[0] }}</small>
             </v-form>
 
             <div class="d-flex flex-column justify-center align-content-space-between">
               <!--  Normal login-->
               <v-btn
                   color="light-green darken-1 mb-3"
-                  elevation="10"
                   rounded
                   @click="apiLogin"
               >Login
@@ -46,7 +45,6 @@
               <v-btn
                   class="mb-3"
                   color="white"
-                  elevation="10"
                   rounded
                   @click="googleLogin"
               >
@@ -60,22 +58,46 @@
                 Google Sign-in
               </v-btn>
 
-              <!-- Register-->
-              <v-btn
-                  color="blue"
-                  rounded
-                  text
-              >
-                <router-link :to="{name:'Register'}">
-                  Register
-                </router-link>
-              </v-btn>
+              <!-- REGISTER AND FORGOT PASSWORD-->
+              <v-row>
+                <v-col>
+                  <!-- Register route-->
+                  <router-link :to="{name:'Register'}">
+                    <v-btn
+                        rounded
+                        text
+                    >
+                      Register
+                    </v-btn>
+                  </router-link>
+                </v-col>
+                <v-spacer/>
+                <v-col>
+                  <!-- Forgot password route-->
+                  <router-link :to="{name:'ForgotPassword'}">
+                    <v-btn
+                        rounded
+                        text
+                    >
+                      Forgot password
+                    </v-btn>
+                  </router-link>
+                </v-col>
+              </v-row>
             </div>
-
+            <!-- If user are not verify email-->
+            <v-alert
+                v-if="errorStatus === 403"
+                border="left"
+                dense
+                type="warning"
+            >
+              We have already send link verify this account to your email.
+              <v-btn @click="verifyAccount">Resend link</v-btn>
+            </v-alert>
           </v-card>
         </v-col>
-        <v-col>
-        </v-col>
+        <v-col/>
       </v-row>
     </v-container>
   </section>
@@ -95,6 +117,7 @@ export default {
       userName: "",
       imageUrl: "",
       error: {},
+      errorStatus: "",
       show1: false,
     };
   },
@@ -106,8 +129,8 @@ export default {
         this.idToken = googleUser.getAuthResponse().id_token
         this.email = profile.getEmail();
         this.userName = profile.getName();
-        this.imageUrl = profile.getImageUrl()
-        console.log(this.imageUrl)
+        this.imageUrl = profile.getImageUrl();
+        // console.log('image url', this.imageUrl)
         this.isLogin = this.$gAuth.isAuthorized;
         let formData = {
           email: this.email,
@@ -116,6 +139,7 @@ export default {
           provider_id: this.idToken
         }
 
+        // console.log('form', formData)
         await this.loginBackend(formData);
         this.$store.commit('AUTH/UPDATE_AUTH', true)
         let previousUrl = this.$router.history._startLocation
@@ -137,7 +161,6 @@ export default {
         // console.log('res data google log', res)
         localStorage.setItem('token', res.data.token);
       } catch (e) {
-        //TODO: handle error
         console.log('Backend login error', e)
       }
     },
@@ -162,9 +185,22 @@ export default {
           await this.$router.replace({path: '/'})
         }
       } catch (e) {
-        // TODO: fix error.response.status = 422
-        console.log(e.response.data)
-        this.error = e.response.data
+        if (e.response.status === 422) {
+          this.error = e.response.data
+        }
+        // if user is not verify account
+        if (e.response.status === 403) {
+          this.errorStatus = 403;
+          await this.verifyAccount()
+        }
+      }
+    },
+
+    async verifyAccount() {
+      try {
+        await Api().post('/email/verification-notification', {email: this.email})
+      } catch (e) {
+        console.log('Error send link', e)
       }
     }
   },
