@@ -1,76 +1,44 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 import Auth from "@/store/modules/Auth";
+import Posts from "@/store/modules/Posts";
+import Api from "@/Apis/Api";
+import {SET_POSTS} from "@/store/mutation-types/post-mutation-types";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    users: [],
-    books: [],
-    totalPage: 0,
-    currentPage: 1,
-    lastPage: 0,
-  },
-  mutations: {
-    setUsers(state, data) {
-      state.users = data;
+    state: {
+        posts: [],
+        currentPage: 0,
+        lastPage: 0,
     },
+    mutations: {
+        setCurrentPage(state, data) {
+            state.currentPage = data;
+        },
 
-    setBooks(state, data) {
-      state.books = data;
-    },
+        setLastPage(state, data) {
+            state.lastPage = data;
+        },
 
-    setCurrentPage(state, page) {
-      state.currentPage = page;
+        [SET_POSTS](state, data) {
+            state.posts = data;
+        }
     },
-
-    setLastPage(state, totalPage) {
-      state.lastPage = totalPage;
+    actions: {
+        async fetchPosts({commit}, page) {
+            try {
+                const response = await Api().get(`/posts?page=${page}`);
+                commit(SET_POSTS, response.data.data)
+                commit('setLastPage', response.data.last_page);
+            } catch (e) {
+                console.log(e)
+            }
+        }
     },
-  },
-  actions: {
-    async fetchUsers({ commit }, page) {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/users?page=${page}`
-        );
-        console.log(response);
-        let users = response.data.data.map((e) => {
-          return {
-            id: e.id,
-            email: e.email,
-            name: e.name,
-          };
-        });
-        commit("setUsers", users);
-        commit("setLastPage", response.data.last_page);
-      } catch (error) {
-        console.log(error);
-      }
+    modules: {
+        AUTH: Auth,
+        POSTS: Posts,
     },
-    async fetchbooks({ commit }, page) {
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/books?page=${page}`
-        );
-        console.log(response);
-        let books = response.data.data.map((e) => {
-          return {
-            id: e.id,
-            author: e.author,
-            name: e.name,
-          };
-        });
-        commit("setBooks", books);
-        commit("setLastPage", response.data.last_page);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
-  modules: {
-    AUTH: Auth,
-  },
 });

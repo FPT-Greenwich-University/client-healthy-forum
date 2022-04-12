@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AuthRoutes from "@/router/modules/AuthRoutes";
 import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
+import PostRoutes from "@/router/modules/Posts/PostRoutes";
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,7 @@ const routes = [
     },
     ...AuthRoutes(),
     ...ProfileRoutes(),
+    ...PostRoutes(),
     {
         path: "*",
         name: "NotFounds",

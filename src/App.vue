@@ -2,7 +2,8 @@
   <v-app>
     <v-app-bar
         app
-        color="light-green darken-1"
+        elevation="0"
+        flat
         dark
     >
       <div class="d-flex align-center">
