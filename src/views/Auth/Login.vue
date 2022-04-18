@@ -13,6 +13,7 @@
         >
           <v-card
               class="pa-5"
+              elevation="1"
           >
             <v-form>
               <v-text-field
@@ -85,6 +86,19 @@
                 </v-col>
               </v-row>
             </div>
+            <!-- If user login fail with wrong email or password-->
+            <v-alert
+                class="ma-2"
+                dense
+                outlined
+                elevation="0"
+                border="left"
+                v-if="errorStatus === 401"
+                type="error"
+            >
+              {{ error }}
+            </v-alert>
+
             <!-- If user are not verify email-->
             <v-alert
                 v-if="errorStatus === 403"
@@ -117,7 +131,7 @@ export default {
       userName: "",
       imageUrl: "",
       error: {},
-      errorStatus: "",
+      errorStatus: 0,
       show1: false,
     };
   },
@@ -185,6 +199,11 @@ export default {
           await this.$router.replace({path: '/'})
         }
       } catch (e) {
+        if (e.response.status === 401) {
+          this.errorStatus = 401
+          this.error = e.response.data
+        }
+
         if (e.response.status === 422) {
           this.error = e.response.data
         }

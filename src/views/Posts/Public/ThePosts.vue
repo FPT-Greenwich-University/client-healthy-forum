@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ currentRouteName }}
     <v-row v-show="posts.length === 0">
       <v-col class="col-12">
         <v-sheet
@@ -17,18 +18,26 @@
         <v-card
             elevation="0"
         >
-          <v-img
-              :src="item.image.path"
-              height="200px"
-          ></v-img>
+          <v-card-text>
+            <v-img
+                :src="`${backEndURL}/${item.image.path}`"
+                height="200px"
+            ></v-img>
+          </v-card-text>
+
           <v-card-title>{{ item.title }}</v-card-title>
-          <v-card-subtitle>{{ item.user.email }}</v-card-subtitle>
+          <v-card-subtitle>Author: <span class="text-lowercase text--primary">{{ item.user.email }}</span>
+          </v-card-subtitle>
           <v-card-subtitle>Category: {{ item.category.name }}</v-card-subtitle>
           <v-card-actions>
             <v-btn
-                color="lighten-2"
+                color="primary"
                 text
+                depressed
+                tile
+                plain
                 @click="handleDetailPost(item.id)"
+                class="text-decoration-underline"
             >
               Read more
             </v-btn>
@@ -38,7 +47,12 @@
     </v-row>
 
     <!-- Paginate -->
-    <Paginate @change-page="handleGetPosts"/>
+    <v-row>
+      <v-col>
+        <Paginate v-if="currentRouteName === 'PostsByTag'" @change-page="handleGetPostsByTag"/>
+        <Paginate v-else-if="currentRouteName === 'Posts'" @change-page="handleGetPosts"/>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
@@ -51,26 +65,41 @@ export default {
     Paginate
   },
   computed: {
-    ...mapState(["posts"])
+    ...mapState(["posts"]),
+    currentRouteName() {
+      return this.$route.name;
+    }
   },
   watch: {
     // Get all the post when render component
     fetchPosts: {
       handler() {
-        this.handleGetPosts(1);
+        // If the url route is post by tag
+        if (this.currentRouteName === "PostsByTag") {
+          alert('tao ok')
+          this.handleGetPostsByTag(this.$route.params.tagID)
+        } else if (this.currentRouteName === "Posts") {
+          this.handleGetPosts();
+        }
       },
       immediate: true
     }
   },
 
   data() {
-    return {}
+    return {
+      backEndURL: process.env.VUE_APP_BACKEND_URL
+    }
   },
   methods: {
-    ...mapActions(['fetchPosts']),
+    ...mapActions(['fetchPosts', 'fetchPostsByTag']),
 
     handleGetPosts(page) {
       this.fetchPosts(page)
+    },
+
+    handleGetPostsByTag(tagID, page) {
+      this.fetchPostsByTag(tagID, page)
     },
 
     handleDetailPost(postID) {
