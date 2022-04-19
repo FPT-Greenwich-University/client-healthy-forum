@@ -4,10 +4,10 @@
     <v-row>
       <v-col class="col-12" transition="slide-x-transition">
         <v-card
-
             class="mt-2"
             color="#26c6da"
             dark
+            elevation="0"
         >
           <v-card-title>
             <v-icon
@@ -70,7 +70,9 @@
 
     <v-row>
       <v-col class="col-5">
-        <v-card id="introduce">
+        <v-card id="introduce"
+        elevation="1"
+        >
           <v-card-title>Introduce</v-card-title>
           <v-card-actions>
             <ChangeProfile @update-profile="fetchProfile"/>
@@ -87,63 +89,26 @@
         </v-card>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col class="col-7">
-        <v-card>
-          <v-card-title>Post articles</v-card-title>
-        </v-card>
-        <v-divider class="my-5"></v-divider>
-        <!--        List all posts-->
-        <v-card>
-          <v-card-text>
-            <v-img class="rounded"
-                   src="https://cafefcdn.com/zoom/260_162/2019/5/5/herbalife-sxsw-blog-640x360-15570277360691388640197-crop-15570277426911668808992.jpg">
-            </v-img>
-            <p class="font-weight-bold mt-5">Tile of post</p>
-            <p>Rating: 4.5</p>
-            <p>Like: 55</p>
-          </v-card-text>
-        </v-card>
 
-        <v-card>
-          <v-card-text>
-            <v-img class="rounded"
-                   src="https://cafefcdn.com/zoom/260_162/2019/5/5/herbalife-sxsw-blog-640x360-15570277360691388640197-crop-15570277426911668808992.jpg">
-            </v-img>
-            <p class="font-weight-bold mt-5">Tile of post</p>
-            <p>Rating: 4.5</p>
-            <p>Like: 55</p>
-          </v-card-text>
-        </v-card>
-
-        <v-card>
-          <v-card-text>
-            <v-img class="rounded"
-                   src="https://cafefcdn.com/zoom/260_162/2019/5/5/herbalife-sxsw-blog-640x360-15570277360691388640197-crop-15570277426911668808992.jpg">
-            </v-img>
-            <p class="font-weight-bold mt-5">Tile of post</p>
-            <p>Rating: 4.5</p>
-            <p>Like: 55</p>
-          </v-card-text>
-        </v-card>
-      </v-col>
+      <DoctorPosts v-if="userInfo.id" :userID="userInfo.id"/>
     </v-row>
   </v-container>
 </template>
 <script>
 // Change profile form component
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
+import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 // Api
 import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
   name: "UserProfile",
   components: {
+    DoctorPosts,
     ChangeProfile
   },
   data() {
-    return {
-      // userInfo: {},
-    }
+    return {}
   },
   computed: {
     ...mapState("AUTH", ["userInfo"]),

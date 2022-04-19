@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    {{ currentRouteName }}
     <v-row v-show="posts.length === 0">
       <v-col class="col-12">
         <v-sheet
@@ -21,7 +20,6 @@
           <v-card-text>
             <v-img
                 :src="`${backEndURL}/${item.image.path}`"
-                height="200px"
             ></v-img>
           </v-card-text>
 
@@ -74,9 +72,7 @@ export default {
     // Get all the post when render component
     fetchPosts: {
       handler() {
-        // If the url route is post by tag
-        if (this.currentRouteName === "PostsByTag") {
-          alert('tao ok')
+        if (this.currentRouteName === "PostsByTag") { // If the url route is post by tag
           this.handleGetPostsByTag(this.$route.params.tagID)
         } else if (this.currentRouteName === "Posts") {
           this.handleGetPosts();
@@ -98,8 +94,8 @@ export default {
       this.fetchPosts(page)
     },
 
-    handleGetPostsByTag(tagID, page) {
-      this.fetchPostsByTag(tagID, page)
+    handleGetPostsByTag(page, tagID = this.$route.params.tagID) {
+      this.fetchPostsByTag(page, tagID)
     },
 
     handleDetailPost(postID) {

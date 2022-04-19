@@ -52,7 +52,7 @@ export default {
   watch: {
     handleFetchComments: {
       handler() {
-        this.fetchComments(this.postID, 1)
+        this.fetchComments(this.postID)
       },
       immediate: true
     }

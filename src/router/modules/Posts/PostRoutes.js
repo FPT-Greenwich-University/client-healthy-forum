@@ -6,6 +6,13 @@ const PostRoutes = () => {
             component: () => import('@/views/Posts/Public/ThePosts')
         },
 
+        // Detail post
+        {
+            path: '/posts/:postID',
+            name: 'ThePostDetails',
+            component: () => import('@/views/Posts/Public/ThePostDetails')
+        },
+
         // List the posts by tag
         {
             path: '/posts/tags/:tagID',
@@ -13,12 +20,7 @@ const PostRoutes = () => {
             component: () => import('@/views/Posts/Public/ThePosts')
         },
 
-        // Detail post
-        {
-            path: '/posts/:postID',
-            name: 'ThePostDetails',
-            component: () => import('@/views/Posts/Public/ThePostDetails')
-        }
+
     ]
 }
-export default PostRoutes
+    export default PostRoutes

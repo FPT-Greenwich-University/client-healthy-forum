@@ -10,7 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        posts: [], comments: [], currentPage: 0, lastPage: 0,
+        posts: [], comments: [], currentPage: 1, lastPage: 0,
     }, mutations: {
         setCurrentPage(state, data) {
             state.currentPage = data;
@@ -39,14 +39,12 @@ export default new Vuex.Store({
         },
 
         // Fetch the posts by tag
-        async fetchPostsByTag({commit}, postTagID, page = 1) {
+        async fetchPostsByTag({commit}, page = 1, tagID) {
             try {
-                const response = await Api().get(`/posts?tag=${postTagID}&page=${page}`)
-                console.log('posts by tag', response.data)
+                const response = await Api().get(`/posts?tag=${tagID}&page=${page}`)
                 commit(SET_POSTS, response.data.data)
                 commit('setLastPage', response.data.last_page);
-                // console.log('Last page', response.data.last_page);
-                await router.push({name: 'PostsByTag', params: {tagID: postTagID}})
+                await router.push({name: 'PostsByTag', params: {tagID: tagID}})
             } catch (e) {
                 console.log(e)
                 if (e.response) {

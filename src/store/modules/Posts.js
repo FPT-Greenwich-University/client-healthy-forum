@@ -27,7 +27,6 @@ const Posts = {
         getDetailPostTags: async function ({commit}, postID) {
             try {
                 const response = await Api().get(`/posts/${postID}/tags`)
-                console.log('tags', response.data)
                 commit(SET_DETAIL_POST_TAGS, response.data)
             } catch (e) {
                 if (e.response) {

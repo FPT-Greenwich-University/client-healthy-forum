@@ -36,13 +36,16 @@ export default {
       if (localStorage.getItem('token')) {
         try {
           const response = await Api().get('/user')
-          console.log('get user info', response.data)
-          this.userInfo = {
-            name: response.data.name,
-            email: response.data.email,
+          if (response) {
+            this.userInfo = {
+              name: response.data.name,
+              email: response.data.email,
+            }
           }
         } catch (error) {
-          console.log(error.response.error)
+          if (error) {
+            console.log(error.response.error)
+          }
         }
       }
     }
