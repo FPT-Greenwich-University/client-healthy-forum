@@ -1,55 +1,23 @@
 <template>
   <section>
     Home page
-    <p class="text-center text-xl-subtitle-1">Hello {{ userInfo.name }}!</p>
+    <p v-if="isAuthenticated" class="text-center text-xl-subtitle-1">Hello {{ userAuthenticated.email }}!</p>
   </section>
 </template>
 
 <script>
 // Axios api
+import {mapState} from "vuex";
 import Api from "@/Apis/Api";
-
-const userInfoState = {name: '', email: ''}
 
 export default {
   name: 'Home',
-
   components: {},
-  watch: {
-    getUserInfo: {
-      handler() {
-        this.fetchUserInfo()
-      },
-      immediate: true,
-    }
+  computed: {
+    ...mapState('AUTH', ['isAuthenticated', 'userAuthenticated'])
   },
   data() {
-    return {
-      userInfo: {
-        ...userInfoState
-      }
-    }
-  },
-
-  methods: {
-    async fetchUserInfo() {
-      if (localStorage.getItem('token')) {
-        try {
-          const response = await Api().get('/user')
-          if (response) {
-            this.userInfo = {
-              name: response.data.name,
-              email: response.data.email,
-            }
-          }
-        } catch (error) {
-          if (error) {
-            console.log(error.response.error)
-          }
-        }
-      }
-    }
-
+    return {}
   },
 }
 </script>

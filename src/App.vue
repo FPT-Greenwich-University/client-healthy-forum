@@ -29,11 +29,25 @@
 <script>
 // Components
 import ItemMenu from "@/components/TopNav/ItemMenu";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'App',
   components: {
     ItemMenu
+  },
+  computed: {
+    ...mapState('AUTH', ['isAuthenticated'])
+  },
+  watch: {
+    getUserInfo: {
+      handler() {
+        if (localStorage.getItem('token')) {
+          this.fetchUserAuthInfo()
+        }
+      },
+      immediate: true,
+    }
   },
   data() {
     return {
@@ -42,6 +56,9 @@ export default {
         'Posts',
       ]
     }
-  }
+  },
+  methods: {
+    ...mapActions('AUTH', ["fetchUserAuthInfo"])
+  },
 };
 </script>

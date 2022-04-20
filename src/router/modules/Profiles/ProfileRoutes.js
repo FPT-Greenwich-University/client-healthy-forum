@@ -1,11 +1,8 @@
-import {checkAuthenticated} from "@/router/guards";
-
 const ProfileRoutes = () => {
     return [{
-        path: '/profiles',
+        path: '/users/:userID',
         name: "UserProfiles",
         component: () => import("@/views/Users/Profiles/UserProfiles"),
-        beforeEnter: checkAuthenticated
     },
     ]
 }

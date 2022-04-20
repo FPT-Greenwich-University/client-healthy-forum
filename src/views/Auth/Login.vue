@@ -88,12 +88,12 @@
             </div>
             <!-- If user login fail with wrong email or password-->
             <v-alert
+                v-if="errorStatus === 401"
+                border="left"
                 class="ma-2"
                 dense
-                outlined
                 elevation="0"
-                border="left"
-                v-if="errorStatus === 401"
+                outlined
                 type="error"
             >
               {{ error }}
@@ -119,6 +119,7 @@
 
 <script>
 import Api from "@/Apis/Api";
+import {mapActions} from "vuex";
 
 export default {
   name: "Login",
@@ -136,6 +137,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions('AUTH', ['fetchUserAuthInfo']),
+
     async googleLogin() {
       try {
         const googleUser = await this.$gAuth.signIn()
@@ -174,6 +177,7 @@ export default {
         const res = await Api().post('/login/google', formData)
         // console.log('res data google log', res)
         localStorage.setItem('token', res.data.token);
+        await this.fetchUserAuthInfo()
       } catch (e) {
         console.log('Backend login error', e)
       }
@@ -191,6 +195,7 @@ export default {
         // console.log(res.data)
         localStorage.setItem('token', res.data.token);
         this.$store.commit('AUTH/UPDATE_AUTH', true)
+        await this.fetchUserAuthInfo()
         let previousUrl = this.$router.history._startLocation
 
         if (previousUrl !== '/login') {
@@ -221,7 +226,7 @@ export default {
       } catch (e) {
         console.log('Error send link', e)
       }
-    }
+    },
   },
 }
 </script>

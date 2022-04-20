@@ -27,7 +27,7 @@
           <v-list-item>
             <v-list-item-title>
               <v-btn block plain text>
-                <router-link :to="{name: 'UserProfiles'}">
+                <router-link :to="{name: 'UserProfiles', params:{userID: userAuthenticated.id}}">
                   View Profile
                 </router-link>
               </v-btn>
@@ -55,7 +55,7 @@ import {mapState} from "vuex";
 export default {
   name: "ItemMenu",
   computed: {
-    ...mapState("AUTH", ["isAuthenticated"]),
+    ...mapState("AUTH", ["isAuthenticated", "userAuthenticated"]),
   },
   components: {
     Logout,

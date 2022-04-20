@@ -119,7 +119,9 @@
                       label="District*"
                       required
                   ></v-select>
-                  <small v-if="errorResponse.district" class="red--text" cols="12">{{ errorResponse.district[0] }}</small>
+                  <small v-if="errorResponse.district" class="red--text" cols="12">
+                    {{ errorResponse.district[0] }}
+                  </small>
                 </v-col>
                 <v-col cols="12" md="4" sm="6">
                   <v-select
@@ -257,6 +259,7 @@ export default {
     async fetchApiCities() {
       try {
         const response = await Api().get('/public/cities')
+        // console.log(response.data);
         this.apiCities = response.data.LtsItem.map((e) => {
           return {
             id: e.ID,
@@ -321,10 +324,10 @@ export default {
       let formData = this.getFormData()
 
       try {
-        await Api().put('users/profiles', formData)
+        await Api().put('/profiles', formData)
         this.dialog = false
-        this.errorResponse = {},
-            this.$emit('update-profile')
+        this.errorResponse = {}
+        this.$emit('update-profile', this.$route.params.userID)  // Listen event call back to update profile in vuex
       } catch (error) {
         if (error.response.status === 422) {
           this.errorResponse = error.response.data

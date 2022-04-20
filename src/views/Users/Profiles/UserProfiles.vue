@@ -71,11 +71,11 @@
     <v-row>
       <v-col class="col-5">
         <v-card id="introduce"
-        elevation="1"
+                elevation="1"
         >
           <v-card-title>Introduce</v-card-title>
-          <v-card-actions>
-            <ChangeProfile @update-profile="fetchProfile"/>
+          <v-card-actions v-if="isOwnProfile">
+            <ChangeProfile @update-profile="handleFetchProfile"/>
           </v-card-actions>
           <!--          <v-divider class="m-4"></v-divider>-->
           <v-card-text v-if="userInfo.profile !== null">
@@ -108,23 +108,28 @@ export default {
     ChangeProfile
   },
   data() {
-    return {}
+    return {
+      isOwn: false, // is current user authenticated own this profile
+    }
   },
   computed: {
-    ...mapState("AUTH", ["userInfo"]),
+    ...mapState("AUTH", ["userInfo", "isOwnProfile", "userAuthenticated"]),
     ...mapGetters("AUTH", ["getFullName"]),
-
   },
   watch: {
     handleFetchProfile: {
       handler() {
-        this.fetchProfile()
+        let userID = this.$route.params.userID
+        this.fetchProfile(userID)
       },
       immediate: true
     }
   },
   methods: {
-    ...mapActions("AUTH", ["fetchProfile"])
+    ...mapActions("AUTH", ["fetchProfile"]),
+    handleFetchProfile(userID) {
+      this.fetchProfile(userID)
+    }
   }
 }
 </script>
