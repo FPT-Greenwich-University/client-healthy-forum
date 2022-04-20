@@ -6,9 +6,9 @@
           <v-spacer/>
           <v-col class="col-12 col-xl-5 col-lg-6 col-md-8 col-sm-10">
             <v-card
+                elevation="1"
                 v-show="!isSuccess"
                 class="pa-5"
-                shaped
             >
               <v-form>
                 <v-text-field
@@ -101,7 +101,7 @@ export default {
     },
     backLogin() {
       setTimeout(() => {
-        this.$router.replace({name: 'Login'})
+        this.$router.replace({name: 'Home'})
       }, 3000)
     }
   }
