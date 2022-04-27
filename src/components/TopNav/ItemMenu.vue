@@ -8,16 +8,16 @@
             v-bind="attrs"
             v-on="on"
         >
-          Menu
+          Action
         </v-btn>
       </template>
       <template v-if="isAuthenticated === false">
         <v-list>
           <v-list-item>
             <v-list-item-title>
-              <v-btn block plain text>
-                <router-link :to="{name: 'Login'}">Login</router-link>
-              </v-btn>
+              <v-tab :to="{name: 'Login'}" block plain text>
+                Login
+              </v-tab>
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -26,11 +26,9 @@
         <v-list>
           <v-list-item>
             <v-list-item-title>
-              <v-btn block plain text>
-                <router-link :to="{name: 'UserProfiles', params:{userID: userAuthenticated.id}}">
-                  View Profile
-                </router-link>
-              </v-btn>
+              <v-tab :to="{name: 'UserProfiles', params:{userID: userAuthenticated.id}}" block plain text>
+                Profile
+              </v-tab>
             </v-list-item-title>
           </v-list-item>
         </v-list>
