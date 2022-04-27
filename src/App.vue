@@ -16,6 +16,9 @@
         <v-tab :to="{name: 'Posts'}">
           Posts
         </v-tab>
+        <v-tab v-if="isDoctor" :to="{name: 'CreatePost'}">
+          Create Post
+        </v-tab>
       </v-tabs>
       <ItemMenu/>
     </v-app-bar>
@@ -29,7 +32,7 @@
 <script>
 // Components
 import ItemMenu from "@/components/TopNav/ItemMenu";
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 export default {
   name: 'App',
@@ -37,7 +40,8 @@ export default {
     ItemMenu
   },
   computed: {
-    ...mapState('AUTH', ['isAuthenticated'])
+    ...mapState('AUTH', ['isAuthenticated']),
+    ...mapGetters('AUTH', ['isDoctor'])
   },
   watch: {
     getUserInfo: {

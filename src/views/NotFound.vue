@@ -1,12 +1,13 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col class="mx-auto">
+    <v-row justify="center">
+      <v-col class="col-12">
         <v-card
-            elevation="0"
+            class="col-6 mx-auto ma-2"
+            elevation="1"
         >
-          <v-card-title>Page not found!</v-card-title>
-          <v-card-subtitle>404 Error</v-card-subtitle>
+          <v-card-title class="text-capitalize text-h5">Page not found!</v-card-title>
+          <v-card-subtitle class="text--darken-4 text-h5">404 Error</v-card-subtitle>
           <v-card-actions>
             <v-btn
                 @click="()=> {$router.push('/') }"

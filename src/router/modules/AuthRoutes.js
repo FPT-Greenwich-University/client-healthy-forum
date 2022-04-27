@@ -8,7 +8,11 @@ const AuthRoutes = () => {
             name: "Login",
             component: () => import("@/views/Auth/Login.vue"),
             beforeEnter: checkAuthenticated
-        }, // Register page
+        },
+
+        /**
+         * Register page
+         */
         {
             path: '/register',
             name: "Register",
@@ -23,7 +27,9 @@ const AuthRoutes = () => {
             }
         },
 
-        // Forgot password form input email page
+        /**
+         * Forgot password Form input email page
+         */
         {
             path: '/forgot-password',
             name: 'ForgotPassword',
@@ -34,6 +40,7 @@ const AuthRoutes = () => {
             name: 'ResetPassword',
             component: () => import("@/views/Auth/ForgotPassword/ResetPassword")
         },
+
 
         {
             path: '/verify-account',

@@ -97,7 +97,7 @@ export default {
   watch: {
     fetchPost: {
       handler: function (newValue) {
-        this.getDetailPost(this.postID)
+        this.getDetailPost(this.$route.params.postID)
       },
       immediate: true
     }
