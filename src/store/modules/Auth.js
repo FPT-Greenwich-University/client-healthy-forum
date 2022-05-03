@@ -1,4 +1,5 @@
 import {
+    PROVIDER_ID,
     UPDATE_AUTH,
     UPDATE_AUTH_PROFILE,
     UPDATE_OWNER_STATUS,
@@ -15,7 +16,8 @@ const Auth = {
         isOwnProfile: false,
         userInfo: {},
         userAuthenticated: {},
-        userRoles: []
+        userRoles: [],
+        providerID: null,
     },
     getters: {
         getFullName: state => {
@@ -25,11 +27,15 @@ const Auth = {
                 return ''
             }
         },
-
+        isGoogleAccount: state => {
+            return (state.providerID !== null)
+        },
         isDoctor: state => {
             return state.userRoles.includes('doctor')
-        }
+        },
+        isAdmin: state => state.userRoles.includes('admin'),
     },
+
     actions: {
         /**
          * Fetch user profile
@@ -76,14 +82,17 @@ const Auth = {
 
                 if (res) {
                     commit(UPDATE_AUTH_PROFILE, res.data)
+                    // console.log('user info', res.data)
                     let roles = res.data.roles.map(e => {
                         return e.name
                     })
                     commit(UPDATE_ROLES, roles)
+                    commit(PROVIDER_ID, res.data.provider_id)
                 }
             } catch (e) {
             }
         },
+
     },
     mutations: {
         [UPDATE_AUTH](state, payload) {
@@ -100,6 +109,9 @@ const Auth = {
         },
         [UPDATE_ROLES](state, payload) {
             state.userRoles = payload
+        },
+        [PROVIDER_ID](state, payload) {
+            state.providerID = payload
         },
         logout(state) {
             state.userAuthenticated = {}
