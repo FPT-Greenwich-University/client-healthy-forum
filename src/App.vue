@@ -19,6 +19,10 @@
         <v-tab v-if="isDoctor" :to="{name: 'CreatePost'}">
           Create Post
         </v-tab>
+
+        <v-tab v-if="isAdmin" :to="{name: 'AdminDashBoard'}">
+          Dashboard
+        </v-tab>
       </v-tabs>
       <ItemMenu/>
     </v-app-bar>
@@ -41,7 +45,7 @@ export default {
   },
   computed: {
     ...mapState('AUTH', ['isAuthenticated']),
-    ...mapGetters('AUTH', ['isDoctor'])
+    ...mapGetters('AUTH', ['isDoctor', 'isAdmin'])
   },
   watch: {
     getUserInfo: {

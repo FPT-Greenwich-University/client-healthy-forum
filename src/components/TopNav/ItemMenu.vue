@@ -3,12 +3,15 @@
     <v-menu offset-y transition="slide-x-transition">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-            color="primary"
-            dark
+
             v-bind="attrs"
+            color="primary"
             v-on="on"
         >
-          Action
+          <v-icon
+          >
+            fas fa-bars
+          </v-icon>
         </v-btn>
       </template>
       <template v-if="isAuthenticated === false">

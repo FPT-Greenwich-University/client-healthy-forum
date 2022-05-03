@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import AuthRoutes from "@/router/modules/AuthRoutes";
 import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
 import PostRoutes from "@/router/modules/Posts/PostRoutes";
+import AdminRoutes from "@/router/modules/Admin/AdminRoutes";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,7 @@ const routes = [
     },
 
     ...AuthRoutes(),
+    ...AdminRoutes(),
     ...ProfileRoutes(),
     ...PostRoutes(),
     {
