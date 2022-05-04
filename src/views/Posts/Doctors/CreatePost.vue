@@ -76,32 +76,21 @@
 
     </v-row>
 
-    <v-row>
-      <v-col>
-        <v-alert
-            v-if="status === 200"
-            class="my-2"
-            text
-            type="success"
-        >
-          Post new article successful
-        </v-alert>
-      </v-col>
-    </v-row>
 
     <v-row>
       <v-col>
         <!-- Error -->
         <v-snackbar
-            v-model="snackbar"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
-          Post new article fail!
+          {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
             <v-btn
-                color="red"
                 text
                 v-bind="attrs"
-                @click="snackbar = false"
+                @click="snackbar.status = false"
             >
               Close
             </v-btn>
@@ -132,8 +121,14 @@ export default {
         thumbnail: undefined,
       },
       status: undefined,
-      errors: [],
-      snackbar: false,
+      //TODO Fix errors to object
+      errors: {},
+      snackbar: {
+        status: false,
+        color: '',
+        content: '',
+        timeout: 3000,
+      },
     }
   },
   watch: {
@@ -173,15 +168,19 @@ export default {
         })
 
         if (res.status === 200) {
-          this.status = 200;
+          this.errors = {} // delete all error
+          this.snackbar.content = res.data
+          this.snackbar.color = 'success'
+          this.snackbar.status = true
+          this.formData = {}
         }
       } catch (e) {
-        console.log('Error create post', e)
-
         if (e.response.status === 422) {
           this.status = 422
           this.errors = e.response.data
-          this.snackbar = true
+          this.snackbar.color = 'red'
+          this.snackbar.content = 'Failed to post new article'
+          this.snackbar.status = true
         }
       }
     },

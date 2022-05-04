@@ -82,7 +82,7 @@
 </template>
 <script>
 import {mapState} from "vuex";
-import Posts from "@/components/Admin/Post/Posts";
+import Posts from "@/components/Admin/Post/AdminPosts";
 
 export default {
   name: "TheDashboard",
