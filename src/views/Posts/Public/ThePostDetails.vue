@@ -1,25 +1,11 @@
 <template>
   <v-container>
-    <v-row v-show="Object.keys(postDetail).length === 0"
-    >
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
-        <v-sheet
-            class="pa-3"
-        >
-          <v-skeleton-loader
-              class="mx-auto"
-              type="card"
-          ></v-skeleton-loader>
-        </v-sheet>
-      </v-col>
-    </v-row>
-
     <!-- Category name -->
-    <v-row>
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
+    <v-row justify="center">
+      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
         <v-card
-            elevation="0"
             class="mx-auto text-center"
+            elevation="0"
         >
           <v-card-subtitle>
             Published At {{ postDetail.published_at }}
@@ -28,31 +14,34 @@
       </v-col>
     </v-row>
 
-    <TheTags :postID="postID"/>
+    <!--  Tags  -->
+    <v-row justify="center">
+      <TheTags :postID="postID"/>
+    </v-row>
 
+    <!--  Introduce title and description  -->
     <v-row>
       <!--Post Title-->
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
         <p class="text-capitalize text-h6 text-center">{{ postDetail.title }}</p>
+        <p class="text-capitalize text-xl-subtitle-1 text-center">{{ postDetail.description }}</p>
       </v-col>
     </v-row>
 
+    <!--  Image  -->
     <v-row>
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
-        <v-card
-            elevation="0"
+        <v-img
+            v-if="postDetail.image"
+            :src="`${backEndURL}/${postDetail.image.path}`"
+            alt="post image"
+            class="rounded-lg"
         >
-          <v-img v-if="postDetail.image"
-                 :src="`${backEndURL}/${postDetail.image.path}`"
-                 alt="post image"
-                 class="mx-auto"
-          >
-          </v-img>
-          <v-card-title>{{ postDetail.description }}</v-card-title>
-        </v-card>
+        </v-img>
       </v-col>
     </v-row>
 
+    <!--  Divider  -->
     <v-row>
       <v-col
           class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
@@ -61,6 +50,7 @@
       </v-col>
     </v-row>
 
+    <!--  Body text  -->
     <v-row>
       <v-col
           class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
@@ -68,26 +58,32 @@
         <v-card
             elevation="0"
         >
-          <v-card-text>
+          <v-card-text class="text-left">
             {{ postDetail.body }}
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
+    <!--  Form comment  -->
+    <FormInputComment :postID="postID"/>
+
     <!--List Comments-->
     <TheComments :postID="postID"/>
   </v-container>
 </template>
+
 <script>
 import {mapActions, mapState} from "vuex";
 // Components
 import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheComments";
 import TheTags from "@/components/Public/Posts/DetailPost/Tags/TheTags";
+import FormInputComment from "@/components/User/Comment/FormInputComment";
 
 export default {
   name: "ThePostDetails",
   components: {
+    FormInputComment,
     TheTags,
     TheComments
   },

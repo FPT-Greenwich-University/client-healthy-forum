@@ -3,7 +3,6 @@
     <v-menu offset-y transition="slide-x-transition">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-
             v-bind="attrs"
             color="primary"
             v-on="on"

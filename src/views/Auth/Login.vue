@@ -153,7 +153,7 @@ export default {
           email: this.email,
           name: this.userName,
           image_url: this.imageUrl,
-          provider_id: this.idToken
+          provider_id: this.idToken // id token for backend database
         }
 
         // console.log('form', formData)

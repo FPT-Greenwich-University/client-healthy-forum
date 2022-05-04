@@ -1,16 +1,12 @@
 <template>
-  <section>
-    <v-row>
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
-        <v-btn x-small text color="primary" class="ma-1 d-inline-block">Tags:</v-btn>
-        <v-btn class="ma-1 d-inline-block" elevation="1" x-small :title="tag.description" v-for="tag in postTags"
-               :key="tag.id"
-               @click="handleFetchPostByTag(tag.id)">
-          {{ tag.name }}
-        </v-btn>
-      </v-col>
-    </v-row>
-  </section>
+  <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
+    <v-btn class="ma-1 d-inline-block" color="primary" text x-small>Tags:</v-btn>
+    <v-btn v-for="tag in postTags" :key="tag.id" :title="tag.description" class="ma-1 d-inline-block" elevation="1"
+           x-small
+           @click="handleFetchPostByTag(tag.id)">
+      {{ tag.name }}
+    </v-btn>
+  </v-col>
 </template>
 <script>
 import {mapActions, mapState} from "vuex";
