@@ -29,13 +29,13 @@
           <v-card-subtitle>Category: {{ item.category.name }}</v-card-subtitle>
           <v-card-actions>
             <v-btn
-                color="primary"
-                text
-                depressed
-                tile
-                plain
-                @click="handleDetailPost(item.id)"
                 class="text-decoration-underline"
+                color="primary"
+                depressed
+                plain
+                text
+                tile
+                @click="handleDetailPost(item.id)"
             >
               Read more
             </v-btn>
@@ -69,7 +69,7 @@ export default {
     }
   },
   watch: {
-    // Get all the post when render component
+    // Get all the post when a rendering component
     fetchPosts: {
       handler() {
         if (this.currentRouteName === "PostsByTag") { // If the url route is post by tag
