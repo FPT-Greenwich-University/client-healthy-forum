@@ -87,10 +87,10 @@ export default {
 
         if (res) {
           this.errors = {}
-          await this.fetchComments(this.postID)
-          this.snackbar.content = res.data
-          this.snackbar.color = 'success'
-          this.snackbar.status = true
+          await this.fetchComments({
+            postID: this.postID, page: 1
+          })
+          this.snackbar = {content: res.data, color: 'success', status: true}
           this.content = '' // reset content
         }
       } catch (e) {
@@ -98,9 +98,7 @@ export default {
           if (e.response.status === 422) {
             console.log(e.response.data.errors)
             this.errors = e.response.data.errors
-            this.snackbar.content = 'Comment failed'
-            this.snackbar.color = 'red'
-            this.snackbar.status = true
+            this.snackbar = {content: 'Failed comment', color: 'red', status: true}
           }
         }
       }

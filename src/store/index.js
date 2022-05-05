@@ -5,6 +5,7 @@ import Posts from "@/store/modules/Posts";
 import Api from "@/Apis/Api";
 import {SET_COMMENTS, SET_POSTS} from "@/store/mutation-types/post-mutation-types";
 import router from "@/router";
+import Comments from "@/store/modules/Comments";
 
 Vue.use(Vuex);
 
@@ -22,13 +23,14 @@ export default new Vuex.Store({
 
         [SET_POSTS](state, data) {
             state.posts = data;
-        }, [SET_COMMENTS](state, data) {
+        },
+        [SET_COMMENTS](state, data) {
             state.comments = data;
         }
 
     }, actions: {
         // Fetch the posts
-        async fetchPosts({commit}, page = 1) {
+        async fetchPosts({commit}, page) {
             try {
                 const response = await Api().get(`/posts?page=${page}`);
                 commit(SET_POSTS, response.data.data)
@@ -56,11 +58,10 @@ export default new Vuex.Store({
             }
         },
 
-
-        // Fetch all comment of the post
-        async fetchComments({commit}, postID, page = 1) {
+        // Fetch all comments of the post
+        async fetchComments({commit}, payload) {
             try {
-                const response = await Api().get(`posts/${postID}/comments?page=${page}`)
+                const response = await Api().get(`posts/${payload.postID}/comments?page=${payload.page}`)
                 commit(SET_COMMENTS, response.data.data)
                 commit('setLastPage', response.data.last_page);
             } catch (e) {
@@ -68,6 +69,8 @@ export default new Vuex.Store({
             }
         },
     }, modules: {
-        AUTH: Auth, POSTS: Posts,
+        AUTH: Auth,
+        POSTS: Posts,
+        COMMENTS: Comments
     },
 });
