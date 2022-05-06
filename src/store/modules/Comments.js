@@ -10,7 +10,7 @@ const comments = {
     mutations: {
         [SET_COMMENT_ID](state, payload) {
             state.commentID = payload.commentID
-        }
+        },
     },
 }
 export default comments

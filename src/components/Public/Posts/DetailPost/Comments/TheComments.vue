@@ -20,7 +20,14 @@
 
                 <v-btn max-width="20%" x-small @click="handleOpenDialog(item.id)">Reply</v-btn>
               </v-list-item-content>
+
+
             </v-list-item>
+
+            <!-- The reply comment -->
+            <v-list-group>
+              <TheReplyComments :commentID="item.id" :postID="postID"/>
+            </v-list-group>
           </template>
         </v-list>
         <v-dialog
@@ -100,12 +107,13 @@
 <script>
 import {mapActions, mapMutations, mapState} from "vuex";
 import Paginate from "@/components/Paginate";
+import TheReplyComments from "@/components/Public/Posts/DetailPost/Comments/TheReplyComments";
 import {SET_COMMENT_ID} from "@/store/mutation-types/comment-mutation-types";
 import Api from "@/Apis/Api";
 
 export default {
   name: "TheComments",
-  components: {Paginate},
+  components: {TheReplyComments, Paginate},
   props: {
     postID: {
       type: Number,
