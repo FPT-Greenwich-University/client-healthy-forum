@@ -1,1 +1,2 @@
 export const SET_COMMENT_ID = 'SET_COMMENT_ID'
+export const SET_REPLY_COMMENTS = 'SET_REPLY_COMMENTS'
