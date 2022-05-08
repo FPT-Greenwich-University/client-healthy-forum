@@ -1,5 +1,5 @@
 import Api from "@/Apis/Api";
-import {SET_DETAIL_POST, SET_DETAIL_POST_TAGS} from "@/store/mutation-types/post-mutation-types";
+import {SET_DETAIL_POST, SET_DETAIL_POST_TAGS, SET_TOTAL_LIKE} from "@/store/mutation-types/post-mutation-types";
 import router from "@/router";
 
 const Posts = {
@@ -8,6 +8,7 @@ const Posts = {
         posts: [],
         postDetail: {},
         postTags: [],
+        totalLikes: 0,
     },
     getters: {},
     actions: {
@@ -35,6 +36,17 @@ const Posts = {
                     }
                 }
             }
+        },
+
+        async getTotalLikeOfPost({commit}, postID) {
+            try {
+                const res = await Api().get(`/posts/${postID}/total-likes`)
+                commit(SET_TOTAL_LIKE, res.data.total_likes)
+            } catch (e) {
+                if (e) {
+                    console.log(e)
+                }
+            }
         }
     },
     mutations: {
@@ -43,6 +55,9 @@ const Posts = {
         },
         [SET_DETAIL_POST_TAGS](state, data) {
             state.postTags = data
+        },
+        [SET_TOTAL_LIKE](state, totalLikes) {
+            state.totalLikes = totalLikes
         }
     }
 }

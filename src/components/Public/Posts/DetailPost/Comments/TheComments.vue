@@ -18,7 +18,7 @@
                 <v-list-item-title v-html="item.user.email"></v-list-item-title>
                 <v-list-item-subtitle v-html="item.content"></v-list-item-subtitle>
 
-                <v-btn max-width="20%" x-small @click="handleOpenDialog(item.id)">Reply</v-btn>
+                <v-btn v-if="isAuthenticated" max-width="20%" x-small @click="handleOpenDialog(item.id)">Reply</v-btn>
               </v-list-item-content>
 
 
@@ -36,7 +36,6 @@
             transition="dialog-top-transition"
         >
           <v-card>
-            <v-card-title>Enter you comment</v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
@@ -96,6 +95,7 @@
         </v-snackbar>
       </v-col>
     </v-row>
+
     <v-row v-show="comments.length !== 0">
       <v-col>
         <!-- Paginate -->
@@ -121,6 +121,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('AUTH', ['isAuthenticated']),
     ...mapState('COMMENTS', ['commentID']),
     ...mapState(['comments'])
   },

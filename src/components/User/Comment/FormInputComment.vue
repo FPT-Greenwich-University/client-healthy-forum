@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" v-if="isAuthenticated">
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
       <!--   Input content   -->
       <v-textarea
@@ -14,16 +14,24 @@
       </v-textarea>
 
       <!--  Send button    -->
-      <v-btn
-          color="indigo"
-          dark
-          elevation="1"
-          small
-          @click="handleComment"
-      >
-        Send
-        <v-icon right small>fas fa-paper-plane</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+              color="indigo"
+              dark
+              elevation="1"
+              small
+              @click="handleComment"
+              v-bind="attrs"
+              v-on="on"
+          >
+            Send
+            <v-icon right small>fas fa-paper-plane</v-icon>
+          </v-btn>
+        </template>
+        <span>Click to upload comment</span>
+      </v-tooltip>
+
 
       <!--   List error   -->
       <template v-if="errors">
@@ -46,14 +54,13 @@
           </v-btn>
         </template>
       </v-snackbar>
-
     </v-col>
   </v-row>
 </template>
 <script>
 
 import Api from "@/Apis/Api";
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "FormInputComment",
@@ -62,6 +69,8 @@ export default {
       required: true,
       type: Number
     }
+  }, computed: {
+    ...mapState('AUTH', ['isAuthenticated'])
   },
   data() {
     return {
