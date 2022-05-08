@@ -65,6 +65,11 @@
       </v-col>
     </v-row>
 
+    <!--  Total like  -->
+    <TotalLike> {{ totalLikes }}</TotalLike>
+    <!--  Like button  -->
+    <LikeButton :postID="postID"/>
+
     <!--  Form comment  -->
     <FormInputComment :postID="postID"/>
 
@@ -79,21 +84,26 @@ import {mapActions, mapState} from "vuex";
 import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheComments";
 import TheTags from "@/components/Public/Posts/DetailPost/Tags/TheTags";
 import FormInputComment from "@/components/User/Comment/FormInputComment";
+import LikeButton from "@/components/User/Like/LikeButton";
+import TotalLike from "@/components/User/Like/TotalLike";
 
 export default {
   name: "ThePostDetails",
   components: {
+    TotalLike,
+    LikeButton,
     FormInputComment,
     TheTags,
     TheComments
   },
   computed: {
-    ...mapState('POSTS', ['postDetail'])
+    ...mapState('POSTS', ['postDetail', 'totalLikes'])
   },
   watch: {
     fetchPost: {
       handler: function (newValue) {
         this.getDetailPost(this.$route.params.postID)
+        this.getTotalLikeOfPost(this.$route.params.postID)
       },
       immediate: true
     }
@@ -105,7 +115,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("POSTS", ['getDetailPost'])
+    ...mapActions("POSTS", ['getDetailPost', 'getTotalLikeOfPost'])
   }
 }
 </script>
