@@ -22,12 +22,21 @@ const PostRoutes = () => {
         },
 
         /**
+         * Doctor detail their post
+         */
+        {
+            path: '/my-posts/:postID',
+            name: 'TheDoctorPostDetails',
+            component: () => import('@/views/Posts/Public/ThePostDetails')
+        },
+
+        /**
          * Create new post
          */
         {
             path: '/doctors/posts/create',
             name: "CreatePost",
-            beforeEnter: checkIsDoctor,
+            // beforeEnter: checkIsDoctor,
             component: () => import('@/views/Posts/Doctors/CreatePost')
         },
 

@@ -21,18 +21,47 @@
           <p>Rating: 4.5</p>
           <p>Like: 55</p>
         </v-card-text>
+
         <v-card-actions>
-          <v-btn
-              color="primary"
-              text
-              depressed
-              tile
-              plain
-              @click="handleDetailPost(item.id)"
-              class="text-decoration-underline"
-          >
-            Read more
-          </v-btn>
+          <v-row class="flex flex-row justify-space-between">
+            <v-col class="text-left">
+              <v-btn
+                  color="primary"
+                  text
+                  depressed
+                  tile
+                  plain
+                  @click="handleDetailPost(item.id)"
+                  class="text-decoration-underline"
+              >
+                Read more
+              </v-btn>
+            </v-col>
+
+            <v-col class="text-right">
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      small
+                  >
+                    Action
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item>
+                    <EditPostButton :postID="item.id"/>
+                  </v-list-item>
+                  <v-list-item
+                  >
+                    <DeletePostButton :postID="item.id" @delete-post="fetchUserPosts(userID)"/>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-col>
+          </v-row>
         </v-card-actions>
       </v-card>
     </template>
@@ -40,13 +69,22 @@
 </template>
 <script>
 import Api from "@/Apis/Api";
+import DeletePostButton from "@/components/Buttons/Posts/Profile/DeletePostButton";
+import {mapGetters} from "vuex";
+import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
 
 export default {
   name: "DoctorPosts",
+  components: {EditPostButton, DeletePostButton},
+  computed: {
+    ...mapGetters('AUTH', ['isDoctor']),
+  },
   watch: {
     handleFetchUserPosts: {
       handler() {
-        this.fetchUserPosts(this.userID)
+        if (this.isDoctor) {
+          this.fetchUserPosts(this.userID)
+        }
       },
       immediate: true
     }
@@ -74,7 +112,7 @@ export default {
     },
 
     handleDetailPost(postID) {
-      this.$router.push(`/posts/${postID}`)
+      this.$router.push({name: 'TheDoctorPostDetails', params: {postID: postID}})
     }
   }
 }

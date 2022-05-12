@@ -65,6 +65,9 @@
       </v-col>
     </v-row>
 
+    <!--  Delete button  -->
+    <DeletePostButton :postID="postID" v-if="isThePostOwner"/>
+
     <!--  Total like  -->
     <TotalLike> {{ totalLikes }}</TotalLike>
     <!--  Like button  -->
@@ -85,24 +88,39 @@ import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheCommen
 import TheTags from "@/components/Public/Posts/DetailPost/Tags/TheTags";
 import FormInputComment from "@/components/User/Comment/FormInputComment";
 import LikeButton from "@/components/User/Like/LikeButton";
+import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
 
 export default {
   name: "ThePostDetails",
   components: {
+    DeletePostButton,
     TotalLike,
     LikeButton,
     FormInputComment,
     TheTags,
     TheComments
   },
+
   computed: {
-    ...mapState('POSTS', ['postDetail', 'totalLikes'])
+    ...mapState('POSTS', ['postDetail', 'totalLikes']),
+    ...mapState('AUTH', ['userAuthenticated']),
+    isThePostOwner() {
+      return (this.userAuthenticated.id === this.postDetail.user_id)
+    }
   },
   watch: {
     fetchPost: {
       handler: function (newValue) {
-        this.getDetailPost(this.$route.params.postID)
+        if (this.$route.name === 'TheDoctorPostDetails') {
+          this.doctorGetDetailPost({
+            userID: this.userAuthenticated.id,
+            postID: this.$route.params.postID
+          })
+        } else {
+          this.getDetailPost(this.$route.params.postID)
+        }
+
         this.getTotalLikeOfPost(this.$route.params.postID)
       },
       immediate: true
@@ -115,7 +133,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("POSTS", ['getDetailPost', 'getTotalLikeOfPost'])
+    ...mapActions("POSTS", ['getDetailPost', 'getTotalLikeOfPost', 'doctorGetDetailPost'])
   }
 }
 </script>
