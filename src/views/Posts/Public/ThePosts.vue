@@ -2,14 +2,7 @@
   <v-container>
     <v-row v-show="posts.length === 0">
       <v-col class="col-12">
-        <v-sheet
-            class="pa-3"
-        >
-          <v-skeleton-loader
-              class="mx-auto"
-              type="card"
-          ></v-skeleton-loader>
-        </v-sheet>
+       <p>No posts</p>
       </v-col>
     </v-row>
     <v-row>

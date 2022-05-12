@@ -6,6 +6,7 @@
             class="pa-5"
             elevation="1"
         >
+          <v-card-title>Edit Post</v-card-title>
           <v-form>
             <v-text-field
                 v-model="formData.title"
@@ -67,7 +68,7 @@
             ></v-file-input>
             <div v-if="errors.thumbnail" class="red--text">{{ errors.thumbnail[0] }}</div>
 
-            <v-btn class="mx-auto" @click="createPost">Submit</v-btn>
+            <v-btn class="mx-auto" @click="updatePost">Submit</v-btn>
           </v-form>
         </v-card>
 
@@ -104,10 +105,19 @@
 
 
 import Api from "@/Apis/Api";
+import {mapState} from "vuex";
 
 export default {
-  name: 'CreatePost',
-  computed: {},
+  name: 'DoctorEditPosts',
+  props: {
+    postID: {
+      required: true,
+      type: Number
+    }
+  },
+  computed: {
+    ...mapState('AUTH', ['userAuthenticated'])
+  },
   data() {
     return {
       categories: [],
@@ -146,9 +156,9 @@ export default {
   },
   methods: {
     /**
-     * Handle create new post
+     * Handle update new post
      */
-    async createPost() {
+    async updatePost() {
       try {
         let formData = new FormData()
         formData.append('title', this.formData.title)
@@ -160,7 +170,7 @@ export default {
           formData.append(`tags[${index}]`, element)
         })
 
-        const res = await Api().post('/posts', formData, {
+        const res = await Api().post(`/users/${this.userAuthenticated.id}/posts/${this.postID}`, formData, {
           header: {
             'Content-Type': 'multipart/form-data'
           }
@@ -178,7 +188,7 @@ export default {
           this.status = 422
           this.errors = e.response.data
           this.snackbar.color = 'red'
-          this.snackbar.content = 'Failed to post new article'
+          this.snackbar.content = 'Failed to update the post'
           this.snackbar.status = true
         }
       }

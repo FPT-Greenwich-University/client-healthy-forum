@@ -5,13 +5,16 @@ import router from "@/router";
 const Posts = {
     namespaced: true,
     state: {
-        posts: [],
-        postDetail: {},
-        postTags: [],
-        totalLikes: 0,
+        posts: [], postDetail: {}, postTags: [], totalLikes: 0,
     },
     getters: {},
     actions: {
+        /**
+         * Public detail post
+         * @param commit
+         * @param postID
+         * @returns {Promise<void>}
+         */
         getDetailPost: async function ({commit}, postID) {
             try {
                 const response = await Api().get(`/posts/${postID}`)
@@ -25,6 +28,33 @@ const Posts = {
             }
         },
 
+        /**
+         * Doctor get their detail post
+         *
+         * @param commit
+         * @param payload
+         * @returns {Promise<void>}
+         */
+        async doctorGetDetailPost({commit}, payload) {
+            try {
+                const response = await Api().get(`/users/${payload.userID}/posts/${payload.postID}`)
+                commit(SET_DETAIL_POST, response.data)
+            } catch (e) {
+                if (e.response) {
+                    if (e.response.status === 404) {
+                        await router.push({name: 'NotFounds'});
+                    }
+                }
+            }
+        },
+
+        /**
+         * Get all tag belong to the post
+         *
+         * @param commit
+         * @param postID
+         * @returns {Promise<void>}
+         */
         getDetailPostTags: async function ({commit}, postID) {
             try {
                 const response = await Api().get(`/posts/${postID}/tags`)
@@ -38,6 +68,13 @@ const Posts = {
             }
         },
 
+        /**
+         * Get the total like of the post
+         *
+         * @param commit
+         * @param postID
+         * @returns {Promise<void>}
+         */
         async getTotalLikeOfPost({commit}, postID) {
             try {
                 const res = await Api().get(`/posts/${postID}/total-likes`)
@@ -47,16 +84,25 @@ const Posts = {
                     console.log(e)
                 }
             }
+        },
+
+        /**
+         * Handle delete post
+         *
+         * @param commit
+         * @param payload
+         * @returns {Promise<AxiosResponse<any>>}
+         */
+        async deletePost({commit}, payload) {
+            return await Api().delete(`/posts/${payload.postID}`)
         }
     },
     mutations: {
         [SET_DETAIL_POST](state, data) {
             state.postDetail = data
-        },
-        [SET_DETAIL_POST_TAGS](state, data) {
+        }, [SET_DETAIL_POST_TAGS](state, data) {
             state.postTags = data
-        },
-        [SET_TOTAL_LIKE](state, totalLikes) {
+        }, [SET_TOTAL_LIKE](state, totalLikes) {
             state.totalLikes = totalLikes
         }
     }
