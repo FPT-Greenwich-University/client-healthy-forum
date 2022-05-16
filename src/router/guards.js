@@ -14,15 +14,15 @@ export const checkAuthenticated = (to, from, next) => {
 export const checkIsDoctor = (to, from, next) => {
     if (!localStorage.getItem('token') && to.name !== 'Login') { // if user not authenticated and try to go route isn't login
         console.log('user not auth')
-        return
+        // return
         next({name: 'Login'})
     } else if (localStorage.getItem('token') && to.name === 'Login') {  // if user has login and try to redirect route login
         console.log('user auth')
-        return
+        // return
         router.go(-1)
     } else if (store.state.AUTH.userRoles.includes('doctor') === true) {
         console.log('user is doctor')
-        return
+        // return
         next()
     }
 }

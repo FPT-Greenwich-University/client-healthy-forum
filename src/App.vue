@@ -4,10 +4,13 @@
         app
         dark
         flat
+        tile
     >
+
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
       <v-tabs
           centered
-          class="ml-n9"
       >
         <v-tab to="/">
           Home
@@ -16,9 +19,6 @@
         <v-tab :to="{name: 'Posts'}">
           Posts
         </v-tab>
-        <v-tab v-if="isDoctor" :to="{name: 'CreatePost'}">
-          Create Post
-        </v-tab>
 
         <v-tab v-if="isAdmin" :to="{name: 'AdminDashBoard'}">
           Dashboard
@@ -26,6 +26,41 @@
       </v-tabs>
       <ItemMenu/>
     </v-app-bar>
+
+    <v-navigation-drawer
+        v-model="drawer"
+        temporary
+        bottom
+        fixed
+    >
+      <v-list
+          nav
+          dense
+      >
+        <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title>
+              <CreatePost v-if="isDoctor"/>
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Bar</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Fizz</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Buzz</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main>
       <router-view/>
@@ -37,10 +72,12 @@
 // Components
 import ItemMenu from "@/components/TopNav/ItemMenu";
 import {mapActions, mapGetters, mapState} from "vuex";
+import CreatePost from "@/views/Posts/Doctors/CreatePost";
 
 export default {
   name: 'App',
   components: {
+    CreatePost,
     ItemMenu
   },
   computed: {
@@ -55,14 +92,20 @@ export default {
         }
       },
       immediate: true,
-    }
+    },
+
+    group() {
+      this.drawer = false
+    },
   },
   data() {
     return {
       links: [
         'Home',
         'Posts',
-      ]
+      ],
+      drawer: false,
+      group: null,
     }
   },
   methods: {

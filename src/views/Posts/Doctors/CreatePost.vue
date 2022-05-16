@@ -1,113 +1,148 @@
 <template>
-  <v-container>
-    <v-row class="mt-10" justify="center">
-      <v-col class="col-8">
-        <v-card
-            class="pa-5"
-            elevation="1"
+  <v-col class="col-12">
+    <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            color="primary"
+            dark
+            plain
+            v-bind="attrs"
+            v-on="on"
         >
-          <v-form>
-            <v-text-field
-                v-model="formData.title"
-                label="Title"
-                required
-            ></v-text-field>
-            <div v-if="errors.title" class="red--text">{{ errors.title[0] }}</div>
-
-            <v-text-field
-                v-model="formData.description"
-                label="Description"
-                required
-            >
-            </v-text-field>
-            <div v-if="errors.description" class="red--text">{{ errors.description[0] }}</div>
-
-            <v-textarea
-                v-model="formData.body"
-                Body
-                label="Body Post"
-                name=""
-            ></v-textarea>
-            <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
-
-            <!-- Select Category-->
-            <v-select
-                v-model="formData.category_id"
-                :items="categories"
-                chips
-                hint="Pick the category for this post"
-                item-text="name"
-                item-value="id"
-                label="Select Category"
-            ></v-select>
-            <div v-if="errors.category_id" class="red--text">{{ errors.category_id[0] }}</div>
-
-            <!-- Select Tags -->
-            <v-select
-                v-model="formData.tags"
-                :items="tags"
-                chips
-                hint="Pick the tags for this post"
-                item-text="name"
-                item-value="id"
-                label="Select Tags"
-                multiple
-            ></v-select>
-            <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
-
-            <v-file-input
-                v-model="formData.thumbnail"
-                accept="image/*"
-                chips
-                filled
-                label="Select your thumbnail"
-                placeholder="Select your thumbnail"
-                prepend-icon="mdi-camera"
-                show-size
-            ></v-file-input>
-            <div v-if="errors.thumbnail" class="red--text">{{ errors.thumbnail[0] }}</div>
-
-            <v-btn class="mx-auto" @click="createPost">Submit</v-btn>
-          </v-form>
-        </v-card>
+          Write Article
+        </v-btn>
+      </template>
 
 
-      </v-col>
-
-    </v-row>
-
-
-    <v-row>
-      <v-col>
-        <!-- Error -->
-        <v-snackbar
-            v-model="snackbar.status"
-            :color="snackbar.color"
-            :timeout="snackbar.timeout"
+      <v-card
+          class="pa-5"
+          elevation="1"
+      >
+        <v-toolbar
+            color="primary"
+            dark
         >
-          {{ snackbar.content }}
-          <template v-slot:action="{ attrs }">
+          <v-btn
+              dark
+              icon
+              @click="dialog = false"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Post</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
             <v-btn
+                dark
                 text
-                v-bind="attrs"
-                @click="snackbar.status = false"
+                @click="dialog = false"
             >
-              Close
+              Save
             </v-btn>
-          </template>
-        </v-snackbar>
-      </v-col>
-    </v-row>
-  </v-container>
+          </v-toolbar-items>
+        </v-toolbar>
+
+        <v-form>
+          <v-text-field
+              v-model="formData.title"
+              label="Title"
+              required
+          ></v-text-field>
+          <div v-if="errors.title" class="red--text">{{ errors.title[0] }}</div>
+
+          <v-text-field
+              v-model="formData.description"
+              label="Description"
+              required
+          >
+          </v-text-field>
+          <div v-if="errors.description" class="red--text">{{ errors.description[0] }}</div>
+
+          <v-textarea
+              v-model="formData.body"
+              Body
+              label="Body Post"
+              name=""
+          ></v-textarea>
+          <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
+
+          <!-- Select Category-->
+          <v-select
+              v-model="formData.category_id"
+              :items="categories"
+              chips
+              hint="Pick the category for this post"
+              item-text="name"
+              item-value="id"
+              label="Select Category"
+          ></v-select>
+          <div v-if="errors.category_id" class="red--text">{{ errors.category_id[0] }}</div>
+
+          <!-- Select Tags -->
+          <v-select
+              v-model="formData.tags"
+              :items="tags"
+              chips
+              hint="Pick the tags for this post"
+              item-text="name"
+              item-value="id"
+              label="Select Tags"
+              multiple
+          ></v-select>
+          <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
+
+          <v-file-input
+              v-model="formData.thumbnail"
+              accept="image/*"
+              chips
+              filled
+              label="Select your thumbnail"
+              placeholder="Select your thumbnail"
+              prepend-icon="mdi-camera"
+              show-size
+          ></v-file-input>
+          <div v-if="errors.thumbnail" class="red--text">{{ errors.thumbnail[0] }}</div>
+
+          <v-btn class="mx-auto" @click="createPost">Submit</v-btn>
+        </v-form>
+      </v-card>
+    </v-dialog>
+
+    <!--  Toast notification  -->
+    <v-snackbar
+        v-model="snackbar.status"
+        :color="snackbar.color"
+        :timeout="snackbar.timeout"
+    >
+      {{ snackbar.content }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            text
+            v-bind="attrs"
+            @click="snackbar.status = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </v-col>
 </template>
 <script>
 
 
 import Api from "@/Apis/Api";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'CreatePost',
-  computed: {},
+  computed: {
+    ...mapGetters('AUTH', ['isDoctor']),
+  },
   data() {
     return {
       categories: [],
@@ -128,6 +163,7 @@ export default {
         content: '',
         timeout: 3000,
       },
+      dialog: false,
     }
   },
   watch: {
@@ -145,6 +181,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchPosts']),
     /**
      * Handle create new post
      */
@@ -167,11 +204,13 @@ export default {
         })
 
         if (res.status === 200) {
+          // await this.fetchPosts()
           this.errors = {} // delete all error
           this.snackbar.content = res.data
           this.snackbar.color = 'success'
           this.snackbar.status = true
           this.formData = {}
+          this.dialog = false
         }
       } catch (e) {
         if (e.response.status === 422) {

@@ -30,7 +30,7 @@ export default new Vuex.Store({
 
     }, actions: {
         // Fetch the posts
-        async fetchPosts({commit}, page) {
+        async fetchPosts({commit}, page = 1) {
             try {
                 const response = await Api().get(`/posts?page=${page}`);
                 commit(SET_POSTS, response.data.data)

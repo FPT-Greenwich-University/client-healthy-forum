@@ -13,8 +13,10 @@
           elevation="1"
       >
         <v-card-text>
-          <v-img class="rounded"
-                 :src="`${backEndURL}/${item.image.path}`"
+          <v-img
+              class="rounded"
+              aspect-ratio="2"
+              :src="`${backEndURL}/${item.image.path}`"
           >
           </v-img>
           <p class="font-weight-bold mt-5">{{ item.title }}</p>

@@ -6,11 +6,9 @@
             v-bind="attrs"
             color="primary"
             v-on="on"
+            icon
         >
-          <v-icon
-          >
-            fas fa-bars
-          </v-icon>
+          <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
       <template v-if="isAuthenticated === false">
