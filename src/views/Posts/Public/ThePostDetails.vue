@@ -111,7 +111,7 @@ export default {
   },
   watch: {
     fetchPost: {
-      handler: function (newValue) {
+      handler: function () {
         if (this.$route.name === 'TheDoctorPostDetails') {
           this.doctorGetDetailPost({
             userID: this.userAuthenticated.id,

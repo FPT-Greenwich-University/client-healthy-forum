@@ -36,7 +36,7 @@ const PostRoutes = () => {
         {
             path: '/doctors/posts/create',
             name: "CreatePost",
-            // beforeEnter: checkIsDoctor,
+            beforeEnter: checkIsDoctor,
             component: () => import('@/views/Posts/Doctors/CreatePost')
         },
 

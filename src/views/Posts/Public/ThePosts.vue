@@ -2,7 +2,7 @@
   <v-container>
     <v-row v-show="posts.length === 0">
       <v-col class="col-12">
-       <p>No posts</p>
+        <p>No posts</p>
       </v-col>
     </v-row>
     <v-row>
@@ -12,6 +12,7 @@
         >
           <v-card-text>
             <v-img
+                aspect-ratio="2"
                 :src="`${backEndURL}/${item.image.path}`"
             ></v-img>
           </v-card-text>
@@ -49,10 +50,12 @@
 <script>
 import {mapActions, mapState} from 'vuex'
 import Paginate from "@/components/Paginate";
+import CreatePost from "@/views/Posts/Doctors/CreatePost";
 
 export default {
   name: "ThePosts",
   components: {
+    CreatePost,
     Paginate
   },
   computed: {
