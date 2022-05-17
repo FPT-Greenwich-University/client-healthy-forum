@@ -14,6 +14,7 @@
               <v-list-item-title>Home</v-list-item-title>
             </v-list-item>
 
+            <!--      Category      -->
             <v-list-group
                 :value="true"
                 prepend-icon="mdi-account-circle"
@@ -29,42 +30,67 @@
               >
                 <template v-slot:activator>
                   <v-list-item-content>
-                    <v-list-item-title>Admin</v-list-item-title>
+                    <v-list-item-title>Category</v-list-item-title>
                   </v-list-item-content>
                 </template>
 
+                <!--      Create category          -->
                 <v-list-item
-                    v-for="([title, icon], i) in admins"
-                    :key="i"
                     link
+                    @click="isCurrentTabComponent = 'CreateCategory'"
                 >
-                  <v-list-item-title v-text="title"></v-list-item-title>
-
+                  <v-list-item-title>Create</v-list-item-title>
                   <v-list-item-icon>
-                    <v-icon v-text="icon"></v-icon>
+                    <v-icon>mdi-plus-outline</v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+
+                <!--      Update category        -->
+                <v-list-item
+                    link
+                    @click="isCurrentTabComponent = 'UpdateCategory'"
+                >
+                  <v-list-item-title>Update</v-list-item-title>
+                  <v-list-item-icon>
+                    <v-icon>mdi-update</v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+
+                <!--     Delete category        -->
+                <v-list-item
+                    link
+                    @click="isCurrentTabComponent = 'DeleteCategory'"
+                >
+                  <v-list-item-title>Delete</v-list-item-title>
+                  <v-list-item-icon>
+                    <v-icon>mdi-delete</v-icon>
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
 
+
+              <!--      Post        -->
               <v-list-group
+                  :value="true"
                   no-action
                   sub-group
               >
                 <template v-slot:activator>
                   <v-list-item-content>
-                    <v-list-item-title>Actions</v-list-item-title>
+                    <v-list-item-title>Post</v-list-item-title>
                   </v-list-item-content>
                 </template>
 
                 <v-list-item
-                    v-for="([title, icon], i) in cruds"
-                    :key="i"
                     link
+                    @click="isCurrentTabComponent = 'Posts'"
                 >
-                  <v-list-item-title v-text="title"></v-list-item-title>
+                  <v-list-item-title>Read</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon v-text="icon"></v-icon>
+                    <v-icon>
+                      mdi-file-outline
+                    </v-icon>
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
@@ -72,9 +98,10 @@
           </v-list>
         </v-card>
       </v-col>
+
       <v-col class="col-12 col-md-9 col-lg-9 col-xl-9 col">
         <keep-alive>
-          <component v-bind:is="isCurrentTabComponent"></component>
+          <component :is="isCurrentTabComponent"></component>
         </keep-alive>
       </v-col>
     </v-row>
@@ -83,30 +110,27 @@
 <script>
 import {mapState} from "vuex";
 import Posts from "@/components/Admin/Post/AdminPosts";
+import CreateCategory from "@/components/Admin/Category/CreateCategory";
+import UpdateCategory from "@/components/Admin/Category/UpdateCategory";
+import DeleteCategory from "@/components/Admin/Category/DeleteCategory";
 
 export default {
   name: "TheDashboard",
   components: {
-    Posts
+    Posts,
+    CreateCategory,
+    UpdateCategory,
+    DeleteCategory,
   },
   computed: {
     ...mapState('AUTH', ['userAuthenticated'])
   },
   data() {
     return {
-      admins: [
-        ['Management', 'mdi-account-multiple-outline'],
-        ['Settings', 'mdi-cog-outline'],
-      ],
-      cruds: [
-        ['Create', 'mdi-plus-outline'],
-        ['Read', 'mdi-file-outline'],
-        ['Update', 'mdi-update'],
-        ['Delete', 'mdi-delete'],
-      ],
       isCurrentTabComponent: "Posts", // Default component render
     }
   },
+  methods: {}
 
 }
 </script>
