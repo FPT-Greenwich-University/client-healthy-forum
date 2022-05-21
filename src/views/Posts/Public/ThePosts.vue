@@ -12,8 +12,8 @@
         >
           <v-card-text>
             <v-img
-                aspect-ratio="2"
                 :src="`${backEndURL}/${item.image.path}`"
+                aspect-ratio="2"
             ></v-img>
           </v-card-text>
 
@@ -39,10 +39,9 @@
     </v-row>
 
     <!-- Paginate -->
-    <v-row>
+    <v-row v-if="posts.length > 0">
       <v-col>
-        <Paginate v-if="currentRouteName === 'PostsByTag'" @change-page="handleGetPostsByTag"/>
-        <Paginate v-else-if="currentRouteName === 'Posts'" @change-page="handleGetPosts"/>
+        <Paginate @change-page="handleGetPosts"/>
       </v-col>
     </v-row>
   </v-container>

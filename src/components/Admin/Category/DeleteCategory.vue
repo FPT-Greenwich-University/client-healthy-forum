@@ -1,6 +1,7 @@
 <template>
   <v-card>
     <v-form
+        ref="formData"
         class="mx-10"
     >
       <!-- Select Category-->
@@ -15,7 +16,14 @@
       ></v-select>
       <div v-if="errors.category" class="red--text">{{ errors.category }}</div>
 
+      <v-checkbox
+          v-model="checkbox"
+          label="Do you agree?"
+      ></v-checkbox>
+
+      <!--  Action delete    -->
       <v-btn
+          :disabled="invalid"
           class="mr-4 my-2"
           color="red"
           outlined
@@ -26,6 +34,18 @@
             right
         >
           mdi-delete
+        </v-icon>
+      </v-btn>
+
+      <v-btn
+          class="mr-4 my-2"
+          color="#66bb6a"
+          outlined
+          @click="resetForm"
+      >
+        Reset
+        <v-icon>
+          mdi-update
         </v-icon>
       </v-btn>
     </v-form>
@@ -60,6 +80,11 @@ import Api from "@/Apis/Api";
 
 export default {
   name: "DeleteCategory",
+  computed: {
+    invalid() {
+      return this.checkbox === false
+    }
+  },
   watch: {
     handleFetchCategories: {
       handler() {
@@ -81,11 +106,16 @@ export default {
         content: '',
         timeout: 3000,
       },
+      checkbox: false,
     }
   },
 
   methods: {
 
+    resetForm() {
+      this.$refs.formData.reset()
+      this.checkbox = false
+    },
     /**
      * Check if the category id is null
      *
@@ -102,7 +132,7 @@ export default {
           if (res) {
             this.errors = {} // delete all error
             this.snackbar = {content: res.data, status: true, color: 'success'}
-            this.formData = {}
+            this.checkbox = false
             this.categoryID = null
             await this.fetchCategories()
           }

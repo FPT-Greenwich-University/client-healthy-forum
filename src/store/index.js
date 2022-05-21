@@ -12,23 +12,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         posts: [], comments: [], currentPage: 1, lastPage: 0,
-    }, mutations: {
-        setCurrentPage(state, data) {
-            state.currentPage = data;
-        },
-
-        setLastPage(state, data) {
-            state.lastPage = data;
-        },
-
-        [SET_POSTS](state, data) {
-            state.posts = data;
-        },
-        [SET_COMMENTS](state, data) {
-            state.comments = data;
-        }
-
-    }, actions: {
+    },
+    actions: {
         // Fetch the posts
         async fetchPosts({commit}, page = 1) {
             try {
@@ -68,7 +53,25 @@ export default new Vuex.Store({
                 console.log(e)
             }
         },
-    }, modules: {
+    },
+    mutations: {
+        setCurrentPage(state, data) {
+            state.currentPage = data;
+        },
+
+        setLastPage(state, data) {
+            state.lastPage = data;
+        },
+
+        [SET_POSTS](state, data) {
+            state.posts = data;
+        },
+        [SET_COMMENTS](state, data) {
+            state.comments = data;
+        }
+
+    },
+    modules: {
         AUTH: Auth,
         POSTS: Posts,
         COMMENTS: Comments

@@ -29,26 +29,28 @@
 
     <v-navigation-drawer
         v-model="drawer"
-        temporary
         bottom
         fixed
+        temporary
     >
       <v-list
-          nav
           dense
+          nav
       >
         <v-list-item-group
             v-model="group"
             active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item v-if="isDoctor">
             <v-list-item-title>
-              <CreatePost v-if="isDoctor"/>
+              <CreatePost/>
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
+          <v-list-item v-if="!isDoctor">
+            <v-list-item-title>
+              <RegisterDoctorButton/>
+            </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
@@ -73,10 +75,14 @@
 import ItemMenu from "@/components/TopNav/ItemMenu";
 import {mapActions, mapGetters, mapState} from "vuex";
 import CreatePost from "@/views/Posts/Doctors/CreatePost";
+import ListRegisterDoctorRole from "@/components/Admin/User/Doctor/ListRegisterDoctorRole";
+import RegisterDoctorButton from "@/components/User/Register/RegisterDoctorButton";
 
 export default {
   name: 'App',
   components: {
+    RegisterDoctorButton,
+    ListRegisterDoctorRole,
     CreatePost,
     ItemMenu
   },

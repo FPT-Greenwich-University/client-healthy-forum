@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <v-card-title>Create Category</v-card-title>
     <v-form
         ref="form"
         class="mx-10"
@@ -26,7 +27,7 @@
           color="error"
           @click="reset"
       >
-        Reset Form
+        Reset
       </v-btn>
 
       <v-btn
@@ -40,7 +41,6 @@
     </v-form>
     <v-row>
       <v-col>
-        <!-- Error -->
         <v-snackbar
             v-model="snackbar.status"
             :color="snackbar.color"
