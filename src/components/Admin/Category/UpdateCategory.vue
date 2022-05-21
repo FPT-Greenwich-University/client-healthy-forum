@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <v-card-title>Update Category</v-card-title>
     <v-form
         ref="form"
         class="mx-10"
@@ -14,7 +15,7 @@
           item-value="id"
           label="Select Category"
       ></v-select>
-            <div v-if="errors.category" class="red--text">{{ errors.category }}</div>
+      <div v-if="errors.category" class="red--text">{{ errors.category }}</div>
 
       <v-text-field
           v-model="formData.name"
@@ -37,7 +38,10 @@
           color="error"
           @click="reset"
       >
-        Reset Form
+        Reset
+        <v-icon>
+          mdi-update
+        </v-icon>
       </v-btn>
 
       <v-btn
@@ -46,6 +50,9 @@
           @click="handleCreateCategory"
       >
         Submit
+        <v-icon>
+          fas fa-paper-plane
+        </v-icon>
       </v-btn>
 
     </v-form>

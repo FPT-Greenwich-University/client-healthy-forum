@@ -94,6 +94,33 @@
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
+
+              <!--      Users        -->
+              <v-list-group
+                  :value="true"
+                  no-action
+                  sub-group
+              >
+                <template v-slot:activator>
+                  <v-list-item-content>
+                    <v-list-item-title>User</v-list-item-title>
+                  </v-list-item-content>
+                </template>
+
+                <v-list-item
+                    link
+                    @click="isCurrentTabComponent = 'ListRegisterDoctorRole'"
+                >
+                  <v-list-item-title>Doctor request</v-list-item-title>
+
+                  <v-list-item-icon>
+                    <v-icon>
+                      fas fa-hospital-user
+                    </v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+              </v-list-group>
+
             </v-list-group>
           </v-list>
         </v-card>
@@ -113,6 +140,7 @@ import Posts from "@/components/Admin/Post/AdminPosts";
 import CreateCategory from "@/components/Admin/Category/CreateCategory";
 import UpdateCategory from "@/components/Admin/Category/UpdateCategory";
 import DeleteCategory from "@/components/Admin/Category/DeleteCategory";
+import ListRegisterDoctorRole from "@/components/Admin/User/Doctor/ListRegisterDoctorRole";
 
 export default {
   name: "TheDashboard",
@@ -121,6 +149,7 @@ export default {
     CreateCategory,
     UpdateCategory,
     DeleteCategory,
+    ListRegisterDoctorRole,
   },
   computed: {
     ...mapState('AUTH', ['userAuthenticated'])
