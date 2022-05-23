@@ -119,6 +119,20 @@
                     </v-icon>
                   </v-list-item-icon>
                 </v-list-item>
+
+                <v-list-item
+                    link
+                    @click="isCurrentTabComponent = 'ListUsers'"
+                >
+                  <v-list-item-title>List Users</v-list-item-title>
+
+                  <v-list-item-icon>
+                    <v-icon>
+                      fas fa-user
+                    </v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+
               </v-list-group>
 
             </v-list-group>
@@ -141,7 +155,7 @@ import CreateCategory from "@/components/Admin/Category/CreateCategory";
 import UpdateCategory from "@/components/Admin/Category/UpdateCategory";
 import DeleteCategory from "@/components/Admin/Category/DeleteCategory";
 import ListRegisterDoctorRole from "@/components/Admin/User/Doctor/ListRegisterDoctorRole";
-
+import ListUsers from "@/components/Admin/User/ListUsers";
 export default {
   name: "TheDashboard",
   components: {
@@ -150,6 +164,7 @@ export default {
     UpdateCategory,
     DeleteCategory,
     ListRegisterDoctorRole,
+    ListUsers,
   },
   computed: {
     ...mapState('AUTH', ['userAuthenticated'])

@@ -47,7 +47,7 @@
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="!isDoctor">
+          <v-list-item v-if="!isDoctor && !isAdmin">
             <v-list-item-title>
               <RegisterDoctorButton/>
             </v-list-item-title>
