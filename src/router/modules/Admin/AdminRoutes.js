@@ -1,4 +1,5 @@
 import store from "@/store";
+import router from "@/router";
 
 const AdminRoutes = () => {
     return [
@@ -8,7 +9,7 @@ const AdminRoutes = () => {
             component: () => import('@/views/Admins/TheDashboard'),
             beforeEnter: (to, from, next) => {
                 if (store.state.AUTH.isAuthenticated && store.state.AUTH.userRoles.includes('admin')) next()
-                else next(false)
+                else router.go(-1)
             }
         },
         {
