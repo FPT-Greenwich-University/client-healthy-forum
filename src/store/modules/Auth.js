@@ -3,6 +3,7 @@ import {
     UPDATE_AUTH,
     UPDATE_AUTH_PROFILE,
     UPDATE_OWNER_STATUS,
+    UPDATE_PERMISSIONS,
     UPDATE_ROLES,
     UPDATE_USER_INFO
 } from "@/store/mutation-types/auth-mutation-types";
@@ -17,6 +18,7 @@ const Auth = {
         userInfo: {},
         userAuthenticated: {},
         userRoles: [],
+        userPermissions: [],
         providerID: null,
     },
     getters: {
@@ -34,6 +36,14 @@ const Auth = {
             return state.userRoles.includes('doctor')
         },
         isAdmin: state => state.userRoles.includes('admin'),
+
+        canCreateAPost: state=> {
+            return state.userPermissions.includes('create a post')
+        },
+
+        canDeleteAPost: state=> {
+            return state.userPermissions.includes('delete a post')
+        }
     },
 
     actions: {
@@ -83,10 +93,8 @@ const Auth = {
                 if (res) {
                     commit(UPDATE_AUTH_PROFILE, res.data)
                     // console.log('user info', res.data)
-                    let roles = res.data.roles.map(e => {
-                        return e.name
-                    })
-                    commit(UPDATE_ROLES, roles)
+                    commit(UPDATE_ROLES, res.data.roles.map(e => e.name))
+                    commit(UPDATE_PERMISSIONS, res.data.permissions.map(e => e.name))
                     commit(PROVIDER_ID, res.data.provider_id)
                 }
             } catch (e) {
@@ -110,6 +118,9 @@ const Auth = {
         [UPDATE_ROLES](state, payload) {
             state.userRoles = payload
         },
+        [UPDATE_PERMISSIONS](state, payload) {
+            state.userPermissions = payload
+        },
         [PROVIDER_ID](state, payload) {
             state.providerID = payload
         },
@@ -118,6 +129,7 @@ const Auth = {
             state.isAuthenticated = false
             state.isOwnProfile = false
             state.userRoles = []
+            state.userPermissions = []
         }
     },
 
