@@ -5,7 +5,7 @@
   >
     <p>Update permission</p>
     <v-select
-        v-model="roleID"
+        v-model="roleIDs"
         :items="roles"
         clearable
         item-text="name"
@@ -90,27 +90,23 @@ export default {
     isNotEmptyPermissionIDs() {
       return this.permissionID.length > 0
     },
-    isNotEmptyRoleID() {
-      return this.roleID.length > 0
+    isNotEmptyRoleIDs() {
+      return this.roleIDs.length > 0
     },
     isFormDataValid() {
-      return (this.isNotEmptyPermissionIDs && this.isNotEmptyRoleID)
+      return (this.isNotEmptyPermissionIDs && this.isNotEmptyRoleIDs)
     }
   },
   watch: {
-    roleID: {
-      handler(newValue, oldValue) {
-        if (this.isNotEmptyRoleID > 0) {
-          this.fetchListPermissions(this.roleID)
-        }
-      },
-
-      deep: true
+    roleIDs(newValue, oldValue) {
+      if (this.isNotEmptyRoleIDs) {
+        this.fetchListPermissions()
+      }
     }
   },
   data() {
     return {
-      roleID: [],
+      roleIDs: [],
       permissions: [],
       permissionID: [],
       snackbar: {
@@ -121,12 +117,13 @@ export default {
       },
       error: {},
     }
-  },
+  }
+  ,
   methods: {
-    async fetchListPermissions(roleID) {
+    async fetchListPermissions() {
       if (this.isAdmin) {
         try {
-          const response = await Api().post(`/admins/permissions`, {role_id: this.roleID})
+          const response = await Api().post(`/admins/permissions`, {role_id: this.roleIDs})
 
           if (response) {
             this.permissions = response.data
@@ -137,7 +134,8 @@ export default {
           }
         }
       }
-    },
+    }
+    ,
 
     async updatePermissions() {
       if (this.isAdmin) {
@@ -150,7 +148,7 @@ export default {
 
           if (response) {
             this.permissions = []
-            this.roleID = null
+            this.roleIDs = []
             this.snackbar = {color: 'success', content: response.data, status: true}
             this.$emit('fetch-user-detail') // callback function
           }
@@ -164,7 +162,8 @@ export default {
           }
         }
       }
-    },
+    }
+    ,
 
     resetFormData() {
       this.$refs.formData.reset()
