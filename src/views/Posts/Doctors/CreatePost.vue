@@ -108,8 +108,9 @@
           ></v-file-input>
           <div v-if="errors.thumbnail" class="red--text">{{ errors.thumbnail[0] }}</div>
 
-          <v-btn class="mx-auto" @click="createPost">Submit</v-btn>
+          <v-btn class="mx-auto" :disabled="!canCreateAPost" @click="createPost">Submit</v-btn>
         </v-form>
+        <v-card-subtitle class="red--text text-uppercase" v-if="!canCreateAPost">You don't have permission to create a new post, please contact to admin of website.</v-card-subtitle>
       </v-card>
     </v-dialog>
 
@@ -141,7 +142,21 @@ import {mapActions, mapGetters} from "vuex";
 export default {
   name: 'CreatePost',
   computed: {
-    ...mapGetters('AUTH', ['isDoctor']),
+    ...mapGetters('AUTH', ['isDoctor', 'canCreateAPost']),
+  },
+  watch: {
+    handleFetchCategoryPosts: {
+      handler() {
+        this.fetchCategoryPosts()
+      },
+      immediate: true
+    },
+    handleFetchTags: {
+      handler() {
+        this.fetchTags()
+      },
+      immediate: true
+    }
   },
   data() {
     return {
@@ -164,20 +179,6 @@ export default {
         timeout: 3000,
       },
       dialog: false,
-    }
-  },
-  watch: {
-    handleFetchCategoryPosts: {
-      handler() {
-        this.fetchCategoryPosts()
-      },
-      immediate: true
-    },
-    handleFetchTags: {
-      handler() {
-        this.fetchTags()
-      },
-      immediate: true
     }
   },
   methods: {
