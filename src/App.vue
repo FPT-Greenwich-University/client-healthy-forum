@@ -20,6 +20,10 @@
           Posts
         </v-tab>
 
+        <v-tab :to="{name: 'Search'}">
+          Search
+        </v-tab>
+
         <v-tab v-if="isAdmin" :to="{name: 'AdminDashBoard'}">
           Dashboard
         </v-tab>
@@ -47,7 +51,7 @@
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="!isDoctor && !isAdmin">
+          <v-list-item v-if="(!isDoctor || !isAdmin) && isCustomer">
             <v-list-item-title>
               <RegisterDoctorButton/>
             </v-list-item-title>
@@ -88,7 +92,7 @@ export default {
   },
   computed: {
     ...mapState('AUTH', ['isAuthenticated']),
-    ...mapGetters('AUTH', ['isDoctor', 'isAdmin'])
+    ...mapGetters('AUTH', ['isCustomer', 'isDoctor', 'isAdmin'])
   },
   watch: {
     getUserInfo: {
