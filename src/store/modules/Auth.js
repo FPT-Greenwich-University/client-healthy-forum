@@ -32,16 +32,21 @@ const Auth = {
         isGoogleAccount: state => {
             return (state.providerID !== null)
         },
+
+        isCustomer: state => {
+            return state.userRoles.includes('customer')
+        },
+
         isDoctor: state => {
             return state.userRoles.includes('doctor')
         },
         isAdmin: state => state.userRoles.includes('admin'),
 
-        canCreateAPost: state=> {
+        canCreateAPost: state => {
             return state.userPermissions.includes('create a post')
         },
 
-        canDeleteAPost: state=> {
+        canDeleteAPost: state => {
             return state.userPermissions.includes('delete a post')
         }
     },
