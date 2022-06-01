@@ -12,13 +12,12 @@
       ></v-text-field>
     </v-row>
 
-    <v-row v-show="posts.length === 0">
-      <v-col class="col-12">
-        <p class="text-uppercase text--darken-1 text-center">No posts</p>
-      </v-col>
-    </v-row>
     <v-row>
-      <v-col v-for="item in posts" :key="item.id" class="col-6">
+      <v-col
+          v-for="item in posts"
+          :key="item.id"
+          class="col-12 col-3-xl col-3-lg  col-md-3 col-sm-3"
+      >
         <v-card
             elevation="0"
         >
@@ -50,7 +49,8 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <!-- Paginate  -->
+    <v-row v-if="!isEmptyPosts">
       <v-col>
         <Paginate @change-page="searchPosts"/>
       </v-col>
@@ -64,6 +64,11 @@ import Paginate from "@/components/Paginate";
 export default {
   name: "Search",
   components: {Paginate},
+  computed: {
+    isEmptyPosts() {
+      return this.posts.length === 0
+    },
+  },
   watch: {
     title: {
       handler(newValue, oldValue) {

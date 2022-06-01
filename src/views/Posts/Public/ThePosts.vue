@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="item in posts" :key="item.id" class="col-6">
+      <v-col v-for="item in posts" :key="item.id" class="col-12 col-3-xl col-3-lg  col-md-3 col-sm-3">
         <v-card
             elevation="0"
         >
@@ -18,7 +18,17 @@
           </v-card-text>
 
           <v-card-title>{{ item.title }}</v-card-title>
-          <v-card-subtitle>Author: <span class="text-lowercase text--primary">{{ item.user.email }}</span>
+          <v-card-subtitle>
+            Author:
+            <v-btn
+                :to="{name: 'UserProfiles', params: {userID: item.user.id }}"
+                class="px-0 my-0"
+                plain
+                small
+                text
+            >
+              {{ item.user.name }}
+            </v-btn>
           </v-card-subtitle>
           <v-card-subtitle>Category: {{ item.category.name }}</v-card-subtitle>
           <v-card-actions>

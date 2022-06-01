@@ -14,9 +14,9 @@
       >
         <v-card-text>
           <v-img
-              class="rounded"
-              aspect-ratio="2"
               :src="`${backEndURL}/${item.image.path}`"
+              aspect-ratio="2"
+              class="rounded"
           >
           </v-img>
           <p class="font-weight-bold mt-5">{{ item.title }}</p>
@@ -28,26 +28,27 @@
           <v-row class="flex flex-row justify-space-between">
             <v-col class="text-left">
               <v-btn
-                  color="primary"
-                  text
-                  depressed
-                  tile
-                  plain
-                  @click="handleDetailPost(item.id)"
                   class="text-decoration-underline"
+                  color="primary"
+                  depressed
+                  plain
+                  text
+                  tile
+                  @click="handleDetailPost(item.id)"
               >
                 Read more
               </v-btn>
             </v-col>
 
-            <v-col class="text-right">
+            <!--    Owner's profile action   -->
+            <v-col v-if="isOwnProfile" class="text-right">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                       dark
+                      small
                       v-bind="attrs"
                       v-on="on"
-                      small
                   >
                     Action
                   </v-btn>
@@ -55,10 +56,6 @@
                 <v-list>
                   <v-list-item>
                     <EditPostButton :postID="item.id"/>
-                  </v-list-item>
-                  <v-list-item
-                  >
-                    <DeletePostButton :postID="item.id" @delete-post="fetchUserPosts(userID)"/>
                   </v-list-item>
                 </v-list>
               </v-menu>
@@ -71,22 +68,19 @@
 </template>
 <script>
 import Api from "@/Apis/Api";
-import DeletePostButton from "@/components/Buttons/Posts/Profile/DeletePostButton";
-import {mapGetters} from "vuex";
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
+import {mapState} from "vuex";
 
 export default {
   name: "DoctorPosts",
-  components: {EditPostButton, DeletePostButton},
+  components: {EditPostButton},
   computed: {
-    ...mapGetters('AUTH', ['isDoctor']),
+    ...mapState('AUTH', ['isOwnProfile'])
   },
   watch: {
     handleFetchUserPosts: {
       handler() {
-        if (this.isDoctor) {
-          this.fetchUserPosts(this.userID)
-        }
+        this.fetchUserPosts(this.userID)
       },
       immediate: true
     }

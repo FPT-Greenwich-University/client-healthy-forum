@@ -76,7 +76,12 @@
           <v-card-title>Introduce</v-card-title>
           <v-card-actions v-if="isOwnProfile">
             <ChangeProfile @update-profile="handleFetchProfile"/>
+
           </v-card-actions>
+          <v-card-actions v-if="!isOwnProfile">
+            <AddToFavoriteButton/>
+          </v-card-actions>
+
           <!--          <v-divider class="m-4"></v-divider>-->
           <v-card-text v-if="userInfo.profile !== null">
             <p>Live at <span class="font-weight-bold">{{ getFullName }}</span></p>
@@ -95,15 +100,17 @@
   </v-container>
 </template>
 <script>
-// Change profile form component
+// Change a profile from a component
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 // Api
 import {mapActions, mapGetters, mapState} from "vuex";
+import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 
 export default {
   name: "UserProfile",
   components: {
+    AddToFavoriteButton,
     DoctorPosts,
     ChangeProfile
   },

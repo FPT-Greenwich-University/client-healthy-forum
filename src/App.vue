@@ -28,7 +28,9 @@
           Dashboard
         </v-tab>
       </v-tabs>
+
       <ItemMenu/>
+
     </v-app-bar>
 
     <v-navigation-drawer
@@ -51,19 +53,21 @@
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="(!isDoctor || !isAdmin) && isCustomer">
+          <v-list-item v-if="!isDoctor && !isAdmin  && isCustomer">
             <v-list-item-title>
               <RegisterDoctorButton/>
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
+            <v-list-item-title>
+              <v-btn :to="{name: 'DoctorFavoriteList'}" plain text>Favorite doctor lists</v-btn>
+            </v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
-          </v-list-item>
+<!--          <v-list-item>-->
+<!--            <v-list-item-title>Buzz</v-list-item-title>-->
+<!--          </v-list-item>-->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -110,10 +114,6 @@ export default {
   },
   data() {
     return {
-      links: [
-        'Home',
-        'Posts',
-      ],
       drawer: false,
       group: null,
     }
