@@ -53,28 +53,40 @@ const Auth = {
 
     actions: {
         /**
+         * Check the current user is an owner of profile page
+         *
+         * @param commit
+         * @param state
+         */
+        checkIsOwnerProfile({commit, state}) {
+            if (state.isAuthenticated && router.currentRoute.name === 'UserProfiles') {
+                let userIDParam = Number(router.currentRoute.params.userID) // Get userID param
+                // Check if the current user id equal to the userID param url
+                if (state.userAuthenticated.id === userIDParam) {
+                    commit(UPDATE_OWNER_STATUS, true) // Set owner of profile is true
+                } else {
+                    commit(UPDATE_OWNER_STATUS, false)
+                }
+            } else { // default
+                commit(UPDATE_OWNER_STATUS, false)
+            }
+        },
+
+        /**
          * Fetch user profile
          *
+         * @param dispatch
          * @param commit
          * @param state
          * @param userID
          * @returns {Promise<void>}
          */
-        async fetchProfile({commit, state}, userID) {
+        async fetchProfile({dispatch, commit, state}, userID) {
             try {
                 const response = await Api().get(`/users/${userID}/profiles`)
-                commit(UPDATE_USER_INFO, response.data)
-
-                if (state.isAuthenticated && router.currentRoute.name === 'UserProfiles') {
-                    let userIDParam = Number(router.currentRoute.params.userID)
-
-                    if (state.userAuthenticated.id === userIDParam) {
-                        commit(UPDATE_OWNER_STATUS, true) // Set owner of profile is true
-                    } else {
-                        commit(UPDATE_OWNER_STATUS, false)
-                    }
-                } else { // default
-                    commit(UPDATE_OWNER_STATUS, false)
+                if (response) {
+                    commit(UPDATE_USER_INFO, response.data)
+                    dispatch('checkIsOwnerProfile', {commit, state})
                 }
             } catch (error) {
                 if (error.response) {

@@ -5,6 +5,7 @@ import AuthRoutes from "@/router/modules/AuthRoutes";
 import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
 import PostRoutes from "@/router/modules/Posts/PostRoutes";
 import AdminRoutes from "@/router/modules/Admin/AdminRoutes";
+import Favorites from "@/router/modules/Users/Favorites";
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,7 @@ const routes = [
     {
         path: "/search",
         name: "Search",
-        component:()=> import("@/views/Search.vue")
+        component: () => import("@/views/Search.vue")
     },
 
     {
@@ -30,15 +31,18 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
     },
 
-    ...AuthRoutes(),
-    ...AdminRoutes(),
-    ...ProfileRoutes(),
-    ...PostRoutes(),
+    // 404 not found page
     {
         path: "*",
         name: "NotFounds",
         component: () => import("@/views/NotFound")
-    }
+    },
+
+    ...AuthRoutes(),
+    ...AdminRoutes(),
+    ...ProfileRoutes(),
+    ...PostRoutes(),
+    ...Favorites(),
 ];
 
 const router = new VueRouter({

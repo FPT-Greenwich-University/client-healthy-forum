@@ -13,6 +13,8 @@
             dark
             v-bind="attrs"
             v-on="on"
+            text
+            plain
         >
           Edit Post
           <v-icon
