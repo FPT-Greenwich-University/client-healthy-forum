@@ -10,14 +10,14 @@
               src="https://images.pexels.com/photos/2383010/pexels-photo-2383010.jpeg"
           ></v-img>
           <v-card-title class="text-body-1 text-xl-h3 text-lg-h5 text-md-h6">
-            My favorite doctors
+            My favorite posts
           </v-card-title>
         </v-card>
       </v-col>
     </v-row>
     <v-row justify="center">
       <v-col
-          v-for="user in users" :key="user.id"
+          v-for="post in posts" :key="post.id"
           class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6"
       >
         <v-card
@@ -26,26 +26,26 @@
           <v-card-title
               class="text-body-1 text-xl-h3 text-lg-h5 text-md-h6"
           >
-            {{ user.name }}
+            {{ post.title }}
           </v-card-title>
           <v-card-subtitle>
-            Email: {{ user.email }}
+            {{ post.description }}
           </v-card-subtitle>
           <v-card-actions>
             <v-btn
-                :to="{name: 'UserProfiles', params: {'userID': user.id}}"
+                :to="{name: 'UserProfiles', params: {userID: post.userId}}"
                 plain
                 text
             >
-              See profile
+              {{ post.userEmail }}
             </v-btn>
-
             <v-btn
+                :to="{name: 'ThePostDetails', params: {postID: post.id}}"
                 color="green"
                 outlined
                 rounded
             >
-              Contract
+              Read more
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -53,7 +53,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <Paginate @change-page="fetchDoctors"/>
+        <Paginate @change-page="fetchFavoritePosts"/>
       </v-col>
     </v-row>
   </v-container>
@@ -61,30 +61,37 @@
 <script>
 import Api from "@/Apis/Api";
 import Paginate from "@/components/Paginate";
+import {mapState} from "vuex";
 
 export default {
-  name: "ListDoctorFavorites",
+  name: "ListPostFavorites",
   components: {Paginate},
+  computed: {
+    ...mapState('AUTH', ['userAuthenticated'])
+  },
   data() {
     return {
-      users: [], // list doctor favorites
+      posts: [],
     }
   },
   watch: {
-    handleFetchDoctor: {
+    handleFetchFavoritePosts: {
       handler() {
-        this.fetchDoctors()
+        this.fetchFavoritePosts(1)
       },
       immediate: true
     }
   },
   methods: {
-    async fetchDoctors(page = 1) {
+    async fetchFavoritePosts(page = 1) {
+      const userId = this.userAuthenticated.id
+
       try {
-        const response = await Api().get(`/users/favorites/doctors?page=${page}`)
+        const response = await Api().get(`/users/${userId}/favorites/posts?page=${page}`)
 
         if (response) {
-          this.users = response.data.data
+          console.log(response)
+          this.posts = response.data.data
           this.$store.commit('setCurrentPage', response.data.current_page)
           this.$store.commit('setLastPage', response.data.last_page)
         }
