@@ -61,13 +61,14 @@
 
           <v-list-item>
             <v-list-item-title>
-              <v-btn :to="{name: 'DoctorFavoriteList'}" plain text>Favorite doctor lists</v-btn>
+              <v-btn :to="{name: 'DoctorFavoriteList'}" plain text>Favorite Doctor</v-btn>
             </v-list-item-title>
           </v-list-item>
-
-<!--          <v-list-item>-->
-<!--            <v-list-item-title>Buzz</v-list-item-title>-->
-<!--          </v-list-item>-->
+          <v-list-item>
+            <v-list-item-title>
+              <v-btn :to="{name: 'PostFavoriteList'}" plain text>Favorite Post</v-btn>
+            </v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

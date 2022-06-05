@@ -14,6 +14,9 @@
       </v-col>
     </v-row>
 
+    <!--  Add post to favorite list -->
+    <AddButton/>
+
     <!--  Tags  -->
     <v-row justify="center">
       <TheTags :postID="postID"/>
@@ -66,7 +69,7 @@
     </v-row>
 
     <!--  Delete button  -->
-    <DeletePostButton :postID="postID" v-if="isThePostOwner"/>
+    <DeletePostButton v-if="isThePostOwner" :postID="postID"/>
 
     <!--  Total like  -->
     <TotalLike> {{ totalLikes }}</TotalLike>
@@ -90,10 +93,12 @@ import FormInputComment from "@/components/User/Comment/FormInputComment";
 import LikeButton from "@/components/User/Like/LikeButton";
 import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
+import AddButton from "@/components/Favorites/Posts/AddButton";
 
 export default {
   name: "ThePostDetails",
   components: {
+    AddButton,
     DeletePostButton,
     TotalLike,
     LikeButton,

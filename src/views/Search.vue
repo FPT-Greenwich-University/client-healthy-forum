@@ -16,7 +16,7 @@
       <v-col
           v-for="item in posts"
           :key="item.id"
-          class="col-12 col-3-xl col-3-lg  col-md-3 col-sm-3"
+          class="col-12 col-xl-6 col-lg-6 col-md-6"
       >
         <v-card
             elevation="0"

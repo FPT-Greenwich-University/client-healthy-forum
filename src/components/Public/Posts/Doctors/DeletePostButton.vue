@@ -3,20 +3,21 @@
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
       <v-dialog
           v-model="dialog"
-          persistent
           max-width="290"
+          persistent
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
+              x-small
               color="red"
-              @click="dialog === true"
               v-bind="attrs"
+              @click="dialog === true"
               v-on="on"
           >
             Delete Post
             <v-icon
                 right
-                small
+                x-small
             >
               fas fa-trash
             </v-icon>
@@ -54,7 +55,6 @@
 </template>
 <script>
 
-import Api from "@/Apis/Api";
 import router from "@/router";
 import {mapActions, mapState} from "vuex";
 
