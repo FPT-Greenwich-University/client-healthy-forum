@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {mapState} from "vuex";
 
 export default {
@@ -83,7 +83,7 @@ export default {
      */
     async addFollow(doctorID) {
       try {
-        const response = await Api().post('/users/favorites/doctors', {doctor_id: doctorID})
+        const response = await HealthyFormWebApi().post('/users/favorites/doctors', {doctor_id: doctorID})
 
         if (response) {
           await this.checkFollow(this.userAuthenticated.id, doctorID)
@@ -95,7 +95,7 @@ export default {
 
     async unFollow(userID, doctorID) {
       try {
-        const response = await Api().delete(`/users/${userID}/favorites/doctors/${doctorID}`)
+        const response = await HealthyFormWebApi().delete(`/users/${userID}/favorites/doctors/${doctorID}`)
 
         console.log(response)
         if (response) {
@@ -116,7 +116,7 @@ export default {
      */
     async checkFollow(userID, doctorID) {
       try {
-        const response = await Api().get(`/users/${userID}/favorites/doctors/${doctorID}`)
+        const response = await HealthyFormWebApi().get(`/users/${userID}/favorites/doctors/${doctorID}`)
         console.log('check', response)
 
         if (response) {

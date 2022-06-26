@@ -104,7 +104,7 @@
 <script>
 
 
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {mapState} from "vuex";
 
 export default {
@@ -170,7 +170,7 @@ export default {
           formData.append(`tags[${index}]`, element)
         })
 
-        const res = await Api().post(`/users/${this.userAuthenticated.id}/posts/${this.postID}`, formData, {
+        const res = await HealthyFormWebApi().post(`/users/${this.userAuthenticated.id}/posts/${this.postID}`, formData, {
           header: {
             'Content-Type': 'multipart/form-data'
           }
@@ -201,7 +201,7 @@ export default {
      */
     async fetchCategoryPosts() {
       try {
-        const res = await Api().get('/categories')
+        const res = await HealthyFormWebApi().get('/categories')
         this.categories = res.data.map(e => {
           return {
             id: e.id,
@@ -221,7 +221,7 @@ export default {
      */
     async fetchTags() {
       try {
-        const res = await Api().get('/tags')
+        const res = await HealthyFormWebApi().get('/tags')
         this.tags = res.data.map(e => {
           return {
             id: e.id, name: e.name

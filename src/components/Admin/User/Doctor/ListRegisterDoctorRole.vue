@@ -46,7 +46,7 @@
   </v-card>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 
 export default {
@@ -73,7 +73,7 @@ export default {
      */
     async fetchListRegisterDoctor(page) {
       try {
-        const res = await Api().get(`/register/doctor-role?page=${page}`)
+        const res = await HealthyFormWebApi().get(`/register/doctor-role?page=${page}`)
         console.log(res)
         this.users = res.data.data
         this.$store.commit('setCurrentPage', res.data.current_page)
@@ -86,7 +86,7 @@ export default {
 
     async handleAcceptDoctorRole(userID) {
       try {
-        const res = await Api().put(`/register/doctor-role/${userID}`)
+        const res = await HealthyFormWebApi().put(`/register/doctor-role/${userID}`)
         console.log('Accept role', res)
         if (res) {
           await this.fetchListRegisterDoctor(1)

@@ -59,7 +59,7 @@
 </template>
 <script>
 
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {mapActions, mapState} from "vuex";
 
 export default {
@@ -90,7 +90,7 @@ export default {
 
     async handleComment() {
       try {
-        const res = await Api().post(`/posts/${this.postID}/comments`, {
+        const res = await HealthyFormWebApi().post(`/posts/${this.postID}/comments`, {
           content: this.content
         })
 

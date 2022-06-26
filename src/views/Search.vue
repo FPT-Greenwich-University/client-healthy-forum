@@ -58,7 +58,7 @@
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 
 export default {
@@ -92,7 +92,7 @@ export default {
 
     async searchPosts(page = 1) {
       try {
-        const response = await Api().get(`/search?title=${this.title}&page=${page}`)
+        const response = await HealthyFormWebApi().get(`/search?title=${this.title}&page=${page}`)
 
         if (response) {
           this.posts = response.data.data

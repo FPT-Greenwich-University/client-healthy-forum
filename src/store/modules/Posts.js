@@ -1,4 +1,4 @@
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {SET_DETAIL_POST, SET_DETAIL_POST_TAGS, SET_TOTAL_LIKE} from "@/store/mutation-types/post-mutation-types";
 import router from "@/router";
 
@@ -17,7 +17,7 @@ const Posts = {
          */
         getDetailPost: async function ({commit}, postID) {
             try {
-                const response = await Api().get(`/posts/${postID}`)
+                const response = await HealthyFormWebApi().get(`/posts/${postID}`)
                 commit(SET_DETAIL_POST, response.data)
             } catch (e) {
                 if (e.response) {
@@ -37,7 +37,7 @@ const Posts = {
          */
         async doctorGetDetailPost({commit}, payload) {
             try {
-                const response = await Api().get(`/users/${payload.userID}/posts/${payload.postID}`)
+                const response = await HealthyFormWebApi().get(`/users/${payload.userID}/posts/${payload.postID}`)
                 commit(SET_DETAIL_POST, response.data)
             } catch (e) {
                 if (e.response) {
@@ -57,7 +57,7 @@ const Posts = {
          */
         getDetailPostTags: async function ({commit}, postID) {
             try {
-                const response = await Api().get(`/posts/${postID}/tags`)
+                const response = await HealthyFormWebApi().get(`/posts/${postID}/tags`)
                 commit(SET_DETAIL_POST_TAGS, response.data)
             } catch (e) {
                 if (e.response) {
@@ -77,7 +77,7 @@ const Posts = {
          */
         async getTotalLikeOfPost({commit}, postID) {
             try {
-                const res = await Api().get(`/posts/${postID}/total-likes`)
+                const res = await HealthyFormWebApi().get(`/posts/${postID}/total-likes`)
                 commit(SET_TOTAL_LIKE, res.data.total_likes)
             } catch (e) {
                 if (e) {
@@ -94,7 +94,7 @@ const Posts = {
          * @returns {Promise<AxiosResponse<any>>}
          */
         async deletePost({commit}, payload) {
-            return await Api().delete(`/posts/${payload.postID}`)
+            return await HealthyFormWebApi().delete(`/posts/${payload.postID}`)
         }
     },
     mutations: {

@@ -67,7 +67,7 @@
   </v-col>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
 import {mapState} from "vuex";
 
@@ -100,7 +100,7 @@ export default {
   methods: {
     async fetchUserPosts(userID) {
       try {
-        const response = await Api().get(`/users/${userID}/posts`);
+        const response = await HealthyFormWebApi().get(`/users/${userID}/posts`);
         this.userPosts = response.data;
       } catch (e) {
         console.log(e)

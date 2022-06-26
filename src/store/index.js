@@ -12,7 +12,7 @@ import {
   GetCommentsByPost,
   GetPostsByTag,
   GetPublishedPosts,
-} from "../Apis/Api";
+} from "@/Apis/HealthyFormWebApi";
 
 Vue.use(Vuex);
 

@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: 'TheReplyComments',
@@ -47,7 +47,7 @@ export default {
   methods: {
     async fetchReplyComments() {
       try {
-        const res = await Api().get(`/posts/${this.postID}/comments/${this.commentID}/reply`)
+        const res = await HealthyFormWebApi().get(`/posts/${this.postID}/comments/${this.commentID}/reply`)
         console.log('Reply comment', res)
         this.replyComments = res.data
       } catch (e) {

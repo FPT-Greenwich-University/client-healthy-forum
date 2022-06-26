@@ -7,7 +7,7 @@ import {
     UPDATE_ROLES,
     UPDATE_USER_INFO
 } from "@/store/mutation-types/auth-mutation-types";
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import router from "@/router";
 
 const Auth = {
@@ -83,7 +83,7 @@ const Auth = {
          */
         async fetchProfile({dispatch, commit, state}, userID) {
             try {
-                const response = await Api().get(`/users/${userID}/profiles`)
+                const response = await HealthyFormWebApi().get(`/users/${userID}/profiles`)
                 if (response) {
                     commit(UPDATE_USER_INFO, response.data)
                     dispatch('checkIsOwnerProfile', {commit, state})
@@ -105,7 +105,7 @@ const Auth = {
          */
         async fetchUserAuthInfo({commit}) {
             try {
-                const res = await Api().get('/user')
+                const res = await HealthyFormWebApi().get('/user')
 
                 if (res) {
                     commit(UPDATE_AUTH_PROFILE, res.data)

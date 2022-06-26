@@ -59,7 +59,7 @@
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 import {mapState} from "vuex";
 
@@ -87,7 +87,7 @@ export default {
       const userId = this.userAuthenticated.id
 
       try {
-        const response = await Api().get(`/users/${userId}/favorites/posts?page=${page}`)
+        const response = await HealthyFormWebApi().get(`/users/${userId}/favorites/posts?page=${page}`)
 
         if (response) {
           console.log(response)

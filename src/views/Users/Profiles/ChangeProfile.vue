@@ -196,8 +196,8 @@
 </template>
 
 <script>
-// Api instance
-import Api from "@/Apis/Api";
+// HealthyFormWebApi instance
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "ChangeProfile",
@@ -258,7 +258,7 @@ export default {
     // call api to get all cities
     async fetchApiCities() {
       try {
-        const response = await Api().get('/public/cities')
+        const response = await HealthyFormWebApi().get('/public/cities')
         // console.log(response.data);
         this.apiCities = response.data.LtsItem.map((e) => {
           return {
@@ -274,7 +274,7 @@ export default {
     //  call api to get district of city
     async fetchApiDistricts(cityID) {
       try {
-        const response = await Api().get(`/public/cities/${cityID}/districts`)
+        const response = await HealthyFormWebApi().get(`/public/cities/${cityID}/districts`)
         this.apiDistricts = response.data.map((e) => {
           return {
             id: e.ID,
@@ -289,7 +289,7 @@ export default {
     //  call api to get wards
     async fetchApiWards(districtID) {
       try {
-        const response = await Api().get(`/public/districts/${districtID}/wards`)
+        const response = await HealthyFormWebApi().get(`/public/districts/${districtID}/wards`)
         this.apiWards = response.data.map((e) => {
           return {
             id: e.ID,
@@ -324,7 +324,7 @@ export default {
       let formData = this.getFormData()
 
       try {
-        await Api().put('/profiles', formData)
+        await HealthyFormWebApi().put('/profiles', formData)
         this.dialog = false
         this.errorResponse = {}
         this.$emit('update-profile', this.$route.params.userID)  // Listen event call back to update profile in vuex

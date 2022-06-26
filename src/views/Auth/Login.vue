@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {mapActions} from "vuex";
 
 export default {
@@ -174,7 +174,7 @@ export default {
     // Login to backend with Google information
     async loginBackend(formData) {
       try {
-        const res = await Api().post('/login/google', formData)
+        const res = await HealthyFormWebApi().post('/login/google', formData)
         // console.log('res data google log', res)
         localStorage.setItem('token', res.data.token);
         await this.fetchUserAuthInfo()
@@ -184,14 +184,14 @@ export default {
     },
 
 
-    // Normal Api login  with sanctum token
+    // Normal HealthyFormWebApi login  with sanctum token
     async apiLogin() {
       let formData = new FormData()
       formData.append('email', this.email)
       formData.append('password', this.password)
 
       try {
-        const res = await Api().post('/login', formData)
+        const res = await HealthyFormWebApi().post('/login', formData)
         // console.log(res.data)
         localStorage.setItem('token', res.data.token);
         this.$store.commit('AUTH/UPDATE_AUTH', true)
@@ -222,7 +222,7 @@ export default {
 
     async verifyAccount() {
       try {
-        await Api().post('/email/verification-notification', {email: this.email})
+        await HealthyFormWebApi().post('/email/verification-notification', {email: this.email})
       } catch (e) {
         console.log('Error send link', e)
       }

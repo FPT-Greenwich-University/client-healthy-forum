@@ -85,7 +85,7 @@
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 const initState = {name: '', email: '', password: '', password_confirmation: ''}
 
@@ -107,7 +107,7 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        const res = await Api().post('/register', this.formRegister)
+        const res = await HealthyFormWebApi().post('/register', this.formRegister)
         console.log(res.data)
         this.isSuccess = true
         this.errorResponse = {}

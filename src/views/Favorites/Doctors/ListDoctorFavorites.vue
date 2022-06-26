@@ -59,7 +59,7 @@
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 
 export default {
@@ -81,7 +81,7 @@ export default {
   methods: {
     async fetchDoctors(page = 1) {
       try {
-        const response = await Api().get(`/users/favorites/doctors?page=${page}`)
+        const response = await HealthyFormWebApi().get(`/users/favorites/doctors?page=${page}`)
 
         if (response) {
           this.users = response.data.data

@@ -48,8 +48,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
-
+import {CreateNewCategory} from "@/Apis/HealthyFormWebApi";
 export default {
   name: "CreateCategory",
   data() {
@@ -68,16 +67,24 @@ export default {
     };
   },
   methods: {
+    /**
+     * Reset form data
+     */
     reset() {
       this.$refs.form.reset();
     },
+
+    /**
+     * Admin create new category
+     */
     async handleCreateCategory() {
       try {
-        const res = await Api().post("/admins/categories", this.formData);
-
-        if (res) {
+        const response = await CreateNewCategory(this.formData);
+        console.log(response);
+        
+        if (response) {
           this.errors = {}; // delete all error
-          this.snackbar.content = res.data;
+          this.snackbar.content = response.data;
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
