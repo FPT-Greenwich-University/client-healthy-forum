@@ -78,6 +78,11 @@ const UpdatePermissions = (userId, formData) => {
   );
 };
 
+// Auth
+const Logout = () => {
+  return HealthyFormWebApi().post("/logout");
+};
+
 export {
   GetPublishedPosts,
   GetCommentsByPost,
@@ -93,4 +98,5 @@ export {
   AdminUpdateStatusPost,
   GetListPermissionsByRole,
   UpdatePermissions,
+  Logout
 };
