@@ -1,19 +1,24 @@
 import axios from "axios";
 
-const BaseApi = axios.create({
+const axiosClient = axios.create({
     baseURL: process.env.VUE_APP_BACKEND_API_URL,
 });
 
-BaseApi.defaults.headers.post["Content-Type"] = "application/json";
+axiosClient.defaults.headers.post["Content-Type"] = "application/json";
 
 const Api = () => {
     const token = localStorage.getItem("token");
 
     if (token) {
-        BaseApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        axiosClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 
-    return BaseApi;
+    return axiosClient;
 };
-
 export default Api;
+// Public
+// const getPosts = (page) => {
+//     return Api().get(`/posts?page=${page}`);
+// }
+//
+// export {getPosts}
