@@ -103,7 +103,7 @@
 // Change a profile from a component
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
-// Api
+// HealthyFormWebApi
 import {mapActions, mapGetters, mapState} from "vuex";
 import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 

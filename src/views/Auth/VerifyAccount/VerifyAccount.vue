@@ -10,7 +10,7 @@
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "VerifyAccount",
@@ -27,7 +27,7 @@ export default {
 
       // Send request update status verify account
       try {
-        await Api().put(`/verify-account`, formData)
+        await HealthyFormWebApi().put(`/verify-account`, formData)
         await this.$router.replace({name: "Login"});
       } catch (e) {
         console.log(e)

@@ -73,7 +73,7 @@
 </template>
 <script>
 import {mapGetters} from "vuex";
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import UpdatePermission from "@/components/Admin/UpdatePermission";
 
 export default {
@@ -104,7 +104,7 @@ export default {
     async fetchUserDetail() {
       if (this.isAdmin) {
         try {
-          const res = await Api().get(`/admins/users/${this.userID}/roles`)
+          const res = await HealthyFormWebApi().get(`/admins/users/${this.userID}/roles`)
           if (res) {
             this.user = res.data
 

@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "RegisterDoctorButton",
@@ -68,7 +68,7 @@ export default {
   methods: {
     async handleRegisterDoctorRole() {
       try {
-        const res = await Api().post(`register/doctor-role`)
+        const res = await HealthyFormWebApi().post(`register/doctor-role`)
 
         if (res) {
           this.responseText = res.data

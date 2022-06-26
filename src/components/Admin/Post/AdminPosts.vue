@@ -43,12 +43,15 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col> No posts </v-col>
+      <v-col> No posts</v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
+import {
+  GetNotPublishedPosts,
+  GetPostsMostLike,
+} from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 import DetailPost from "@/components/Admin/Post/DetailPost";
 import DeletePost from "@/components/Admin/Post/DeletePost";
@@ -79,7 +82,8 @@ export default {
   methods: {
     async fetchPostWhereNotPublish(page = 1) {
       try {
-        const res = await Api().get(`/admins/posts/not-published?page=${page}`);
+        const res = await GetNotPublishedPosts(page);
+
         this.posts = res.data.data;
         this.$store.commit("setCurrentPage", res.data.current_page);
         this.$store.commit("setLastPage", res.data.last_page);
@@ -92,7 +96,8 @@ export default {
 
     async fetchPostsMostLiked(page) {
       try {
-        const res = await Api().get(`/admins/statistic/posts?page=${page}`);
+        const res = await GetPostsMostLike(page);
+
         this.posts = res.data.data;
         this.$store.commit("setCurrentPage", res.data.current_page);
         this.$store.commit("setLastPage", res.data.last_page);

@@ -109,7 +109,7 @@ import {mapActions, mapMutations, mapState} from "vuex";
 import Paginate from "@/components/Paginate";
 import TheReplyComments from "@/components/Public/Posts/DetailPost/Comments/TheReplyComments";
 import {SET_COMMENT_ID} from "@/store/mutation-types/comment-mutation-types";
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "TheComments",
@@ -180,7 +180,7 @@ export default {
 
     async handleReplyComment() {
       try {
-        const res = await Api().post(`/posts/${this.postID}/comments/${this.commentID}/reply`, this.formData)
+        const res = await HealthyFormWebApi().post(`/posts/${this.postID}/comments/${this.commentID}/reply`, this.formData)
 
         if (res) {
           this.formData = {}

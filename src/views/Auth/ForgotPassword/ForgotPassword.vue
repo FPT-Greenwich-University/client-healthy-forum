@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "ForgotPassword",
@@ -80,7 +80,7 @@ export default {
       let formData = new FormData()
       formData.append('email', this.email)
       try {
-        const response = await Api().post('/forgot-password', formData)
+        const response = await HealthyFormWebApi().post('/forgot-password', formData)
         if (response) {
           this.isLoading = false
           this.isSuccess = true

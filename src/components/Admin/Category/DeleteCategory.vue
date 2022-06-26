@@ -3,7 +3,7 @@
     <v-form ref="formData" class="mx-10">
       <!-- Select Category-->
       <v-select
-        v-model="categoryID"
+        v-model="categoryId"
         :items="categories"
         chips
         hint="Pick the category to delete"
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import { GetCategories, DeleteCategory } from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "DeleteCategory",
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       categories: [],
-      categoryID: null,
+      categoryId: null,
       errors: {},
       snackbar: {
         status: false,
@@ -90,34 +90,35 @@ export default {
   },
 
   methods: {
+    /**
+     * Reset form input
+     */
     resetForm() {
       this.$refs.formData.reset();
       this.checkbox = false;
     },
+
     /**
      * Check if the category id is null
-     *
-     * @returns {boolean} true if categoryID is null, otherwise false
      */
-    checkIsNullCategoryID() {
-      return this.categoryID == null;
+    checkIsNullCategoryId() {
+      return this.categoryId === null;
     },
 
     async handleDeleteCategory() {
       try {
-        if (this.checkIsNullCategoryID() !== true) {
-          const res = await Api().delete(
-            `/admins/categories/${this.categoryID}`
-          );
+        if (this.checkIsNullCategoryId() !== true) {
+          const res = await DeleteCategory(this.categoryId);
+
           if (res) {
-            this.errors = {}; // delete all error
+            this.errors = {}; // remove all errors
             this.snackbar = {
-              content: res.data,
+              content: "Delete Success",
               status: true,
               color: "success",
             };
             this.checkbox = false;
-            this.categoryID = null;
+            this.categoryId = null;
             await this.fetchCategories();
           }
         } else {
@@ -133,25 +134,19 @@ export default {
         }
       } catch (e) {
         if (e) {
-          if (e.response.status === 405) {
-            this.snackbar = {
-              color: "red",
-              status: true,
-              content: "The category have used by the posts, can't not remove!",
-            };
-          }
+          console.log(e);
         }
       }
     },
 
     /**
      * Fetch all the categories
-     * @returns {Promise<void>}
      */
     async fetchCategories() {
       try {
-        const res = await Api().get("/categories");
-        this.categories = res.data.map((e) => {
+        const response = await GetCategories();
+
+        this.categories = response.data.map((e) => {
           return {
             id: e.id,
             name: e.name,

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
@@ -31,7 +31,7 @@ export default {
 
     async logoutBackend() {
       try {
-        const res = await Api().post('/logout')
+        const res = await HealthyFormWebApi().post('/logout')
         console.log('res backend', res)
         localStorage.removeItem('token')
         this.logout()

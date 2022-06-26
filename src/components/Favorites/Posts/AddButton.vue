@@ -23,7 +23,7 @@
 
 <script>
 import {mapState} from "vuex";
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "AddButton.vue",
@@ -70,7 +70,7 @@ export default {
      */
     async addFollow(postID) {
       try {
-        const response = await Api().post('/users/favorites/posts', {post_id: postID})
+        const response = await HealthyFormWebApi().post('/users/favorites/posts', {post_id: postID})
 
         if (response) {
           await this.checkFollow(this.userAuthenticated.id, postID)
@@ -82,7 +82,7 @@ export default {
 
     async unFollow(userID, postID) {
       try {
-        const response = await Api().delete(`/users/${userID}/favorites/posts/${postID}`)
+        const response = await HealthyFormWebApi().delete(`/users/${userID}/favorites/posts/${postID}`)
 
         console.log(response)
         if (response) {
@@ -103,7 +103,7 @@ export default {
      */
     async checkFollow(userID, postID) {
       try {
-        const response = await Api().get(`/users/${userID}/favorites/posts/${postID}`)
+        const response = await HealthyFormWebApi().get(`/users/${userID}/favorites/posts/${postID}`)
         console.log('check', response)
 
         if (response) {

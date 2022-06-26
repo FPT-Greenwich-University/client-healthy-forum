@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 
 const initFormData = {password: '', password_confirmation: ''}
 export default {
@@ -86,7 +86,7 @@ export default {
         token: this.token
       }
       try {
-        const response = await Api().put('/reset-password', formResetPassword)
+        const response = await HealthyFormWebApi().put('/reset-password', formResetPassword)
         console.log(response.data)
         if (response) {
           this.isSuccess = true

@@ -2,9 +2,7 @@
   <v-container>
     <v-row>
       <v-col class="col-3 d-none d-md-block d-lg-block d-xl-block">
-        <v-card
-            elevation="1"
-        >
+        <v-card elevation="1">
           <v-list>
             <v-list-item>
               <v-list-item-icon>
@@ -15,19 +13,14 @@
             </v-list-item>
 
             <!--      Category      -->
-            <v-list-group
-                :value="true"
-                prepend-icon="mdi-account-circle"
-            >
+            <v-list-group :value="true" prepend-icon="mdi-account-circle">
               <template v-slot:activator>
-                <v-list-item-title>{{ userAuthenticated.name }}</v-list-item-title>
+                <v-list-item-title>{{
+                  userAuthenticated.name
+                }}</v-list-item-title>
               </template>
 
-              <v-list-group
-                  :value="true"
-                  no-action
-                  sub-group
-              >
+              <v-list-group :value="true" no-action sub-group>
                 <template v-slot:activator>
                   <v-list-item-content>
                     <v-list-item-title>Category</v-list-item-title>
@@ -36,8 +29,8 @@
 
                 <!--      Create category          -->
                 <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'CreateCategory'"
+                  link
+                  @click="isCurrentTabComponent = 'CreateCategory'"
                 >
                   <v-list-item-title>Create</v-list-item-title>
                   <v-list-item-icon>
@@ -47,8 +40,8 @@
 
                 <!--      Update category        -->
                 <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'UpdateCategory'"
+                  link
+                  @click="isCurrentTabComponent = 'UpdateCategory'"
                 >
                   <v-list-item-title>Update</v-list-item-title>
                   <v-list-item-icon>
@@ -58,8 +51,8 @@
 
                 <!--     Delete category        -->
                 <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'DeleteCategory'"
+                  link
+                  @click="isCurrentTabComponent = 'DeleteCategory'"
                 >
                   <v-list-item-title>Delete</v-list-item-title>
                   <v-list-item-icon>
@@ -67,40 +60,25 @@
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
-
-
-              <!--      Post        -->
-              <v-list-group
-                  :value="true"
-                  no-action
-                  sub-group
-              >
+              <!-- Post -->
+              <v-list-group :value="true" no-action sub-group>
                 <template v-slot:activator>
                   <v-list-item-content>
-                    <v-list-item-title>Post</v-list-item-title>
+                    <v-list-item-title>Post not publised</v-list-item-title>
                   </v-list-item-content>
                 </template>
 
-                <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'Posts'"
-                >
+                <v-list-item link @click="isCurrentTabComponent = 'Posts'">
                   <v-list-item-title>Read</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon>
-                      mdi-file-outline
-                    </v-icon>
+                    <v-icon> mdi-file-outline </v-icon>
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
 
               <!--      Users        -->
-              <v-list-group
-                  :value="true"
-                  no-action
-                  sub-group
-              >
+              <v-list-group :value="true" no-action sub-group>
                 <template v-slot:activator>
                   <v-list-item-content>
                     <v-list-item-title>User</v-list-item-title>
@@ -108,33 +86,24 @@
                 </template>
 
                 <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'ListRegisterDoctorRole'"
+                  link
+                  @click="isCurrentTabComponent = 'ListRegisterDoctorRole'"
                 >
                   <v-list-item-title>Doctor request</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon>
-                      fas fa-hospital-user
-                    </v-icon>
+                    <v-icon> fas fa-hospital-user </v-icon>
                   </v-list-item-icon>
                 </v-list-item>
 
-                <v-list-item
-                    link
-                    @click="isCurrentTabComponent = 'ListUsers'"
-                >
+                <v-list-item link @click="isCurrentTabComponent = 'ListUsers'">
                   <v-list-item-title>List Users</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon>
-                      fas fa-user
-                    </v-icon>
+                    <v-icon> fas fa-user </v-icon>
                   </v-list-item-icon>
                 </v-list-item>
-
               </v-list-group>
-
             </v-list-group>
           </v-list>
         </v-card>
@@ -149,7 +118,7 @@
   </v-container>
 </template>
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import Posts from "@/components/Admin/Post/AdminPosts";
 import CreateCategory from "@/components/Admin/Category/CreateCategory";
 import UpdateCategory from "@/components/Admin/Category/UpdateCategory";
@@ -167,14 +136,13 @@ export default {
     ListUsers,
   },
   computed: {
-    ...mapState('AUTH', ['userAuthenticated'])
+    ...mapState("AUTH", ["userAuthenticated"]),
   },
   data() {
     return {
       isCurrentTabComponent: "Posts", // Default component render
-    }
+    };
   },
-  methods: {}
-
-}
+  methods: {},
+};
 </script>

@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import Api from "@/Apis/Api";
+import { GetCategories, UpdateCategory } from "@/Apis/HealthyFormWebApi";
 
 export default {
   name: "UpdateCategory",
@@ -107,14 +107,11 @@ export default {
     async handleCreateCategory() {
       try {
         if (this.checkIsNullCategoryID() !== true) {
-          const res = await Api().put(
-            `/admins/categories/${this.categoryID}`,
-            this.formData
-          );
-          console.log("Update category", res);
-          if (res) {
-            this.errors = {}; // delete all error
-            this.snackbar.content = res.data;
+          const response = await UpdateCategory(this.categoryID, this.formData);
+
+          if (response) {
+            this.errors = {}; // remove all error
+            this.snackbar.content = "Update success";
             this.snackbar.color = "success";
             this.snackbar.status = true;
             this.formData = {};
@@ -143,12 +140,12 @@ export default {
 
     /**
      * Fetch all the categories
-     * @returns {Promise<void>}
      */
     async fetchCategories() {
       try {
-        const res = await Api().get("/categories");
-        this.categories = res.data.map((e) => {
+        const response = await GetCategories();
+
+        this.categories = response.data.map((e) => {
           return {
             id: e.id,
             name: e.name,
