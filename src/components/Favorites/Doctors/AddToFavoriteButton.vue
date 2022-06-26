@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="isAuthenticated">
     <v-row>
       <v-col>
         <v-btn
@@ -41,7 +41,7 @@ import {mapState} from "vuex";
 export default {
   name: "AddToFavoriteButton",
   computed: {
-    ...mapState('AUTH', ['userAuthenticated']),
+    ...mapState('AUTH', ['userAuthenticated', "isAuthenticated"]),
 
     isFollowed() {
       return this.followStatus.status
@@ -50,9 +50,12 @@ export default {
   watch: {
     handleCheckFollow: {
       handler() {
-        this.userID = this.userAuthenticated.id
-        if (this.userID !== undefined) {
-          this.checkFollow(this.userAuthenticated.id, this.doctorID)
+        if (this.isAuthenticated) {
+          this.userID = this.userAuthenticated.id
+
+          if (this.userID !== undefined) {
+            this.checkFollow(this.userAuthenticated.id, this.doctorID)
+          }
         }
       },
 

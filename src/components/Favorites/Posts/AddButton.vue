@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" v-if="isAuthenticated">
     <v-col class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
       <v-btn
           :color="followStatus.color"
@@ -28,7 +28,7 @@ import Api from "@/Apis/Api";
 export default {
   name: "AddButton.vue",
   computed: {
-    ...mapState('AUTH', ['userAuthenticated']),
+    ...mapState('AUTH', ['userAuthenticated', 'isAuthenticated']),
 
     isFollowed() {
       return this.followStatus.status
@@ -37,9 +37,12 @@ export default {
   watch: {
     handleCheckFollow: {
       handler() {
-        this.userID = this.userAuthenticated.id
-        if (this.userID !== undefined) {
-          this.checkFollow(this.userAuthenticated.id, this.postID)
+        if (this.isAuthenticated) {
+          this.userID = this.userAuthenticated.id
+
+          if (this.userID !== undefined) {
+            this.checkFollow(this.userAuthenticated.id, this.postID)
+          }
         }
       },
 
