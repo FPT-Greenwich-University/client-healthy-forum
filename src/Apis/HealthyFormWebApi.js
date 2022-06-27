@@ -83,6 +83,29 @@ const Logout = () => {
   return HealthyFormWebApi().post("/logout");
 };
 
+const checkIsFollow = (userId, doctorId) => {
+  return HealthyFormWebApi().delete(
+    `/users/${userId}/favorites/doctors/${doctorId}`
+  );
+};
+/**
+ * Add doctor to favorite list
+ */
+const AddFollow = (doctorId) => {
+  return HealthyFormWebApi().post("/users/favorites/doctors", {
+    doctor_id: doctorId,
+  });
+};
+
+/**
+ * Remove doctor in favorite
+ */
+const UnFollow = (userId, doctorId) => {
+  return HealthyFormWebApi().delete(
+    `/users/${userId}/favorites/doctors/${doctorId}`
+  );
+};
+
 export {
   GetPublishedPosts,
   GetCommentsByPost,
@@ -98,5 +121,8 @@ export {
   AdminUpdateStatusPost,
   GetListPermissionsByRole,
   UpdatePermissions,
-  Logout
+  Logout,
+  AddFollow,
+  UnFollow,
+  checkIsFollow,
 };
