@@ -106,9 +106,26 @@ const UnFollow = (userId, doctorId) => {
   );
 };
 
+/**
+ * Handle reply comment
+ */
+const ReplyComment = (postId, commentId, formData) => {
+  return HealthyFormWebApi().post(
+    `/posts/${postId}/comments/${commentId}/reply`,
+    formData
+  );
+};
+
+const GetReplyComments = (postId, commentId) => {
+  return HealthyFormWebApi().get(
+    `/posts/${postId}/comments/${commentId}/reply`
+  );
+};
+
 export {
   GetPublishedPosts,
   GetCommentsByPost,
+  GetReplyComments,
   GetPostsByTag,
   GetPostsMostLike,
   GetCategories,
@@ -125,4 +142,5 @@ export {
   AddFollow,
   UnFollow,
   checkIsFollow,
+  ReplyComment,
 };
