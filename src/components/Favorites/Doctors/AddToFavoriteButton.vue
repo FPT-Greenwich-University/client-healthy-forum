@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import HealthyFormWebApi, { AddFollow } from "@/Apis/HealthyFormWebApi";
 import { mapState } from "vuex";
 import { AddFollow, UnFollow } from "../../../Apis/HealthyFormWebApi";
 
