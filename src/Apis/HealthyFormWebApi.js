@@ -22,6 +22,18 @@ const GetPublishedPosts = (page) => {
   return HealthyFormWebApi().get(`/posts?page=${page}`);
 };
 
+const GetDetailPost = (postId) => {
+  return HealthyFormWebApi().get(`/posts/${postId}`);
+};
+/**
+ * Get tags by post
+ */
+const GetTagsByPost = (postID) => {
+  return HealthyFormWebApi().get(`/posts/${postID}/tags`);
+};
+const GetToltalLikeOfPost = (postID) => {
+  return HealthyFormWebApi().get(`/posts/${postID}/tags`);
+};
 const GetCommentsByPost = (payload) => {
   return HealthyFormWebApi().get(
     `posts/${payload.postID}/comments?page=${payload.page}`
@@ -34,6 +46,13 @@ const GetPostsByTag = (page, tagId) => {
 
 const GetCategories = () => {
   return HealthyFormWebApi().get("/categories");
+};
+
+/**
+ * Get user profile
+ */
+const GetUserProfile = (userId) => {
+  return await HealthyFormWebApi().get(`/users/${userId}/profiles`);
 };
 
 // Admin api
@@ -122,11 +141,28 @@ const GetReplyComments = (postId, commentId) => {
   );
 };
 
+const GetAuthProfile = () => {
+  return HealthyFormWebApi().get("/user");
+};
+
+const DoctorGetDetailPost = (payload) => {
+  return HealthyFormWebApi().get(
+    `/users/${payload.userID}/posts/${payload.postID}`
+  );
+};
+
+const DoctorDeletePost = (payload) => {
+  return HealthyFormWebApi().delete(`/posts/${payload.postID}`);
+};
+
 export {
   GetPublishedPosts,
+  GetTagsByPost,
+  GetDetailPost,
   GetCommentsByPost,
   GetReplyComments,
   GetPostsByTag,
+  GetToltalLikeOfPost,
   GetPostsMostLike,
   GetCategories,
   GetNotPublishedPosts,
@@ -134,6 +170,7 @@ export {
   UpdateCategory,
   DeleteCategory,
   DeletePost,
+  DoctorDeletePost,
   AdminGetDetailPost,
   AdminUpdateStatusPost,
   GetListPermissionsByRole,
@@ -141,6 +178,9 @@ export {
   Logout,
   AddFollow,
   UnFollow,
+  GetAuthProfile,
   checkIsFollow,
   ReplyComment,
+  DoctorGetDetailPost,
+  GetUserProfile,
 };
