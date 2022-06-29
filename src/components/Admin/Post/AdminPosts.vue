@@ -7,112 +7,106 @@
           <v-simple-table>
             <template v-slot:default>
               <thead>
-              <tr>
-                <th class="text-left">
-                  Title
-                </th>
-                <th class="text-left">
-                  User
-                </th>
-                <th class="text-left">
-                  Category
-                </th>
-                <th class="text-left">
-                  Published
-                </th>
-                <th colspan="3">Action</th>
-              </tr>
+                <tr>
+                  <th class="text-left">Title</th>
+                  <th class="text-left">User</th>
+                  <th class="text-left">Category</th>
+                  <th class="text-left">Published</th>
+                  <th colspan="3">Action</th>
+                </tr>
               </thead>
               <tbody>
-              <tr
-                  v-for="item in posts"
-                  :key="item.id"
-              >
-                <td>{{ item.title }}</td>
-                <td>{{ item.user.name }}</td>
-                <td>{{ item.category.name }}</td>
-                <td>{{ item.is_published ? 'Yes' : 'No' }}</td>
-                <td>
-                  <DetailPost :postID="item.id"
-                              @update-status="fetchPostWhereNotPublish"
-                  />
-                </td>
-                <td>
-                  <DeletePost :postID="item.id"
-                              @delete-post="fetchPostWhereNotPublish()"
-                  />
-                </td>
-              </tr>
+                <tr v-for="item in posts" :key="item.id">
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.user.name }}</td>
+                  <td>{{ item.category.name }}</td>
+                  <td>{{ item.is_published ? "Yes" : "No" }}</td>
+                  <td>
+                    <DetailPost
+                      :postID="item.id"
+                      @update-status="fetchPostWhereNotPublish"
+                    />
+                  </td>
+                  <td>
+                    <DeletePost
+                      :postID="item.id"
+                      @delete-post="fetchPostWhereNotPublish()"
+                    />
+                  </td>
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
 
-          <Paginate @change-page="fetchPostWhereNotPublish"/>
+          <Paginate @change-page="fetchPostWhereNotPublish" />
         </v-card>
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col>
-        No posts
-      </v-col>
+      <v-col> No posts</v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import Api from "@/Apis/Api";
 import Paginate from "@/components/Paginate";
 import DetailPost from "@/components/Admin/Post/DetailPost";
 import DeletePost from "@/components/Admin/Post/DeletePost";
+import {
+  GetNotPublishedPosts,
+  GetPostsMostLike,
+} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "Posts",
   components: {
     DetailPost,
     DeletePost,
-    Paginate
+    Paginate,
   },
   watch: {
     PostWhereNotPublish: {
       handler() {
-        this.fetchPostWhereNotPublish()
+        this.fetchPostWhereNotPublish();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   data() {
     return {
       posts: [],
-      search: '',
+      search: "",
       snackbar: false,
-      snackbarContent: '',
-    }
+      snackbarContent: "",
+    };
   },
   methods: {
     async fetchPostWhereNotPublish(page = 1) {
       try {
-        const res = await Api().get(`/admins/posts/not-published?page=${page}`)
-        this.posts = res.data.data
-        this.$store.commit('setCurrentPage', res.data.current_page)
-        this.$store.commit('setLastPage', res.data.last_page)
+        const res = await GetNotPublishedPosts(page);
+
+        this.posts = res.data.data;
+        this.$store.commit("setCurrentPage", res.data.current_page);
+        this.$store.commit("setLastPage", res.data.last_page);
       } catch (e) {
         if (e) {
-          console.log(e)
+          console.log(e);
         }
       }
     },
 
     async fetchPostsMostLiked(page) {
       try {
-        const res = await Api().get(`/admins/statistic/posts?page=${page}`)
-        this.posts = res.data.data
-        this.$store.commit('setCurrentPage', res.data.current_page)
-        this.$store.commit('setLastPage', res.data.last_page)
+        const res = await GetPostsMostLike(page);
+
+        this.posts = res.data.data;
+        this.$store.commit("setCurrentPage", res.data.current_page);
+        this.$store.commit("setLastPage", res.data.last_page);
       } catch (e) {
         if (e) {
-          console.log(e)
+          console.log(e);
         }
       }
-    }
+    },
   },
-}
+};
 </script>

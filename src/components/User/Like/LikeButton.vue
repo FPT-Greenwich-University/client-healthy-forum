@@ -2,44 +2,22 @@
   <v-row v-if="isAuthenticated">
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
       <!--   Like button   -->
-      <v-tooltip bottom v-if="isExistLike === false">
+      <v-tooltip v-if="isExistLike === false" bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              v-bind="attrs"
-              v-on="on"
-              @click="handleLikePost"
-          >
+          <v-btn v-bind="attrs" @click="handleLikePost" v-on="on">
             Like
-            <v-icon
-                right
-                dark
-                color="red"
-                dense
-            >
-              fas fa-heart
-            </v-icon>
+            <v-icon color="red" dark dense right> fas fa-heart</v-icon>
           </v-btn>
         </template>
         <span>Click to like this post</span>
       </v-tooltip>
 
       <!--   Unlike button   -->
-      <v-tooltip bottom v-else>
+      <v-tooltip v-else bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              v-bind="attrs"
-              v-on="on"
-              @click="handleUnlikePost"
-          >
+          <v-btn v-bind="attrs" @click="handleUnlikePost" v-on="on">
             UnLike
-            <v-icon
-                right
-                dark
-                color="red"
-                dense
-            >
-              fas fa-heart
-            </v-icon>
+            <v-icon color="red" dark dense right> fas fa-heart</v-icon>
           </v-btn>
         </template>
         <span>Click to unlike this post</span>
@@ -48,34 +26,35 @@
   </v-row>
 </template>
 <script>
-import Api from "@/Apis/Api";
-import {mapActions, mapState} from "vuex";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "LikeButton",
   props: {
     postID: {
       required: true,
-      type: Number
-    }
+      type: Number,
+    },
   },
   computed: {
-    ...mapState('AUTH', ['isAuthenticated'])
+    ...mapState("AUTH", ["isAuthenticated"]),
   },
   watch: {
     handleCheckLikeIsExist: {
       handler() {
-        this.checkLikeIsExist()
-      }, immediate: true
-    }
+        this.checkLikeIsExist();
+      },
+      immediate: true,
+    },
   },
   data() {
     return {
-      isExistLike: false
-    }
+      isExistLike: false,
+    };
   },
   methods: {
-    ...mapActions('POSTS', ['getTotalLikeOfPost']),
+    ...mapActions("POSTS", ["getTotalLikeOfPost"]),
 
     /**
      * Handle check if user is like the post
@@ -85,13 +64,15 @@ export default {
     async checkLikeIsExist() {
       if (this.isAuthenticated) {
         try {
-          const res = await Api().get(`/posts/${this.postID}/likes/is-exist`)
+          const res = await HealthyFormWebApi().get(
+            `/posts/${this.postID}/likes/is-exist`
+          );
           if (res) {
-            this.isExistLike = res.data
+            this.isExistLike = res.data;
           }
         } catch (e) {
           if (e) {
-            console.log(e)
+            console.log(e);
           }
         }
       }
@@ -104,12 +85,12 @@ export default {
      */
     async handleLikePost() {
       try {
-        await Api().post(`/posts/${this.postID}/likes`)
-        await this.checkLikeIsExist()
-        await this.getTotalLikeOfPost(this.postID)
+        await HealthyFormWebApi().post(`/posts/${this.postID}/likes`);
+        await this.checkLikeIsExist();
+        await this.getTotalLikeOfPost(this.postID);
       } catch (e) {
         if (e) {
-          console.log('Like error', e)
+          console.log("Like error", e);
         }
       }
     },
@@ -121,15 +102,15 @@ export default {
      */
     async handleUnlikePost() {
       try {
-        await Api().delete(`/posts/${this.postID}/likes`)
-        await this.checkLikeIsExist()
-        await this.getTotalLikeOfPost(this.postID)
+        await HealthyFormWebApi().delete(`/posts/${this.postID}/likes`);
+        await this.checkLikeIsExist();
+        await this.getTotalLikeOfPost(this.postID);
       } catch (e) {
         if (e) {
-          console.log(e)
+          console.log(e);
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

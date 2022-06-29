@@ -1,43 +1,23 @@
 <template>
   <v-row>
-    <v-btn
-        color="primary"
-        dark
-        x-small
-        @click="fetchDetailPost"
-    >
-      <v-icon x-small>
-        fas fa-eye
-      </v-icon>
+    <v-btn color="primary" dark x-small @click="fetchDetailPost">
+      <v-icon x-small> fas fa-eye </v-icon>
     </v-btn>
     <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar
-            color="primary"
-            dark
-        >
-          <v-btn
-              dark
-              icon
-              @click="dialog = false"
-          >
+        <v-toolbar color="primary" dark>
+          <v-btn dark icon @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>Post Detail Setting</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn
-                dark
-                text
-                @click="dialog = false"
-            >
-              Close
-            </v-btn>
+            <v-btn dark text @click="dialog = false"> Close </v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-list>
@@ -45,14 +25,17 @@
             <v-btn @click="publishPost">Public this post</v-btn>
           </v-list-item>
 
-          <v-subheader class="text-center text-h5 text-capitalize">{{ post.title }}</v-subheader>
+          <v-subheader class="text-center text-h5 text-capitalize">{{
+            post.title
+          }}</v-subheader>
 
           <v-list-item>
-            <v-img v-if="post.image"
-                   :src="`${backEndURL}/${post.image.path}`"
-                   alt="post image"
-                   class="mx-auto"
-                   max-width="600"
+            <v-img
+              v-if="post.image"
+              :src="`${backEndURL}/${post.image.path}`"
+              alt="post image"
+              class="mx-auto"
+              max-width="600"
             >
             </v-img>
           </v-list-item>
@@ -76,15 +59,17 @@
   </v-row>
 </template>
 <script>
-
-import Api from "@/Apis/Api";
+import {
+  AdminGetDetailPost,
+  AdminUpdateStatusPost,
+} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "DetailPost",
   props: {
     postID: {
       required: true,
-      type: Number
+      type: Number,
     },
   },
   watch: {},
@@ -93,36 +78,36 @@ export default {
       post: {},
       dialog: false,
       backEndURL: process.env.VUE_APP_BACKEND_URL,
-    }
+    };
   },
   methods: {
     async fetchDetailPost() {
-      this.dialog = true
+      this.dialog = true;
 
       try {
-        const res = await Api().get(`/admins/posts/${this.postID}`)
-        // console.log('Detail post', res.data)
-        this.post = res.data
+        const res = await AdminGetDetailPost(this.postID); // console.log('Detail post', res.data)
+        this.post = res.data;
       } catch (e) {
         if (e) {
-          console.log(e)
+          console.log(e);
         }
       }
     },
 
     async publishPost() {
       try {
-        const res = await Api().put(`/admins/posts/${this.postID}/publish`)
+        const res = await AdminUpdateStatusPost(this.postID);
+
         if (res) {
-          this.dialog = false
-          this.$emit('update-status')
+          this.dialog = false;
+          this.$emit("update-status");
         }
       } catch (e) {
         if (e) {
-          console.log(e)
+          console.log(e);
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

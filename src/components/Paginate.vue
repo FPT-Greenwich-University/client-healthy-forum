@@ -1,20 +1,20 @@
 <template>
   <div class="text-center">
     <v-pagination
-        v-model="currentPage"
-        :length="lastPage"
-        :total-visible="7"
+      v-model="currentPage"
+      :length="lastPage"
+      :total-visible="7"
     ></v-pagination>
   </div>
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Paginate",
   watch: {
-    currentPage(newValue, oldValue) {
+    currentPage(newValue) {
       this.handleSetCurrentPage(newValue);
     },
   },
