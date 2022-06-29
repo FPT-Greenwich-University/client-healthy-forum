@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" v-if="isAuthenticated">
+  <v-row v-if="isAuthenticated" justify="center">
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
       <!--   Input content   -->
       <v-textarea
@@ -21,8 +21,8 @@
               dark
               elevation="1"
               small
-              @click="handleComment"
               v-bind="attrs"
+              @click="handleComment"
               v-on="on"
           >
             Send
@@ -59,7 +59,7 @@
 </template>
 <script>
 
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 import {mapActions, mapState} from "vuex";
 
 export default {

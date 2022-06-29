@@ -1,5 +1,3 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
-import { GetDetailPost } from "@/Apis/HealthyFormWebApi";
 import {
   SET_DETAIL_POST,
   SET_DETAIL_POST_TAGS,
@@ -9,8 +7,12 @@ import router from "@/router";
 import {
   DoctorDeletePost,
   DoctorGetDetailPost,
+} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import {
+  GetDetailPost,
   GetTagsByPost,
-} from "../../Apis/HealthyFormWebApi";
+  GetTotalLikeOfPost,
+} from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 
 const Posts = {
   namespaced: true,
@@ -90,9 +92,7 @@ const Posts = {
      */
     async getTotalLikeOfPost({ commit }, postID) {
       try {
-        const res = await HealthyFormWebApi().get(
-          `/posts/${postID}/total-likes`
-        );
+        const res = await GetTotalLikeOfPost(postID);
         commit(SET_TOTAL_LIKE, res.data.total_likes);
       } catch (e) {
         if (e) {

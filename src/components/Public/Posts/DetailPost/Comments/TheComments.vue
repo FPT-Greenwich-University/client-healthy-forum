@@ -2,8 +2,8 @@
   <section class="comments">
     <v-row v-if="comments.length === 0">
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto"
-        >This post not have comments</v-col
-      >
+        >This post not have comments
+      </v-col>
     </v-row>
 
     <v-row v-else>
@@ -27,8 +27,8 @@
                   max-width="20%"
                   x-small
                   @click="handleOpenDialog(item.id)"
-                  >Reply</v-btn
-                >
+                  >Reply
+                </v-btn>
               </v-list-item-content>
             </v-list-item>
 
@@ -110,7 +110,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 import Paginate from "@/components/Paginate";
 import TheReplyComments from "@/components/Public/Posts/DetailPost/Comments/TheReplyComments";
 import { SET_COMMENT_ID } from "@/store/mutation-types/comment-mutation-types";
-import { ReplyComment } from "@/Apis/HealthyFormWebApi";
+import { ReplyComment } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 
 export default {
   name: "TheComments",

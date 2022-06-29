@@ -3,19 +3,9 @@
     <!--  Top profile  -->
     <v-row>
       <v-col class="col-12" transition="slide-x-transition">
-        <v-card
-            class="mt-2"
-            color="#26c6da"
-            dark
-            elevation="0"
-        >
+        <v-card class="mt-2" color="#26c6da" dark elevation="0">
           <v-card-title>
-            <v-icon
-                large
-                left
-            >
-              mdi-twitter
-            </v-icon>
+            <v-icon large left> mdi-twitter</v-icon>
             <span class="text-h6 font-weight-light">Twitter</span>
           </v-card-title>
 
@@ -26,18 +16,21 @@
           <v-card-actions>
             <v-list-item class="grow">
               <!--  if user is google account-->
-              <v-list-item-avatar v-if="userInfo.provider_id !== null" color="grey darken-3">
+              <v-list-item-avatar
+                v-if="userInfo.provider_id !== null"
+                color="grey darken-3"
+              >
                 <v-img
-                    :src="userInfo.image_url"
-                    alt=""
-                    class="elevation-6"
+                  :src="userInfo.image_url"
+                  alt=""
+                  class="elevation-6"
                 ></v-img>
               </v-list-item-avatar>
               <v-list-item-avatar v-else color="grey darken-3">
                 <v-img
-                    alt=""
-                    class="elevation-6"
-                    src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
+                  alt=""
+                  class="elevation-6"
+                  src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
                 ></v-img>
               </v-list-item-avatar>
 
@@ -45,18 +38,11 @@
                 <v-list-item-title>{{ userInfo.name }}</v-list-item-title>
               </v-list-item-content>
 
-              <v-row
-                  align="center"
-                  justify="end"
-              >
-                <v-icon class="mr-1">
-                  mdi-heart
-                </v-icon>
+              <v-row align="center" justify="end">
+                <v-icon class="mr-1"> mdi-heart</v-icon>
                 <span class="subheading mr-2">256</span>
                 <span class="mr-1">·</span>
-                <v-icon class="mr-1">
-                  mdi-share-variant
-                </v-icon>
+                <v-icon class="mr-1"> mdi-share-variant</v-icon>
                 <span class="subheading">45</span>
               </v-row>
             </v-list-item>
@@ -65,27 +51,28 @@
       </v-col>
     </v-row>
 
-
     <v-divider class="my-5"></v-divider>
 
     <v-row>
       <v-col class="col-5">
-        <v-card id="introduce"
-                elevation="1"
-        >
+        <v-card id="introduce" elevation="1">
           <v-card-title>Introduce</v-card-title>
           <v-card-actions v-if="isOwnProfile">
-            <ChangeProfile @update-profile="handleFetchProfile"/>
-
+            <ChangeProfile @update-profile="handleFetchProfile" />
           </v-card-actions>
           <v-card-actions v-if="!isOwnProfile">
-            <AddToFavoriteButton/>
+            <AddToFavoriteButton />
           </v-card-actions>
 
           <!--          <v-divider class="m-4"></v-divider>-->
           <v-card-text v-if="userInfo.profile !== null">
-            <p>Live at <span class="font-weight-bold">{{ getFullName }}</span></p>
-            <p>Join at <span class="font-weight-bold">{{ userInfo.created_at }}</span></p>
+            <p>
+              Live at <span class="font-weight-bold">{{ getFullName }}</span>
+            </p>
+            <p>
+              Join at
+              <span class="font-weight-bold">{{ userInfo.created_at }}</span>
+            </p>
             <p>Have <span class="font-weight-bold">1K</span> follower</p>
           </v-card-text>
           <v-card-text v-else>
@@ -95,16 +82,14 @@
       </v-col>
       <v-spacer></v-spacer>
 
-      <DoctorPosts v-if="userInfo.id" :userID="userInfo.id"/>
+      <DoctorPosts v-if="userInfo.id" :userID="userInfo.id" />
     </v-row>
   </v-container>
 </template>
 <script>
-// Change a profile from a component
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
-// HealthyFormWebApi
-import {mapActions, mapGetters, mapState} from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 
 export default {
@@ -112,12 +97,12 @@ export default {
   components: {
     AddToFavoriteButton,
     DoctorPosts,
-    ChangeProfile
+    ChangeProfile,
   },
   data() {
     return {
       isOwn: false, // is current user authenticated own this profile
-    }
+    };
   },
   computed: {
     ...mapState("AUTH", ["userInfo", "isOwnProfile", "userAuthenticated"]),
@@ -126,19 +111,19 @@ export default {
   watch: {
     handleFetchProfile: {
       handler() {
-        let userID = this.$route.params.userID
-        this.fetchProfile(userID)
+        let userID = this.$route.params.userID;
+        this.fetchProfile(userID);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     ...mapActions("AUTH", ["fetchProfile"]),
     handleFetchProfile(userID) {
-      this.fetchProfile(userID)
-    }
-  }
-}
+      this.fetchProfile(userID);
+    },
+  },
+};
 </script>
 <style scoped>
 .user-profile {

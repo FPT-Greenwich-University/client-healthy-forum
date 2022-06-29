@@ -1,15 +1,15 @@
 <template>
   <div>
     <v-btn v-if="isGoogleAccount" block plain text @click="logoutGoogle"
-      >Logout</v-btn
-    >
+      >Logout
+    </v-btn>
     <v-btn v-else block plain text @click="logoutBackend">Logout</v-btn>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import { Logout } from "@/Apis/HealthyFormWebApi";
+import { Logout } from "@/Apis/HealthyFormWebApi/AuthApi/AuthApi";
 
 export default {
   name: "Logout",

@@ -7,9 +7,9 @@ import {
   UPDATE_ROLES,
   UPDATE_USER_INFO,
 } from "@/store/mutation-types/auth-mutation-types";
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import router from "@/router";
-import { GetUserProfile, GetAuthProfile } from "@/Apis/HealthyFormWebApi";
+import { GetUserProfile } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import { GetAuthProfile } from "@/Apis/HealthyFormWebApi/AuthApi/AuthApi";
 
 const Auth = {
   namespaced: true,

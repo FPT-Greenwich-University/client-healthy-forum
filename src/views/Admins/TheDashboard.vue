@@ -15,9 +15,9 @@
             <!--      Category      -->
             <v-list-group :value="true" prepend-icon="mdi-account-circle">
               <template v-slot:activator>
-                <v-list-item-title>{{
-                  userAuthenticated.name
-                }}</v-list-item-title>
+                <v-list-item-title
+                  >{{ userAuthenticated.name }}
+                </v-list-item-title>
               </template>
 
               <v-list-group :value="true" no-action sub-group>
@@ -72,7 +72,7 @@
                   <v-list-item-title>Read</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon> mdi-file-outline </v-icon>
+                    <v-icon> mdi-file-outline</v-icon>
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
@@ -92,7 +92,7 @@
                   <v-list-item-title>Doctor request</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon> fas fa-hospital-user </v-icon>
+                    <v-icon> fas fa-hospital-user</v-icon>
                   </v-list-item-icon>
                 </v-list-item>
 
@@ -100,7 +100,7 @@
                   <v-list-item-title>List Users</v-list-item-title>
 
                   <v-list-item-icon>
-                    <v-icon> fas fa-user </v-icon>
+                    <v-icon> fas fa-user</v-icon>
                   </v-list-item-icon>
                 </v-list-item>
               </v-list-group>
@@ -125,6 +125,7 @@ import UpdateCategory from "@/components/Admin/Category/UpdateCategory";
 import DeleteCategory from "@/components/Admin/Category/DeleteCategory";
 import ListRegisterDoctorRole from "@/components/Admin/User/Doctor/ListRegisterDoctorRole";
 import ListUsers from "@/components/Admin/User/ListUsers";
+
 export default {
   name: "TheDashboard",
   components: {

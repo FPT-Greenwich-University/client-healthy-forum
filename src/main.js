@@ -1,15 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import vuetify from './plugins/vuetify'
-
-Vue.config.productionTip = false
-
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import vuetify from "./plugins/vuetify";
 import GAuth from "vue-google-oauth2";
+
+Vue.config.productionTip = false;
+
 const gauthOption = {
   clientId:
-      "267568785906-l2o0brkumgs5atlbc68dbamcf6v60csk.apps.googleusercontent.com",
+    "267568785906-l2o0brkumgs5atlbc68dbamcf6v60csk.apps.googleusercontent.com",
 
   scope: "profile email",
   prompt: "consent",
@@ -22,5 +22,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

@@ -22,7 +22,7 @@
         ><p class="red--text">{{ errors.description[0] }}</p></template
       >
 
-      <v-btn class="mr-4 my-2" color="error" @click="reset"> Reset </v-btn>
+      <v-btn class="mr-4 my-2" color="error" @click="reset"> Reset</v-btn>
 
       <v-btn class="mr-4 my-2" color="primary" @click="handleCreateCategory">
         Submit
@@ -48,7 +48,8 @@
 </template>
 
 <script>
-import {CreateNewCategory} from "@/Apis/HealthyFormWebApi";
+import { CreateNewCategory } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
+
 export default {
   name: "CreateCategory",
   data() {
@@ -67,24 +68,16 @@ export default {
     };
   },
   methods: {
-    /**
-     * Reset form data
-     */
     reset() {
       this.$refs.form.reset();
     },
-
-    /**
-     * Admin create new category
-     */
     async handleCreateCategory() {
       try {
-        const response = await CreateNewCategory(this.formData);
-        console.log(response);
-        
-        if (response) {
+        const res = await CreateNewCategory(this.formData);
+
+        if (res) {
           this.errors = {}; // delete all error
-          this.snackbar.content = response.data;
+          this.snackbar.content = res.data;
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
