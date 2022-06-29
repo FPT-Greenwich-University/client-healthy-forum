@@ -50,12 +50,11 @@
   </v-form>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi";
 import { mapGetters } from "vuex";
 import {
   GetListPermissionsByRole,
   UpdatePermissions,
-} from "../../Apis/HealthyFormWebApi";
+} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "UpdatePermission",

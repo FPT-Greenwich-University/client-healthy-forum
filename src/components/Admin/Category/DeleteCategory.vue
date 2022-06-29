@@ -24,12 +24,12 @@
         @click="handleDeleteCategory"
       >
         Delete
-        <v-icon right> mdi-delete </v-icon>
+        <v-icon right> mdi-delete</v-icon>
       </v-btn>
 
       <v-btn class="mr-4 my-2" color="#66bb6a" outlined @click="resetForm">
         Reset
-        <v-icon> mdi-update </v-icon>
+        <v-icon> mdi-update</v-icon>
       </v-btn>
     </v-form>
 
@@ -55,7 +55,8 @@
 </template>
 
 <script>
-import { GetCategories, DeleteCategory } from "@/Apis/HealthyFormWebApi";
+import { GetCategories } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import { DeleteCategory } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "DeleteCategory",

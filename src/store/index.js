@@ -1,18 +1,19 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
+import router from "@/router";
 import Auth from "@/store/modules/Auth";
 import Posts from "@/store/modules/Posts";
+import Comments from "@/store/modules/Comments";
 import {
   SET_COMMENTS,
   SET_POSTS,
 } from "@/store/mutation-types/post-mutation-types";
-import router from "@/router";
-import Comments from "@/store/modules/Comments";
 import {
   GetCommentsByPost,
   GetPostsByTag,
   GetPublishedPosts,
-} from "@/Apis/HealthyFormWebApi";
+} from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 
 Vue.use(Vuex);
 

@@ -48,13 +48,13 @@
   </v-container>
 </template>
 <script>
-import {
-  GetNotPublishedPosts,
-  GetPostsMostLike,
-} from "@/Apis/HealthyFormWebApi";
 import Paginate from "@/components/Paginate";
 import DetailPost from "@/components/Admin/Post/DetailPost";
 import DeletePost from "@/components/Admin/Post/DeletePost";
+import {
+  GetNotPublishedPosts,
+  GetPostsMostLike,
+} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "Posts",

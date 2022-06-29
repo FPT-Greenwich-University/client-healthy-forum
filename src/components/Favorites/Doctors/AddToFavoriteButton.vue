@@ -34,7 +34,11 @@
 
 <script>
 import { mapState } from "vuex";
-import { AddFollow, UnFollow } from "../../../Apis/HealthyFormWebApi";
+import {
+  AddFollow,
+  CheckIsFollow,
+  UnFollow,
+} from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 
 export default {
   name: "AddToFavoriteButton",
@@ -93,6 +97,7 @@ export default {
 
     async unFollow(userID, doctorID) {
       try {
+        userID = this.userAuthenticated.id;
         const response = await UnFollow(userID, doctorID);
 
         if (response) {
@@ -113,7 +118,7 @@ export default {
      */
     async checkFollow(userID, doctorID) {
       try {
-        const response = await this.checkFollow(userID, doctorID);
+        const response = await CheckIsFollow(userID, doctorID);
 
         if (response) {
           if (response.data === false) {

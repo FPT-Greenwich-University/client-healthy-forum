@@ -10,7 +10,7 @@
           @click="dialog = true"
           v-on="on"
         >
-          <v-icon x-small> fas fa-trash </v-icon>
+          <v-icon x-small> fas fa-trash</v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -26,14 +26,15 @@
           <v-btn color="green darken-1" text @click="dialog = false">
             Disagree
           </v-btn>
-          <v-btn color="green darken-1" text @click="deletePost"> Agree </v-btn>
+          <v-btn color="green darken-1" text @click="deletePost"> Agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-row>
 </template>
 <script>
-import { DeletePost } from "../../../Apis/HealthyFormWebApi";
+import { DeletePost } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
+
 export default {
   name: "AdminDeletePost",
   props: {

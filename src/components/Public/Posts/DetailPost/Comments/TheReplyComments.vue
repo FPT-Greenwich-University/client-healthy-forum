@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { GetReplyComments } from "@/Apis/HealthyFormWebApi";
+import { GetReplyComments } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 
 export default {
   name: "TheReplyComments",

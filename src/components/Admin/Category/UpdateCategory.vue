@@ -36,12 +36,12 @@
 
       <v-btn class="mr-4 my-2" color="error" @click="reset">
         Reset
-        <v-icon> mdi-update </v-icon>
+        <v-icon> mdi-update</v-icon>
       </v-btn>
 
       <v-btn class="mr-4 my-2" color="primary" @click="handleCreateCategory">
         Submit
-        <v-icon> fas fa-paper-plane </v-icon>
+        <v-icon> fas fa-paper-plane</v-icon>
       </v-btn>
     </v-form>
     <v-row>
@@ -65,7 +65,8 @@
 </template>
 
 <script>
-import { GetCategories, UpdateCategory } from "@/Apis/HealthyFormWebApi";
+import { GetCategories } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import { UpdateCategory } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "UpdateCategory",

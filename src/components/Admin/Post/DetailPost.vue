@@ -62,7 +62,8 @@
 import {
   AdminGetDetailPost,
   AdminUpdateStatusPost,
-} from "@/Apis/HealthyFormWebApi";
+} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
+
 export default {
   name: "DetailPost",
   props: {
