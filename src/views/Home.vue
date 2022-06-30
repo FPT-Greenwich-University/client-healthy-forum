@@ -1,27 +1,36 @@
 <template>
-  <section>
-    Home page
-    <p v-if="isAuthenticated" class="text-center text-xl-subtitle-1">
-      Hello {{ userAuthenticated.email }}!
-    </p>
-    <p v-show="isDoctor">Tao la doctor</p>
-  </section>
+  <v-app>
+    <!-- Top Nav   -->
+    <TopNav />
+
+    <!--  Body  -->
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-// Axios api
-import { mapGetters, mapState } from "vuex";
+import { mapActions } from "vuex";
+import TopNav from "@/views/Layout/TopNav";
 
 export default {
   name: "Home",
-  components: {},
-  computed: {
-    ...mapState("AUTH", ["isAuthenticated", "userAuthenticated", "userRoles"]),
-    ...mapGetters("AUTH", ["isDoctor"]),
+  components: {
+    TopNav,
   },
-  data() {
-    return {};
+  watch: {
+    getUserInfo: {
+      handler() {
+        if (localStorage.getItem("token")) {
+          this.fetchUserAuthInfo();
+        }
+      },
+      immediate: true,
+    },
   },
-  methods: {},
+  methods: {
+    ...mapActions("AUTH", ["fetchUserAuthInfo"]),
+  },
 };
 </script>
