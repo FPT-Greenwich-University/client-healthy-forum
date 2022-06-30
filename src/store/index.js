@@ -5,6 +5,8 @@ import router from "@/router";
 import Auth from "@/store/modules/Auth";
 import Posts from "@/store/modules/Posts";
 import Comments from "@/store/modules/Comments";
+import Common from "@/store/modules/Common";
+
 import {
   SET_COMMENTS,
   SET_POSTS,
@@ -87,5 +89,6 @@ export default new Vuex.Store({
     AUTH: Auth,
     POSTS: Posts,
     COMMENTS: Comments,
+    COMMON: Common,
   },
 });
