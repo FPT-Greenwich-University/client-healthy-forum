@@ -12,9 +12,9 @@ import {
   SET_POSTS,
 } from "@/store/mutation-types/post-mutation-types";
 import {
+  FilterPosts,
   GetCommentsByPost,
   GetPostsByTag,
-  GetPublishedPosts,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 
 Vue.use(Vuex);
@@ -28,10 +28,9 @@ export default new Vuex.Store({
   },
   actions: {
     // Fetch the posts
-    async fetchPosts({ commit }, page = 1) {
+    async fetchPosts({ commit }, payload) {
       try {
-        const response = await GetPublishedPosts(page);
-
+        const response = await FilterPosts(payload.categoryId, payload.page);
         commit(SET_POSTS, response.data.data);
         commit("setLastPage", response.data.last_page);
       } catch (e) {
