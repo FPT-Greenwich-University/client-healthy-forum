@@ -4,15 +4,32 @@
       <v-col class="col-3">
         <v-select
             v-model="categoryId"
+            :attach="true"
             :items="categories"
+            chips
             item-text="name"
             item-value="id"
             label="Category"
+            multiple
+        ></v-select>
+      </v-col>
+
+      <!--   Select tag   -->
+      <v-col class="col-3">
+        <v-select
+            v-model="tagId"
+            :attach="true"
+            :items="tags"
+            chips
+            item-text="name"
+            item-value="id"
+            label="Tags"
+            multiple
         ></v-select>
       </v-col>
 
       <v-col class="text-end d-flex align-center">
-        <v-btn color="blue" plain text @click="handleGetPosts">filter</v-btn>
+        <v-btn color="blue" plain text @click="handleGetPosts(1)">filter</v-btn>
         <v-btn plain text @click="resetFilter">reset</v-btn>
       </v-col>
     </v-row>
@@ -82,14 +99,15 @@
 import {mapActions, mapState} from "vuex";
 import Paginate from "@/components/Paginate";
 import CreatePost from "@/views/Posts/Doctors/CreatePost";
-import TheFilterPosts from "@/components/Filter/TheFilterPosts";
-import {GetCategories} from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import {
+  GetCategories,
+  GetTags,
+} from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 
 export default {
   name: "ThePosts",
   components: {
     CreatePost,
-    TheFilterPosts,
     Paginate,
   },
   computed: {
@@ -99,6 +117,12 @@ export default {
     handleGetCategories: {
       handler() {
         this.fetchCategories();
+      },
+      immediate: true,
+    },
+    fetchTags: {
+      handler() {
+        this.fetchTags();
       },
       immediate: true,
     },
@@ -113,7 +137,10 @@ export default {
 
     // Get post by category
     categoryId() {
-      this.handleGetPosts();
+      this.handleGetPosts(1);
+    },
+    tagId() {
+      this.handleGetPosts(1);
     },
   },
 
@@ -122,13 +149,19 @@ export default {
       backEndURL: process.env.VUE_APP_BACKEND_URL,
       categories: [],
       categoryId: null,
+      tags: [],
+      tagId: null,
     };
   },
   methods: {
     ...mapActions(["fetchPosts"]),
 
     handleGetPosts(page = 1) {
-      let payload = {categoryId: this.categoryId, page: page};
+      let payload = {
+        categoryId: this.categoryId,
+        tagId: this.tagId,
+        page: page,
+      };
       this.fetchPosts(payload);
     },
 
@@ -149,9 +182,21 @@ export default {
         }
       }
     },
+    async fetchTags() {
+      try {
+        const response = await GetTags();
+
+        if (response) {
+          this.tags = response.data;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
 
     resetFilter() {
       this.categoryId = null;
+      this.tagId = null;
     },
   },
 };
