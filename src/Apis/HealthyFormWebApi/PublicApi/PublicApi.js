@@ -58,6 +58,16 @@ const GetTags = () => {
   return HealthyFormWebApi().get("/tags");
 };
 
+const FilterPosts = (categoryId, page) => {
+  if (categoryId) {
+    return HealthyFormWebApi().get(
+      `/posts?filter[category_id]=${categoryId}&page=${page}`
+    );
+  } else {
+    return HealthyFormWebApi().get(`/posts?page=${page}`);
+  }
+};
+
 export {
   GetUserProfile,
   GetPostsByTag,
@@ -72,4 +82,5 @@ export {
   GetDistricts,
   SearchPosts,
   GetWards,
+  FilterPosts,
 };
