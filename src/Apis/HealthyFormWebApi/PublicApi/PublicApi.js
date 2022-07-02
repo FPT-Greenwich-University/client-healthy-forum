@@ -58,10 +58,20 @@ const GetTags = () => {
   return HealthyFormWebApi().get("/tags");
 };
 
-const FilterPosts = (categoryId, page) => {
+const FilterPosts = (categoryId, tagId, page) => {
+  if (categoryId && tagId) {
+    return HealthyFormWebApi().get(
+      `/posts?filter[category_id]=${categoryId}&filter[tag_id]=${tagId}&page=${page}`
+    );
+  }
+
   if (categoryId) {
     return HealthyFormWebApi().get(
       `/posts?filter[category_id]=${categoryId}&page=${page}`
+    );
+  } else if (tagId) {
+    return HealthyFormWebApi().get(
+      `/posts?filter[tag_id]=${tagId}&page=${page}`
     );
   } else {
     return HealthyFormWebApi().get(`/posts?page=${page}`);
