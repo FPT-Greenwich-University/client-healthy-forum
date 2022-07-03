@@ -6,18 +6,18 @@
           <v-card-title>Edit Post</v-card-title>
           <v-form>
             <v-text-field
-              v-model="formData.title"
-              label="Title"
-              required
+                v-model="formData.title"
+                label="Title"
+                required
             ></v-text-field>
             <div v-if="errors.title" class="red--text">
               {{ errors.title[0] }}
             </div>
 
             <v-text-field
-              v-model="formData.description"
-              label="Description"
-              required
+                v-model="formData.description"
+                label="Description"
+                required
             >
             </v-text-field>
             <div v-if="errors.description" class="red--text">
@@ -25,22 +25,22 @@
             </div>
 
             <v-textarea
-              v-model="formData.body"
-              Body
-              label="Body Post"
-              name=""
+                v-model="formData.body"
+                Body
+                label="Body Post"
+                name=""
             ></v-textarea>
             <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
 
             <!-- Select Category-->
             <v-select
-              v-model="formData.category_id"
-              :items="categories"
-              chips
-              hint="Pick the category for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Category"
+                v-model="formData.category_id"
+                :items="categories"
+                chips
+                hint="Pick the category for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Category"
             ></v-select>
             <div v-if="errors.category_id" class="red--text">
               {{ errors.category_id[0] }}
@@ -48,26 +48,26 @@
 
             <!-- Select Tags -->
             <v-select
-              v-model="formData.tags"
-              :items="tags"
-              chips
-              hint="Pick the tags for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Tags"
-              multiple
+                v-model="formData.tags"
+                :items="tags"
+                chips
+                hint="Pick the tags for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Tags"
+                multiple
             ></v-select>
             <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
 
             <v-file-input
-              v-model="formData.thumbnail"
-              accept="image/*"
-              chips
-              filled
-              label="Select your thumbnail"
-              placeholder="Select your thumbnail"
-              prepend-icon="mdi-camera"
-              show-size
+                v-model="formData.thumbnail"
+                accept="image/*"
+                chips
+                filled
+                label="Select your thumbnail"
+                placeholder="Select your thumbnail"
+                prepend-icon="mdi-camera"
+                show-size
             ></v-file-input>
             <div v-if="errors.thumbnail" class="red--text">
               {{ errors.thumbnail[0] }}
@@ -83,9 +83,9 @@
       <v-col>
         <!-- Error -->
         <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -99,12 +99,13 @@
   </v-container>
 </template>
 <script>
-import { mapState } from "vuex";
-import { UpdatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import {mapState} from "vuex";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import {UpdatePost} from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DoctorEditPosts",
@@ -152,6 +153,13 @@ export default {
       },
       immediate: true,
     },
+
+    handleFetchDetailPost: {
+      handler() {
+        this.getDetailPost(this.postID);
+      },
+      immediate: true,
+    },
   },
   methods: {
     /**
@@ -169,9 +177,9 @@ export default {
           formData.append(`tags[${index}]`, element);
         });
         const res = await UpdatePost(
-          this.userAuthenticated.id,
-          this.postID,
-          formData
+            this.userAuthenticated.id,
+            this.postID,
+            formData
         );
 
         if (res.status === 200) {
@@ -225,6 +233,15 @@ export default {
             name: e.name,
           };
         });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async getDetailPost(postId) {
+      try {
+        const response = await DoctorGetDetailPost(postId);
+        console.log("Detail post", response.data);
       } catch (e) {
         console.log(e);
       }
