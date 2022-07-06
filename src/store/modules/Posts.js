@@ -53,13 +53,14 @@ const Posts = {
     async doctorGetDetailPost({ commit }, payload) {
       try {
         const response = await DoctorGetDetailPost(payload);
+        console.log(response);
         commit(SET_DETAIL_POST, response.data);
       } catch (e) {
-        if (e.response) {
-          if (e.response.status === 404) {
-            await router.push({ name: "NotFounds" });
-          }
-        }
+        // if (e.response) {
+        //   if (e.response.status === 404) {
+        //     await router.push({ name: "NotFounds" });
+        //   }
+        // }
       }
     },
 
