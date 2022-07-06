@@ -41,6 +41,7 @@
               item-text="name"
               item-value="id"
               label="Select Category"
+              small-chips
             ></v-select>
             <div v-if="errors.category_id" class="red--text">
               {{ errors.category_id[0] }}
@@ -56,15 +57,21 @@
               item-value="id"
               label="Select Tags"
               multiple
+              small-chips
             ></v-select>
             <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
 
+            <v-img
+              v-if="post.image"
+              :src="`${backEndURL}/${post.image.path}`"
+            ></v-img>
             <v-file-input
               v-model="formData.thumbnail"
               accept="image/*"
               chips
+              class="mt-5"
               filled
-              label="Select your thumbnail"
+              label="Select new thumbnail (Optional)"
               placeholder="Select your thumbnail"
               prepend-icon="mdi-camera"
               show-size
@@ -100,11 +107,12 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { UpdatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import { UpdatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DoctorEditPosts",
@@ -119,8 +127,10 @@ export default {
   },
   data() {
     return {
+      post: {},
       categories: [],
       tags: [],
+      backEndURL: process.env.VUE_APP_BACKEND_URL,
       formData: {
         title: "",
         body: "",
@@ -152,6 +162,13 @@ export default {
       },
       immediate: true,
     },
+
+    handleFetchDetailPost: {
+      handler() {
+        this.getDetailPost(this.postID);
+      },
+      immediate: true,
+    },
   },
   methods: {
     /**
@@ -164,7 +181,11 @@ export default {
         formData.append("description", this.formData.description);
         formData.append("body", this.formData.body);
         formData.append("category_id", this.formData.category_id);
-        formData.append("thumbnail", this.formData.thumbnail);
+
+        if (this.formData.thumbnail !== undefined) {
+          formData.append("thumbnail", this.formData.thumbnail);
+        }
+
         this.formData.tags.forEach((element, index) => {
           formData.append(`tags[${index}]`, element);
         });
@@ -174,12 +195,13 @@ export default {
           formData
         );
 
-        if (res.status === 200) {
+        if (res.status === 204) {
           this.errors = {}; // delete all error
-          this.snackbar.content = res.data;
+          this.snackbar.content = "Update success";
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
+          await this.getDetailPost(this.postID); // Refresh information post
         }
       } catch (e) {
         if (e.response.status === 422) {
@@ -225,6 +247,32 @@ export default {
             name: e.name,
           };
         });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async getDetailPost(postId) {
+      try {
+        let payload = {
+          userId: this.userAuthenticated.id,
+          postId: postId,
+        };
+        const response = await DoctorGetDetailPost(payload);
+
+        if (response) {
+          this.post = response.data;
+          this.formData = {
+            title: this.post.title,
+            body: this.post.body,
+            category_id: this.post.category_id,
+            description: this.post.description,
+          };
+          // Set tags of the formdata
+          this.formData.tags = this.post.tags.map((e) => {
+            return e.id;
+          });
+        }
       } catch (e) {
         console.log(e);
       }

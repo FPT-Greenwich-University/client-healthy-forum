@@ -29,7 +29,6 @@ export default new Vuex.Store({
   actions: {
     // Fetch the posts
     async fetchPosts({ commit }, payload) {
-      console.log("page", payload.page);
       try {
         const response = await FilterPosts(
           payload.categoryId,

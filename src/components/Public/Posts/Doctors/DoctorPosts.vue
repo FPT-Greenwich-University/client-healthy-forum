@@ -4,14 +4,15 @@
       <v-card-title>Post articles</v-card-title>
     </v-card>
     <v-divider class="my-5"></v-divider>
-    <template v-for="item in userPosts">
+    <template v-if="userPosts.length > 0" v-for="item in userPosts">
       <!--    List all posts-->
       <v-card class="my-5" elevation="1">
         <v-card-text>
           <v-img
-            :src="`${backEndURL}/${item.image.path}`"
-            aspect-ratio="2"
-            class="rounded"
+              v-if="item.image.path"
+              :src="`${backEndURL}/${item.image.path}`"
+              aspect-ratio="2"
+              class="rounded"
           >
           </v-img>
           <p class="font-weight-bold mt-5">{{ item.title }}</p>
@@ -23,13 +24,13 @@
           <v-row class="flex flex-row justify-space-between">
             <v-col class="text-left">
               <v-btn
-                class="text-decoration-underline"
-                color="primary"
-                depressed
-                plain
-                text
-                tile
-                @click="handleDetailPost(item.id)"
+                  class="text-decoration-underline"
+                  color="primary"
+                  depressed
+                  plain
+                  text
+                  tile
+                  @click="handleDetailPost(item.id)"
               >
                 Read more
               </v-btn>
@@ -39,11 +40,11 @@
             <v-col v-if="isOwnProfile" class="text-right">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn dark small v-bind="attrs" v-on="on"> Action </v-btn>
+                  <v-btn dark small v-bind="attrs" v-on="on"> Action</v-btn>
                 </template>
                 <v-list>
                   <v-list-item>
-                    <EditPostButton :postID="item.id" />
+                    <EditPostButton :postID="item.id"/>
                   </v-list-item>
                 </v-list>
               </v-menu>
@@ -57,11 +58,12 @@
 <script>
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
+import login from "@/views/Auth/Login";
 
 export default {
   name: "DoctorPosts",
-  components: { EditPostButton },
+  components: {EditPostButton},
   computed: {
     ...mapState("AUTH", ["isOwnProfile"]),
   },
@@ -89,9 +91,13 @@ export default {
     async fetchUserPosts(userID) {
       try {
         const response = await HealthyFormWebApi().get(
-          `/users/${userID}/posts`
+            `/users/${userID}/posts`
         );
-        this.userPosts = response.data;
+
+        if (response) {
+          this.userPosts = response.data;
+          console.log(this.userPosts);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -100,7 +106,7 @@ export default {
     handleDetailPost(postID) {
       this.$router.push({
         name: "TheDoctorPostDetails",
-        params: { postID: postID },
+        params: {postID: postID},
       });
     },
   },
