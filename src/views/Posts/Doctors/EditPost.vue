@@ -6,18 +6,18 @@
           <v-card-title>Edit Post</v-card-title>
           <v-form>
             <v-text-field
-                v-model="formData.title"
-                label="Title"
-                required
+              v-model="formData.title"
+              label="Title"
+              required
             ></v-text-field>
             <div v-if="errors.title" class="red--text">
               {{ errors.title[0] }}
             </div>
 
             <v-text-field
-                v-model="formData.description"
-                label="Description"
-                required
+              v-model="formData.description"
+              label="Description"
+              required
             >
             </v-text-field>
             <div v-if="errors.description" class="red--text">
@@ -25,22 +25,23 @@
             </div>
 
             <v-textarea
-                v-model="formData.body"
-                Body
-                label="Body Post"
-                name=""
+              v-model="formData.body"
+              Body
+              label="Body Post"
+              name=""
             ></v-textarea>
             <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
 
             <!-- Select Category-->
             <v-select
-                v-model="formData.category_id"
-                :items="categories"
-                chips
-                hint="Pick the category for this post"
-                item-text="name"
-                item-value="id"
-                label="Select Category"
+              v-model="formData.category_id"
+              :items="categories"
+              chips
+              hint="Pick the category for this post"
+              item-text="name"
+              item-value="id"
+              label="Select Category"
+              small-chips
             ></v-select>
             <div v-if="errors.category_id" class="red--text">
               {{ errors.category_id[0] }}
@@ -48,26 +49,32 @@
 
             <!-- Select Tags -->
             <v-select
-                v-model="formData.tags"
-                :items="tags"
-                chips
-                hint="Pick the tags for this post"
-                item-text="name"
-                item-value="id"
-                label="Select Tags"
-                multiple
+              v-model="formData.tags"
+              :items="tags"
+              chips
+              hint="Pick the tags for this post"
+              item-text="name"
+              item-value="id"
+              label="Select Tags"
+              multiple
+              small-chips
             ></v-select>
             <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
 
+            <v-img
+              v-if="post.image"
+              :src="`${backEndURL}/${post.image.path}`"
+            ></v-img>
             <v-file-input
-                v-model="formData.thumbnail"
-                accept="image/*"
-                chips
-                filled
-                label="Select your thumbnail"
-                placeholder="Select your thumbnail"
-                prepend-icon="mdi-camera"
-                show-size
+              v-model="formData.thumbnail"
+              accept="image/*"
+              chips
+              class="mt-5"
+              filled
+              label="Select new thumbnail (Optional)"
+              placeholder="Select your thumbnail"
+              prepend-icon="mdi-camera"
+              show-size
             ></v-file-input>
             <div v-if="errors.thumbnail" class="red--text">
               {{ errors.thumbnail[0] }}
@@ -83,9 +90,9 @@
       <v-col>
         <!-- Error -->
         <v-snackbar
-            v-model="snackbar.status"
-            :color="snackbar.color"
-            :timeout="snackbar.timeout"
+          v-model="snackbar.status"
+          :color="snackbar.color"
+          :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -99,13 +106,13 @@
   </v-container>
 </template>
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
-import {UpdatePost} from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
-import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import { UpdatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DoctorEditPosts",
@@ -120,8 +127,10 @@ export default {
   },
   data() {
     return {
+      post: {},
       categories: [],
       tags: [],
+      backEndURL: process.env.VUE_APP_BACKEND_URL,
       formData: {
         title: "",
         body: "",
@@ -172,22 +181,27 @@ export default {
         formData.append("description", this.formData.description);
         formData.append("body", this.formData.body);
         formData.append("category_id", this.formData.category_id);
-        formData.append("thumbnail", this.formData.thumbnail);
+
+        if (this.formData.thumbnail !== undefined) {
+          formData.append("thumbnail", this.formData.thumbnail);
+        }
+
         this.formData.tags.forEach((element, index) => {
           formData.append(`tags[${index}]`, element);
         });
         const res = await UpdatePost(
-            this.userAuthenticated.id,
-            this.postID,
-            formData
+          this.userAuthenticated.id,
+          this.postID,
+          formData
         );
 
-        if (res.status === 200) {
+        if (res.status === 204) {
           this.errors = {}; // delete all error
-          this.snackbar.content = res.data;
+          this.snackbar.content = "Update success";
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
+          await this.getDetailPost(this.postID); // Refresh information post
         }
       } catch (e) {
         if (e.response.status === 422) {
@@ -240,8 +254,25 @@ export default {
 
     async getDetailPost(postId) {
       try {
-        const response = await DoctorGetDetailPost(postId);
-        console.log("Detail post", response.data);
+        let payload = {
+          userId: this.userAuthenticated.id,
+          postId: postId,
+        };
+        const response = await DoctorGetDetailPost(payload);
+
+        if (response) {
+          this.post = response.data;
+          this.formData = {
+            title: this.post.title,
+            body: this.post.body,
+            category_id: this.post.category_id,
+            description: this.post.description,
+          };
+          // Set tags of the formdata
+          this.formData.tags = this.post.tags.map((e) => {
+            return e.id;
+          });
+        }
       } catch (e) {
         console.log(e);
       }

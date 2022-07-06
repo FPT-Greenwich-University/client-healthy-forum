@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 // Components
 import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheComments";
 import TheTags from "@/components/Public/Posts/DetailPost/Tags/TheTags";
@@ -95,6 +95,8 @@ import LikeButton from "@/components/User/Like/LikeButton";
 import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
 import AddButton from "@/components/Favorites/Posts/AddButton";
+import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import { SET_DETAIL_POST } from "@/store/mutation-types/post-mutation-types";
 
 export default {
   name: "ThePostDetails",
@@ -111,6 +113,7 @@ export default {
   computed: {
     ...mapState("POSTS", ["postDetail", "totalLikes"]),
     ...mapState("AUTH", ["userAuthenticated"]),
+    ...mapGetters("AUTH", ["isDoctor"]),
     isThePostOwner() {
       return this.userAuthenticated.id === this.postDetail.user_id;
     },
@@ -118,11 +121,14 @@ export default {
   watch: {
     fetchPost: {
       handler: function () {
-        if (this.$route.name === "TheDoctorPostDetails") {
-          this.doctorGetDetailPost({
-            userID: this.userAuthenticated.id,
-            postID: this.$route.params.postID,
-          });
+        if (this.$route.name === "TheDoctorPostDetails" && this.isDoctor) {
+          if (this.userAuthenticated.id) {
+            // alert("OK");
+            this.doctorGetDetailPost(
+              this.userAuthenticated.id,
+              this.$route.params.postID
+            );
+          }
         } else {
           this.getDetailPost(this.$route.params.postID);
         }
@@ -144,6 +150,15 @@ export default {
       "getTotalLikeOfPost",
       "doctorGetDetailPost",
     ]),
+
+    async doctorGetDetailPost(userId, postId) {
+      try {
+        const response = await DoctorGetDetailPost({ userId, postId });
+        this.$store.commit(`POSTS/${SET_DETAIL_POST}`, response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
