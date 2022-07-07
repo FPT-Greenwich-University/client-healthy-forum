@@ -5,6 +5,12 @@ const GetPublishedPosts = (page) => {
   return HealthyFormWebApi().get(`/posts?page=${page}`);
 };
 
+const GetPublishedPostsByUser = (userId, page) => {
+  return HealthyFormWebApi().get(
+    `/users/${userId}/published-posts?page=${page}`
+  );
+};
+
 const GetDetailPost = (postId) => {
   return HealthyFormWebApi().get(`/posts/${postId}`);
 };
@@ -80,6 +86,7 @@ const FilterPosts = (categoryId, tagId, page) => {
 
 export {
   GetUserProfile,
+  GetPublishedPostsByUser,
   GetPostsByTag,
   GetCommentsByPost,
   GetDetailPost,

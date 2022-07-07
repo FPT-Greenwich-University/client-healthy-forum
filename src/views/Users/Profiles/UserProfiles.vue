@@ -89,6 +89,7 @@
 <script>
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
+
 import { mapActions, mapGetters, mapState } from "vuex";
 import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 
