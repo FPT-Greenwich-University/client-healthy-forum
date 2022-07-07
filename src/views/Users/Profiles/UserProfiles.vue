@@ -126,9 +126,6 @@ export default {
 };
 </script>
 <style scoped>
-.user-profile {
-}
-
 #introduce {
   position: sticky;
   top: 64px;
