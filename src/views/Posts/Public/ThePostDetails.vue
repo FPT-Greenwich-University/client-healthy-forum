@@ -31,33 +31,23 @@
 
     <!--  Image  -->
     <v-row>
-      <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
-        <v-img
-          v-if="postDetail.image"
-          :src="`${backEndURL}/${postDetail.image.path}`"
-          alt="post image"
-          class="rounded-lg"
-        >
+      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
+        <v-img v-if="postDetail.image" :src="`${backEndURL}/${postDetail.image.path}`" alt="post image"
+          class="rounded-lg">
         </v-img>
       </v-col>
     </v-row>
 
     <!--  Divider  -->
     <v-row>
-      <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
+      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
         <v-divider></v-divider>
       </v-col>
     </v-row>
 
     <!--  Body text  -->
     <v-row>
-      <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
+      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
         <v-card elevation="0">
           <v-card-text class="text-left">
             {{ postDetail.body }}
@@ -83,9 +73,13 @@
 </template>
 
 <script>
-// TODO: fix postId to postId
+/**
+ * Vue x
+ */
 import { mapActions, mapGetters, mapState } from "vuex";
-// Components
+/**
+ * Components
+ */
 import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheComments";
 import TheTags from "@/components/Public/Posts/DetailPost/Tags/TheTags";
 import FormInputComment from "@/components/User/Comment/FormInputComment";
@@ -134,7 +128,7 @@ export default {
   data() {
     return {
       postId: Number(this.$route.params.postId),
-      backEndURL: process.env.VUE_APP_BACKEND_URL,
+      backEndURL: process.env.VUE_APP_BACKEND_URL, // Backend domain url
     };
   },
   methods: {
@@ -144,6 +138,11 @@ export default {
       "doctorGetDetailPost",
     ]),
 
+    /**
+     * Get Detail Doctor's Post
+     * @param {*} userId
+     * @param {*} postId
+     */
     async doctorGetDetailPost(userId, postId) {
       try {
         const response = await DoctorGetDetailPost({ userId, postId });

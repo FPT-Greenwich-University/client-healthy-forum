@@ -1,10 +1,6 @@
 <template>
   <div class="text-center">
-    <v-pagination
-      v-model="currentPage"
-      :length="lastPage"
-      :total-visible="7"
-    ></v-pagination>
+    <v-pagination v-model="currentPage" :length="lastPage" :total-visible="7"></v-pagination>
   </div>
 </template>
 
@@ -47,4 +43,5 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
