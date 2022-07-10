@@ -3,74 +3,59 @@
     <v-card elevation="1">
       <v-card-title>Post articles</v-card-title>
     </v-card>
+
     <v-divider class="my-5"></v-divider>
-    <template v-if="userPosts.length > 0" v-for="item in userPosts">
-      <!--    List all posts-->
-      <v-card class="my-5" elevation="1">
-        <v-card-text>
-          <v-img
-              v-if="item.image.path"
-              :src="`${backEndURL}/${item.image.path}`"
-              aspect-ratio="2"
-              class="rounded"
-          >
-          </v-img>
-          <p class="font-weight-bold mt-5">{{ item.title }}</p>
-          <p>Rating: 4.5</p>
-          <p>Like: 55</p>
-        </v-card-text>
 
-        <v-card-actions>
-          <v-row class="flex flex-row justify-space-between">
-            <v-col class="text-left">
-              <v-btn
-                  class="text-decoration-underline"
-                  color="primary"
-                  depressed
-                  plain
-                  text
-                  tile
-                  @click="handleDetailPost(item.id)"
-              >
-                Read more
-              </v-btn>
-            </v-col>
+    <!--    List some posts-->
+    <div v-if="!isEmptyPosts">
+      <PostItem v-for="item in userPosts" :key="item.id" :item="item" />
 
-            <!--    Owner's profile action   -->
-            <v-col v-if="isOwnProfile" class="text-right">
-              <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn dark small v-bind="attrs" v-on="on"> Action</v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <EditPostButton :postID="item.id"/>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-col>
-          </v-row>
-        </v-card-actions>
-      </v-card>
-    </template>
+      <!-- Button Read more posts -->
+      <ReadMorePostsButton />
+    </div>
+
+    <div v-else>
+      <p>Not have posts</p>
+    </div>
   </v-col>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+/**
+ * Components
+ * */
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
-import {mapState} from "vuex";
-import login from "@/views/Auth/Login";
+import PostItem from "@/components/Profiles/DoctorPosts/PostItem";
+import ReadMorePostsButton from "@/components/Profiles/DoctorPosts/ReadMorePostsButton";
 
+/**
+ * Api call
+ */
+import { DoctorGetOwnPosts } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import { GetPublishedPostsByUser } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi.js";
+
+/**
+ * Vuex
+ */
+import { mapState } from "vuex";
 export default {
   name: "DoctorPosts",
-  components: {EditPostButton},
+  components: { EditPostButton, PostItem, ReadMorePostsButton },
   computed: {
     ...mapState("AUTH", ["isOwnProfile"]),
+
+    isEmptyPosts() {
+      return this.userPosts.length < 0;
+    },
   },
   watch: {
     handleFetchUserPosts: {
       handler() {
-        this.fetchUserPosts(this.userID);
+        // if is owner profile
+        if (this.isOwnProfile) {
+          this.doctorFetchPosts(this.userID, 1); // Get all the posts
+        } else {
+          this.fetchPublishedPosts(this.userID, 1); // Get only published posts
+        }
       },
       immediate: true,
     },
@@ -84,30 +69,36 @@ export default {
   data() {
     return {
       userPosts: [],
-      backEndURL: process.env.VUE_APP_BACKEND_URL,
     };
   },
   methods: {
-    async fetchUserPosts(userID) {
+    async doctorFetchPosts(userId, page = 1) {
       try {
-        const response = await HealthyFormWebApi().get(
-            `/users/${userID}/posts`
-        );
+        const response = await DoctorGetOwnPosts(userId, page);
 
-        if (response) {
-          this.userPosts = response.data;
-          console.log(this.userPosts);
-        }
-      } catch (e) {
-        console.log(e);
+        this.userPosts = response.data.data.filter((element, index) => {
+          if (index < 2) {
+            return element;
+          }
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
 
-    handleDetailPost(postID) {
-      this.$router.push({
-        name: "TheDoctorPostDetails",
-        params: {postID: postID},
-      });
+    //TODO: call this method if the current user not is a owner of the profile
+    async fetchPublishedPosts(userId, page) {
+      try {
+        const response = await GetPublishedPostsByUser(userId, page);
+
+        this.userPosts = response.data.data.filter((element, index) => {
+          if (index < 2) {
+            return element;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

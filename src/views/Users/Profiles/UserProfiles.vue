@@ -89,6 +89,7 @@
 <script>
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
+
 import { mapActions, mapGetters, mapState } from "vuex";
 import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 
@@ -126,9 +127,6 @@ export default {
 };
 </script>
 <style scoped>
-.user-profile {
-}
-
 #introduce {
   position: sticky;
   top: 64px;
