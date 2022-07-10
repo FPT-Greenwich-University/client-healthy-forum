@@ -4,7 +4,7 @@
     <v-form ref="form" class="mx-10">
       <!-- Select Category-->
       <v-select
-        v-model="categoryID"
+        v-model="categoryId"
         :items="categories"
         chips
         hint="Pick the category to update"
@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       categories: [],
-      categoryID: null,
+      categoryId: null,
       formData: {
         name: "",
         description: "",
@@ -101,14 +101,14 @@ export default {
       this.$refs.form.reset();
     },
 
-    checkIsNullCategoryID() {
-      return this.categoryID == null;
+    checkIsNullcategoryId() {
+      return this.categoryId == null;
     },
 
     async handleCreateCategory() {
       try {
-        if (this.checkIsNullCategoryID() !== true) {
-          const response = await UpdateCategory(this.categoryID, this.formData);
+        if (this.checkIsNullcategoryId() !== true) {
+          const response = await UpdateCategory(this.categoryId, this.formData);
 
           if (response) {
             this.errors = {}; // remove all error
@@ -116,7 +116,7 @@ export default {
             this.snackbar.color = "success";
             this.snackbar.status = true;
             this.formData = {};
-            this.categoryID = null;
+            this.categoryId = null;
           }
         } else {
           this.snackbar.color = "red";

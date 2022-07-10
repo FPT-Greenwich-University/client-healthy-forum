@@ -67,7 +67,7 @@ import {
 export default {
   name: "DetailPost",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
@@ -85,7 +85,7 @@ export default {
       this.dialog = true;
 
       try {
-        const res = await AdminGetDetailPost(this.postID); // console.log('Detail post', res.data)
+        const res = await AdminGetDetailPost(this.postId); // console.log('Detail post', res.data)
         this.post = res.data;
       } catch (e) {
         if (e) {
@@ -96,7 +96,7 @@ export default {
 
     async publishPost() {
       try {
-        const res = await AdminUpdateStatusPost(this.postID);
+        const res = await AdminUpdateStatusPost(this.postId);
 
         if (res) {
           this.dialog = false;

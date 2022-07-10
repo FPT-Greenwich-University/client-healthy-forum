@@ -38,7 +38,7 @@ import { DeletePost } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 export default {
   name: "AdminDeletePost",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
@@ -52,7 +52,7 @@ export default {
   methods: {
     async deletePost() {
       try {
-        const res = await DeletePost(this.postID);
+        const res = await DeletePost(this.postId);
 
         if (res) {
           this.dialog = false;

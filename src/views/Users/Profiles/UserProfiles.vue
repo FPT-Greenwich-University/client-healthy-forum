@@ -60,11 +60,9 @@
           <v-card-actions v-if="isOwnProfile">
             <ChangeProfile @update-profile="handleFetchProfile" />
           </v-card-actions>
-          <v-card-actions v-if="!isOwnProfile">
-            <AddToFavoriteButton />
-          </v-card-actions>
 
-          <!--          <v-divider class="m-4"></v-divider>-->
+          <v-divider class="m-4"></v-divider>
+
           <v-card-text v-if="userInfo.profile !== null">
             <p>
               Live at <span class="font-weight-bold">{{ getFullName }}</span>
@@ -82,7 +80,7 @@
       </v-col>
       <v-spacer></v-spacer>
 
-      <DoctorPosts v-if="userInfo.id" :userID="userInfo.id" />
+      <DoctorPosts v-if="userInfo.id" :userId="userInfo.id" />
     </v-row>
   </v-container>
 </template>
@@ -91,12 +89,10 @@ import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 
 import { mapActions, mapGetters, mapState } from "vuex";
-import AddToFavoriteButton from "@/components/Favorites/Doctors/AddToFavoriteButton";
 
 export default {
   name: "UserProfile",
   components: {
-    AddToFavoriteButton,
     DoctorPosts,
     ChangeProfile,
   },
@@ -112,16 +108,16 @@ export default {
   watch: {
     handleFetchProfile: {
       handler() {
-        let userID = this.$route.params.userID;
-        this.fetchProfile(userID);
+        let userId = this.$route.params.userId;
+        this.fetchProfile(userId);
       },
       immediate: true,
     },
   },
   methods: {
     ...mapActions("AUTH", ["fetchProfile"]),
-    handleFetchProfile(userID) {
-      this.fetchProfile(userID);
+    handleFetchProfile(userId) {
+      this.fetchProfile(userId);
     },
   },
 };

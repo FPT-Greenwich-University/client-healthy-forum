@@ -158,7 +158,7 @@ export default {
       try {
         const res = await GoogleLogin(formData);
         // console.log('res data google log', res)
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", JSON.stringify(res.data.token));
         await this.fetchUserAuthInfo();
       } catch (e) {
         console.log("Backend login error", e);
@@ -177,7 +177,7 @@ export default {
       try {
         const res = await Login(formData);
 
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", JSON.stringify(res.data.token));
         this.$store.commit("AUTH/UPDATE_AUTH", true);
         await this.fetchUserAuthInfo();
         let previousUrl = this.$router.history._startLocation;

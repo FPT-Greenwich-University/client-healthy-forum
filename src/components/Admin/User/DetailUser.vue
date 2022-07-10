@@ -51,7 +51,7 @@
         <v-list-item>
           <UpdatePermission
             :roles="roles"
-            :userID="userID"
+            :userId="userId"
             @fetch-user-detail="fetchUserDetail"
           />
         </v-list-item>
@@ -68,7 +68,7 @@ export default {
   name: "DetailUser",
   components: { UpdatePermission },
   props: {
-    userID: {
+    userId: {
       type: Number,
       required: true,
     },
@@ -93,7 +93,7 @@ export default {
       if (this.isAdmin) {
         try {
           const res = await HealthyFormWebApi().get(
-            `/admins/users/${this.userID}/roles`
+            `/admins/users/${this.userId}/roles`
           );
           if (res) {
             this.user = res.data;

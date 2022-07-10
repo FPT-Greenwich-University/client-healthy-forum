@@ -81,10 +81,10 @@ export default {
       }
     },
 
-    async handleAcceptDoctorRole(userID) {
+    async handleAcceptDoctorRole(userId) {
       try {
         const res = await HealthyFormWebApi().put(
-          `/register/doctor-role/${userID}`
+          `/register/doctor-role/${userId}`
         );
         console.log("Accept role", res);
         if (res) {

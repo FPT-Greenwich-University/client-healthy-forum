@@ -23,13 +23,13 @@
                   <td>{{ item.is_published ? "Yes" : "No" }}</td>
                   <td>
                     <DetailPost
-                      :postID="item.id"
+                      :postId="item.id"
                       @update-status="fetchPostWhereNotPublish"
                     />
                   </td>
                   <td>
                     <DeletePost
-                      :postID="item.id"
+                      :postId="item.id"
                       @delete-post="fetchPostWhereNotPublish()"
                     />
                   </td>
@@ -96,14 +96,14 @@ export default {
 
     async fetchPostsMostLiked(page) {
       try {
-        const res = await GetPostsMostLike(page);
+        const response = await GetPostsMostLike(page);
 
-        this.posts = res.data.data;
-        this.$store.commit("setCurrentPage", res.data.current_page);
-        this.$store.commit("setLastPage", res.data.last_page);
+        this.posts = response.data.data;
+        this.$store.commit("setCurrentPage", response.data.current_page);
+        this.$store.commit("setLastPage", response.data.last_page);
       } catch (e) {
-        if (e) {
-          console.log(e);
+        if (error) {
+          console.log(error);
         }
       }
     },

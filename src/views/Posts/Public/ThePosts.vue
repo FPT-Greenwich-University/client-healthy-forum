@@ -3,28 +3,28 @@
     <v-row class="d-flex flex-row mx-auto">
       <v-col class="col-3">
         <v-select
-            v-model="categoryId"
-            :attach="true"
-            :items="categories"
-            chips
-            item-text="name"
-            item-value="id"
-            label="Category"
-            multiple
+          v-model="categoryId"
+          :attach="true"
+          :items="categories"
+          chips
+          item-text="name"
+          item-value="id"
+          label="Category"
+          multiple
         ></v-select>
       </v-col>
 
       <!--   Select tag   -->
       <v-col class="col-3">
         <v-select
-            v-model="tagId"
-            :attach="true"
-            :items="tags"
-            chips
-            item-text="name"
-            item-value="id"
-            label="Tags"
-            multiple
+          v-model="tagId"
+          :attach="true"
+          :items="tags"
+          chips
+          item-text="name"
+          item-value="id"
+          label="Tags"
+          multiple
         ></v-select>
       </v-col>
 
@@ -43,16 +43,16 @@
 
     <v-row>
       <v-col
-          v-for="item in posts"
-          :key="item.id"
-          class="col-12 col-xl-6 col-lg-6 col-md-6"
+        v-for="item in posts"
+        :key="item.id"
+        class="col-12 col-xl-6 col-lg-6 col-md-6"
       >
         <v-card elevation="0">
           <v-card-text>
             <v-img
-                v-if="item.image.path"
-                :src="`${backEndURL}/${item.image.path}`"
-                aspect-ratio="2"
+              v-if="item.image.path"
+              :src="`${backEndURL}/${item.image.path}`"
+              aspect-ratio="2"
             ></v-img>
           </v-card-text>
 
@@ -60,11 +60,11 @@
           <v-card-subtitle>
             Author:
             <v-btn
-                :to="{ name: 'UserProfiles', params: { userID: item.user.id } }"
-                class="px-0 my-0"
-                plain
-                small
-                text
+              :to="{ name: 'UserProfiles', params: { userId: item.user.id } }"
+              class="px-0 my-0"
+              plain
+              small
+              text
             >
               {{ item.user.name }}
             </v-btn>
@@ -72,13 +72,13 @@
           <v-card-subtitle>Category: {{ item.category.name }}</v-card-subtitle>
           <v-card-actions>
             <v-btn
-                class="text-decoration-underline"
-                color="primary"
-                depressed
-                plain
-                text
-                tile
-                @click="handleDetailPost(item.id)"
+              class="text-decoration-underline"
+              color="primary"
+              depressed
+              plain
+              text
+              tile
+              @click="handleDetailPost(item.id)"
             >
               Read more
             </v-btn>
@@ -90,13 +90,13 @@
     <!-- Paginate -->
     <v-row v-if="posts.length > 0">
       <v-col>
-        <Paginate @change-page="handleGetPosts"/>
+        <Paginate @change-page="handleGetPosts" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import {mapActions, mapState} from "vuex";
+import { mapActions, mapState } from "vuex";
 import Paginate from "@/components/Paginate";
 import CreatePost from "@/views/Posts/Doctors/CreatePost";
 import {
@@ -165,8 +165,8 @@ export default {
       this.fetchPosts(payload);
     },
 
-    handleDetailPost(postID) {
-      this.$router.push(`/posts/${postID}`);
+    handleDetailPost(postId) {
+      this.$router.push(`/posts/${postId}`);
     },
 
     async fetchCategories() {

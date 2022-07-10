@@ -17,7 +17,7 @@ const DoctorGetDetailPost = (payload) => {
 
 const DoctorDeletePost = (payload) => {
   return HealthyFormWebApi().delete(
-    `/users/${payload.userID}/posts/${payload.postID}`
+    `/users/${payload.userId}/posts/${payload.postId}`
   );
 };
 

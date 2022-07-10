@@ -27,12 +27,12 @@ const Posts = {
     /**
      * Public detail post
      * @param commit
-     * @param postID
+     * @param postId
      * @returns {Promise<void>}
      */
-    getDetailPost: async function ({ commit }, postID) {
+    getDetailPost: async function ({ commit }, postId) {
       try {
-        const response = await GetDetailPost(postID);
+        const response = await GetDetailPost(postId);
         commit(SET_DETAIL_POST, response.data);
       } catch (e) {
         if (e.response) {
@@ -68,12 +68,12 @@ const Posts = {
      * Get all tag belong to the post
      *
      * @param commit
-     * @param postID
+     * @param postId
      * @returns {Promise<void>}
      */
-    getDetailPostTags: async function ({ commit }, postID) {
+    getDetailPostTags: async function ({ commit }, postId) {
       try {
-        const response = await GetTagsByPost(postID);
+        const response = await GetTagsByPost(postId);
         commit(SET_DETAIL_POST_TAGS, response.data);
       } catch (e) {
         if (e.response) {
@@ -88,13 +88,14 @@ const Posts = {
      * Get the total like of the post
      *
      * @param commit
-     * @param postID
+     * @param postId
      * @returns {Promise<void>}
      */
-    async getTotalLikeOfPost({ commit }, postID) {
+    async getTotalLikeOfPost({ commit }, postId) {
       try {
-        const res = await GetTotalLikeOfPost(postID);
-        commit(SET_TOTAL_LIKE, res.data.total_likes);
+        const res = await GetTotalLikeOfPost(postId);
+        console.log("TOTAL LIKE:", res);
+        commit(SET_TOTAL_LIKE, res.data);
       } catch (e) {
         if (e) {
           console.log(e);

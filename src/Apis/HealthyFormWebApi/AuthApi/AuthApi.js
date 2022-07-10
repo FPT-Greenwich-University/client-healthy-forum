@@ -35,8 +35,8 @@ const GetAuthProfile = () => {
  * User update profile
  * @param formData
  */
-const UpdateProfile = (formData) => {
-  return HealthyFormWebApi().put("/profiles", formData);
+const UpdateProfile = (userId, formData) => {
+  return HealthyFormWebApi().put(`/users/${userId}/profiles`, formData);
 };
 
 /**

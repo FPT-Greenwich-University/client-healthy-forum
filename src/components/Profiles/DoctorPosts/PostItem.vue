@@ -29,7 +29,7 @@
             tile
             :to="{
               name: 'TheDoctorPostDetails',
-              params: { postID: item.id },
+              params: { postId: item.id },
             }"
           >
             Read more
@@ -46,7 +46,7 @@
             tile
             :to="{
               name: 'ThePostDetails',
-              params: { postID: item.id },
+              params: { postId: item.id },
             }"
           >
             Read more
@@ -61,7 +61,7 @@
             </template>
             <v-list>
               <v-list-item>
-                <EditPostButton :postID="item.id" />
+                <EditPostButton :postId="item.id" />
               </v-list-item>
             </v-list>
           </v-menu>

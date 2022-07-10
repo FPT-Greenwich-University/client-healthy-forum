@@ -88,8 +88,8 @@ export default {
     };
   },
   methods: {
-    handleDetailPost(postID) {
-      this.$router.push(`/posts/${postID}`);
+    handleDetailPost(postId) {
+      this.$router.push(`/posts/${postId}`);
     },
 
     async searchPosts(page = 1) {

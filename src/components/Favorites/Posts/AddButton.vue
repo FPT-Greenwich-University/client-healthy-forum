@@ -2,12 +2,11 @@
   <v-row v-if="isAuthenticated" justify="center">
     <v-col class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
       <v-btn
-        :color="followStatus.color"
         block
         dark
         elevation="2"
         x-small
-        @click="isFollowed ? unFollow(userID, postID) : addFollow(postID)"
+        @click="isFollowed ? unFollow(userId, postId) : addFollow(postId)"
       >
         {{ followStatus.message }}
         <v-icon dark x-small>
@@ -35,10 +34,10 @@ export default {
     handleCheckFollow: {
       handler() {
         if (this.isAuthenticated) {
-          this.userID = this.userAuthenticated.id;
+          this.userId = this.userAuthenticated.id;
 
-          if (this.userID !== undefined) {
-            this.checkFollow(this.userAuthenticated.id, this.postID);
+          if (this.userId !== undefined) {
+            this.checkFollow(this.userAuthenticated.id, this.postId);
           }
         }
       },
@@ -48,12 +47,11 @@ export default {
   },
   data() {
     return {
-      postID: this.$route.params.postID,
-      userID: undefined,
+      postId: this.$route.params.postId,
+      userId: undefined,
       followStatus: {
         status: false,
         message: "",
-        color: "",
         icon: "",
       },
     };
@@ -62,33 +60,33 @@ export default {
     /**
      * Handle add post to a favorite list
      *
-     * @param postID
+     * @param postId
      * @returns {Promise<void>}
      */
-    async addFollow(postID) {
+    async addFollow(postId) {
       try {
         const response = await HealthyFormWebApi().post(
           "/users/favorites/posts",
-          { post_id: postID }
+          { post_id: postId }
         );
 
         if (response) {
-          await this.checkFollow(this.userAuthenticated.id, postID);
+          await this.checkFollow(this.userAuthenticated.id, postId);
         }
       } catch (error) {
         console.log(error);
       }
     },
 
-    async unFollow(userID, postID) {
+    async unFollow(userId, postId) {
       try {
         const response = await HealthyFormWebApi().delete(
-          `/users/${userID}/favorites/posts/${postID}`
+          `/users/${userId}/favorites/posts/${postId}`
         );
 
         console.log(response);
         if (response) {
-          await this.checkFollow(this.userAuthenticated.id, postID);
+          await this.checkFollow(this.userAuthenticated.id, postId);
         }
       } catch (error) {
         console.log(error);
@@ -99,14 +97,14 @@ export default {
      * If post in list favorite, then return true
      * otherwise false
      *
-     * @param userID
-     * @param postID
+     * @param userId
+     * @param postId
      * @returns {Promise<void>}
      */
-    async checkFollow(userID, postID) {
+    async checkFollow(userId, postId) {
       try {
         const response = await HealthyFormWebApi().get(
-          `/users/${userID}/favorites/posts/${postID}`
+          `/users/${userId}/favorites/posts/${postId}`
         );
         console.log("check", response);
 
@@ -115,14 +113,12 @@ export default {
             this.followStatus = {
               status: false,
               message: "Add favorite",
-              color: "primary",
               icon: "fas fa-heart",
             };
           } else {
             this.followStatus = {
               status: true,
               message: "Remove favorite",
-              color: "red",
               icon: "fas fa-unlink",
             };
           }

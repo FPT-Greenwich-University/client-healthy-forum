@@ -12,6 +12,7 @@
           <v-subheader class="text--primary">Comments</v-subheader>
           <template v-for="item in comments">
             <v-divider></v-divider>
+
             <v-list-item :key="item.id">
               <v-list-item-avatar>
                 <img v-if="item.user.image" :src="item.user.image.path" />
@@ -34,7 +35,7 @@
 
             <!-- The reply comment -->
             <v-list-group>
-              <TheReplyComments :commentID="item.id" :postID="postID" />
+              <TheReplyComments :commentId="item.id" :postId="postId" />
             </v-list-group>
           </template>
         </v-list>
@@ -116,14 +117,14 @@ export default {
   name: "TheComments",
   components: { TheReplyComments, Paginate },
   props: {
-    postID: {
+    postId: {
       type: Number,
       required: true,
     },
   },
   computed: {
     ...mapState("AUTH", ["isAuthenticated"]),
-    ...mapState("COMMENTS", ["commentID"]),
+    ...mapState("COMMENTS", ["commentId"]),
     ...mapState(["comments"]),
   },
 
@@ -156,7 +157,7 @@ export default {
 
     handleFetchComments(page = 1) {
       this.fetchComments({
-        postID: this.postID,
+        postId: this.postId,
         page: page,
       });
     },
@@ -164,16 +165,16 @@ export default {
     /**
      * Handle open dialog and set the parent comment id for reply
      *
-     * @param commentID
+     * @param commentId
      */
-    handleOpenDialog(commentID) {
-      this.SET_COMMENT_ID({ commentID });
+    handleOpenDialog(commentId) {
+      this.SET_COMMENT_ID({ commentId });
       this.dialog = true;
     },
 
     handleCloseDialog() {
       this.SET_COMMENT_ID({
-        commentID: null,
+        commentId: null,
       });
       this.formData = {};
       this.dialog = false;
@@ -182,8 +183,8 @@ export default {
     async handleReplyComment() {
       try {
         const res = await ReplyComment(
-          this.postID,
-          this.commentID,
+          this.postId,
+          this.commentId,
           this.formData
         );
 

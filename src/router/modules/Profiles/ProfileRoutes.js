@@ -1,7 +1,7 @@
 const ProfileRoutes = () => {
   return [
     {
-      path: "/users/:userID",
+      path: "/users/:userId/profiles",
       name: "UserProfiles",
       component: () => import("@/views/Users/Profiles/UserProfiles"),
     },

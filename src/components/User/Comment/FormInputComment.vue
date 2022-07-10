@@ -3,13 +3,13 @@
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
       <!--   Input content   -->
       <v-textarea
-          v-model="content"
-          auto-grow
-          background-color="grey lighten-5"
-          clear-icon="mdi-close-circle"
-          clearable
-          filled
-          label="Comment"
+        v-model="content"
+        auto-grow
+        background-color="grey lighten-5"
+        clear-icon="mdi-close-circle"
+        clearable
+        filled
+        label="Comment"
       >
       </v-textarea>
 
@@ -17,13 +17,13 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-              color="indigo"
-              dark
-              elevation="1"
-              small
-              v-bind="attrs"
-              @click="handleComment"
-              v-on="on"
+            color="indigo"
+            dark
+            elevation="1"
+            small
+            v-bind="attrs"
+            @click="handleComment"
+            v-on="on"
           >
             Send
             <v-icon right small>fas fa-paper-plane</v-icon>
@@ -32,24 +32,19 @@
         <span>Click to upload comment</span>
       </v-tooltip>
 
-
       <!--   List error   -->
       <template v-if="errors">
         <p v-if="errors.content" class="red--text">{{ errors.content[0] }}</p>
       </template>
 
       <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+        v-model="snackbar.status"
+        :color="snackbar.color"
+        :timeout="snackbar.timeout"
       >
         {{ snackbar.content }}
         <template v-slot:action="{ attrs }">
-          <v-btn
-              text
-              v-bind="attrs"
-              @click="snackbar.status = false"
-          >
+          <v-btn text v-bind="attrs" @click="snackbar.status = false">
             Close
           </v-btn>
         </template>
@@ -58,60 +53,68 @@
   </v-row>
 </template>
 <script>
-
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
-import {mapActions, mapState} from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "FormInputComment",
   props: {
-    postID: {
+    postId: {
       required: true,
-      type: Number
-    }
-  }, computed: {
-    ...mapState('AUTH', ['isAuthenticated'])
+      type: Number,
+    },
+  },
+  computed: {
+    ...mapState("AUTH", ["isAuthenticated"]),
   },
   data() {
     return {
-      content: '',
+      content: "",
       snackbar: {
         status: false,
-        color: '',
-        content: '',
+        color: "",
+        content: "",
         timeout: 3000,
       },
-      responseText: '',
+      responseText: "",
       errors: {},
-    }
+    };
   },
   methods: {
-    ...mapActions(['fetchComments']),
+    ...mapActions(["fetchComments"]),
 
     async handleComment() {
       try {
-        const res = await HealthyFormWebApi().post(`/posts/${this.postID}/comments`, {
-          content: this.content
-        })
+        const res = await HealthyFormWebApi().post(
+          `/posts/${this.postId}/comments`,
+          {
+            content: this.content,
+          }
+        );
 
         if (res) {
-          this.errors = {}
+          this.errors = {};
           await this.fetchComments({
-            postID: this.postID, page: 1
-          })
-          this.snackbar = {content: res.data, color: 'success', status: true}
-          this.content = '' // reset content
+            postId: this.postId,
+            page: 1,
+          });
+          this.snackbar = { content: res.data, color: "success", status: true };
+          this.content = ""; // reset content
         }
       } catch (e) {
         if (e) {
           if (e.response.status === 422) {
-            console.log(e.response.data.errors)
-            this.errors = e.response.data.errors
-            this.snackbar = {content: 'Failed comment', color: 'red', status: true}
+            console.log(e.response.data.errors);
+            this.errors = e.response.data.errors;
+            this.snackbar = {
+              content: "Failed comment",
+              color: "red",
+              status: true,
+            };
           }
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>

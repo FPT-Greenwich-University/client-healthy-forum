@@ -26,7 +26,7 @@
           <v-card-subtitle> Email: {{ user.email }}</v-card-subtitle>
           <v-card-actions>
             <v-btn
-              :to="{ name: 'UserProfiles', params: { userID: user.id } }"
+              :to="{ name: 'UserProfiles', params: { userId: user.id } }"
               plain
               text
             >

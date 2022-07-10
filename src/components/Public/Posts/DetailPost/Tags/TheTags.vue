@@ -22,7 +22,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "TheTags",
   props: {
-    postID: {
+    postId: {
       type: Number,
       required: true,
     },
@@ -33,7 +33,7 @@ export default {
   watch: {
     handleGetDetailPostTags: {
       handler() {
-        this.getDetailPostTags(this.postID);
+        this.getDetailPostTags(this.postId);
       },
       immediate: true,
     },
@@ -45,8 +45,8 @@ export default {
     ...mapActions("POSTS", ["getDetailPostTags"]),
     ...mapActions(["fetchPostsByTag"]),
 
-    handleFetchPostByTag(tagID) {
-      this.fetchPostsByTag(tagID);
+    handleFetchPostByTag(tagId) {
+      this.fetchPostsByTag(tagId);
     },
   },
 };

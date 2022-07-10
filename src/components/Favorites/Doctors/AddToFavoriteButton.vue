@@ -3,12 +3,11 @@
     <v-row>
       <v-col>
         <v-btn
-          :color="followStatus.color"
           block
           class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
           dark
           elevation="2"
-          @click="isFollowed ? unFollow(userID, doctorID) : addFollow(doctorID)"
+          @click="isFollowed ? unFollow(userId, doctorId) : addFollow(doctorId)"
         >
           {{ followStatus.message }}
           <v-icon dark small>
@@ -16,12 +15,11 @@
           </v-icon>
         </v-btn>
         <v-btn
-          :color="followStatus.color"
           class="d-block d-xl-none d-lg-none d-md-none d-sm-none"
           dark
           fab
           x-small
-          @click="isFollowed ? unFollow(userID, doctorID) : addFollow(doctorID)"
+          @click="isFollowed ? unFollow(userId, doctorId) : addFollow(doctorId)"
         >
           <v-icon dark>
             {{ followStatus.icon }}
@@ -53,10 +51,10 @@ export default {
     handleCheckFollow: {
       handler() {
         if (this.isAuthenticated) {
-          this.userID = this.userAuthenticated.id;
+          this.userId = this.userAuthenticated.id;
 
-          if (this.userID !== undefined) {
-            this.checkFollow(this.userAuthenticated.id, this.doctorID);
+          if (this.userId !== undefined) {
+            this.checkFollow(this.userAuthenticated.id, this.doctorId);
           }
         }
       },
@@ -66,8 +64,8 @@ export default {
   },
   data() {
     return {
-      doctorID: this.$route.params.userID,
-      userID: undefined,
+      doctorId: this.$route.params.userId,
+      userId: undefined,
       followStatus: {
         status: false,
         message: "",
@@ -80,28 +78,28 @@ export default {
     /**
      * Handle add doctor to a favorite list
      *
-     * @param doctorID
+     * @param doctorId
      * @returns {Promise<void>}
      */
-    async addFollow(doctorID) {
+    async addFollow(doctorId) {
       try {
-        const response = await AddFollow(doctorID);
+        const response = await AddFollow(doctorId);
 
         if (response) {
-          await this.checkFollow(this.userAuthenticated.id, doctorID);
+          await this.checkFollow(this.userAuthenticated.id, doctorId);
         }
       } catch (error) {
         console.log(error);
       }
     },
 
-    async unFollow(userID, doctorID) {
+    async unFollow(userId, doctorId) {
       try {
-        userID = this.userAuthenticated.id;
-        const response = await UnFollow(userID, doctorID);
+        userId = this.userAuthenticated.id;
+        const response = await UnFollow(userId, doctorId);
 
         if (response) {
-          await this.checkFollow(this.userAuthenticated.id, doctorID);
+          await this.checkFollow(this.userAuthenticated.id, doctorId);
         }
       } catch (error) {
         console.log(error);
@@ -112,13 +110,13 @@ export default {
      * If doctor in list favorite, then return true
      * otherwise false
      *
-     * @param userID
-     * @param doctorID
+     * @param userId
+     * @param doctorId
      * @returns {Promise<void>}
      */
-    async checkFollow(userID, doctorID) {
+    async checkFollow(userId, doctorId) {
       try {
-        const response = await CheckIsFollow(userID, doctorID);
+        const response = await CheckIsFollow(userId, doctorId);
 
         if (response) {
           if (response.data === false) {

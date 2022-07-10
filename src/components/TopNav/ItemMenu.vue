@@ -22,7 +22,7 @@
               <v-tab
                 :to="{
                   name: 'UserProfiles',
-                  params: { userID: userAuthenticated.id },
+                  params: { userId: userAuthenticated.id },
                 }"
                 block
                 plain
