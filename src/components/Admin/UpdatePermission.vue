@@ -63,7 +63,7 @@ export default {
       type: Array,
       required: true,
     },
-    userID: {
+    userId: {
       type: Number,
       required: true,
     },
@@ -135,7 +135,7 @@ export default {
         };
 
         try {
-          const response = await UpdatePermissions(this.userID, formData);
+          const response = await UpdatePermissions(this.userId, formData);
 
           if (response) {
             this.permissions = [];

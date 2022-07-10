@@ -28,14 +28,14 @@
           </v-card-subtitle>
           <v-card-actions>
             <v-btn
-              :to="{ name: 'UserProfiles', params: { userID: post.userId } }"
+              :to="{ name: 'UserProfiles', params: { userId: post.userId } }"
               plain
               text
             >
               {{ post.userEmail }}
             </v-btn>
             <v-btn
-              :to="{ name: 'ThePostDetails', params: { postID: post.id } }"
+              :to="{ name: 'ThePostDetails', params: { postId: post.id } }"
               color="green"
               outlined
               rounded

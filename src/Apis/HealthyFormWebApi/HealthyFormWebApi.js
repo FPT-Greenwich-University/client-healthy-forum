@@ -7,7 +7,7 @@ const axiosClient = axios.create({
 axiosClient.defaults.headers.post["Content-Type"] = "application/json";
 
 const HealthyFormWebApi = () => {
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("token"));
 
   if (token) {
     axiosClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;

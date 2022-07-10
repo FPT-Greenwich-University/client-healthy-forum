@@ -22,11 +22,11 @@ import { GetReplyComments } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerA
 export default {
   name: "TheReplyComments",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
-    commentID: {
+    commentId: {
       required: true,
       type: Number,
     },
@@ -34,7 +34,7 @@ export default {
   watch: {
     handleFetchReplyComments: {
       handler() {
-        console.log("commentID", this.commentID);
+        console.log("commentId", this.commentId);
         this.fetchReplyComments();
       },
       immediate: true,
@@ -48,7 +48,7 @@ export default {
   methods: {
     async fetchReplyComments() {
       try {
-        const res = await GetReplyComments(this.postID, this.commentID);
+        const res = await GetReplyComments(this.postId, this.commentId);
         this.replyComments = res.data;
       } catch (e) {
         if (e) {

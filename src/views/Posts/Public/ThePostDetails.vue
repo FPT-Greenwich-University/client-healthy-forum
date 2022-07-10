@@ -11,12 +11,9 @@
       </v-col>
     </v-row>
 
-    <!--  Add post to favorite list -->
-    <AddButton />
-
     <!--  Tags  -->
     <v-row justify="center">
-      <TheTags :postID="postID" />
+      <TheTags :postId="postId" />
     </v-row>
 
     <!--  Introduce title and description  -->
@@ -70,22 +67,23 @@
     </v-row>
 
     <!--  Delete button  -->
-    <DeletePostButton v-if="isThePostOwner" :postID="postID" />
+    <DeletePostButton v-if="isThePostOwner" :postId="postId" />
 
     <!--  Total like  -->
     <TotalLike> {{ totalLikes }}</TotalLike>
     <!--  Like button  -->
-    <LikeButton :postID="postID" />
+    <LikeButton :postId="postId" />
 
     <!--  Form comment  -->
-    <FormInputComment :postID="postID" />
+    <FormInputComment :postId="postId" />
 
     <!--List Comments-->
-    <TheComments :postID="postID" />
+    <TheComments :postId="postId" />
   </v-container>
 </template>
 
 <script>
+// TODO: fix postId to postId
 import { mapActions, mapGetters, mapState } from "vuex";
 // Components
 import TheComments from "@/components/Public/Posts/DetailPost/Comments/TheComments";
@@ -94,14 +92,12 @@ import FormInputComment from "@/components/User/Comment/FormInputComment";
 import LikeButton from "@/components/User/Like/LikeButton";
 import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
-import AddButton from "@/components/Favorites/Posts/AddButton";
 import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 import { SET_DETAIL_POST } from "@/store/mutation-types/post-mutation-types";
 
 export default {
   name: "ThePostDetails",
   components: {
-    AddButton,
     DeletePostButton,
     TotalLike,
     LikeButton,
@@ -122,25 +118,22 @@ export default {
     fetchPost: {
       handler: function () {
         if (this.$route.name === "TheDoctorPostDetails" && this.isDoctor) {
-          if (this.userAuthenticated.id) {
-            // alert("OK");
-            this.doctorGetDetailPost(
-              this.userAuthenticated.id,
-              this.$route.params.postID
-            );
-          }
+          this.doctorGetDetailPost(
+            this.$route.params.userId,
+            this.$route.params.postId
+          );
         } else {
-          this.getDetailPost(this.$route.params.postID);
+          this.getDetailPost(this.$route.params.postId);
         }
 
-        this.getTotalLikeOfPost(this.$route.params.postID);
+        this.getTotalLikeOfPost(this.$route.params.postId);
       },
       immediate: true,
     },
   },
   data() {
     return {
-      postID: Number(this.$route.params.postID),
+      postId: Number(this.$route.params.postId),
       backEndURL: process.env.VUE_APP_BACKEND_URL,
     };
   },

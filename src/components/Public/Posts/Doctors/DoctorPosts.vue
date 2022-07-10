@@ -52,16 +52,16 @@ export default {
       handler() {
         // if is owner profile
         if (this.isOwnProfile) {
-          this.doctorFetchPosts(this.userID, 1); // Get all the posts
+          this.doctorFetchPosts(this.userId, 1); // Get all the posts
         } else {
-          this.fetchPublishedPosts(this.userID, 1); // Get only published posts
+          this.fetchPublishedPosts(this.userId, 1); // Get only published posts
         }
       },
       immediate: true,
     },
   },
   props: {
-    userID: {
+    userId: {
       type: Number,
       required: true,
     },
@@ -86,7 +86,7 @@ export default {
       }
     },
 
-    //TODO: call this method if the current user not is a owner of the profile
+    // If user not is owner of current profile
     async fetchPublishedPosts(userId, page) {
       try {
         const response = await GetPublishedPostsByUser(userId, page);

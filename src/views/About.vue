@@ -13,7 +13,9 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn color="orange lighten-2" text> Explore</v-btn>
+            <v-btn @click="redirectGitHubProfile" color="orange lighten-2" text>
+              Explore</v-btn
+            >
 
             <v-spacer></v-spacer>
 
@@ -81,6 +83,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    redirectGitHubProfile() {
+      window.open(this.userInfo.html_url);
     },
   },
 };

@@ -15,7 +15,7 @@
             <td>{{ item.email }}</td>
             <td>
               <v-btn small>
-                <DetailUser :userID="item.id" />
+                <DetailUser :userId="item.id" />
               </v-btn>
             </td>
           </tr>

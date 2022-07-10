@@ -117,7 +117,7 @@ import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorAp
 export default {
   name: "DoctorEditPosts",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
@@ -165,7 +165,7 @@ export default {
 
     handleFetchDetailPost: {
       handler() {
-        this.getDetailPost(this.postID);
+        this.getDetailPost(this.postId);
       },
       immediate: true,
     },
@@ -191,7 +191,7 @@ export default {
         });
         const res = await UpdatePost(
           this.userAuthenticated.id,
-          this.postID,
+          this.postId,
           formData
         );
 
@@ -201,7 +201,8 @@ export default {
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
-          await this.getDetailPost(this.postID); // Refresh information post
+          await this.getDetailPost(this.postId); // Refresh information post
+          this.$emit("update-post-success");
         }
       } catch (e) {
         if (e.response.status === 422) {

@@ -25,7 +25,7 @@
         </v-toolbar>
 
         <!--   Form edit   -->
-        <EditPost :postID="postID" />
+        <EditPost :postId="postId" />
       </v-card>
     </v-dialog>
   </v-row>
@@ -37,7 +37,7 @@ import EditPost from "@/views/Posts/Doctors/EditPost";
 export default {
   name: "EditPostButton", // child component of DoctorPost component
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },

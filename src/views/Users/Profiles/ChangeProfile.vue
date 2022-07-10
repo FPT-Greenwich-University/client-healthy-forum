@@ -310,12 +310,13 @@ export default {
     // Update user profile
     async handleUpdateProfile() {
       let formData = this.getFormData();
+      const userId = this.$route.params.userId;
 
       try {
-        await UpdateProfile(formData);
+        await UpdateProfile(userId, formData);
         this.dialog = false;
         this.errorResponse = {};
-        this.$emit("update-profile", this.$route.params.userID); // Listen event call back to update profile in vuex
+        this.$emit("update-profile", userId); // Listen event call back to update profile in vuex
       } catch (error) {
         if (error.response.status === 422) {
           this.errorResponse = error.response.data;

@@ -6,6 +6,7 @@ import Auth from "@/store/modules/Auth";
 import Posts from "@/store/modules/Posts";
 import Comments from "@/store/modules/Comments";
 import Common from "@/store/modules/Common";
+import createPersistedState from "vuex-persistedstate";
 
 import {
   SET_COMMENTS,
@@ -20,6 +21,8 @@ import {
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
+
   state: {
     posts: [],
     comments: [],
@@ -43,13 +46,13 @@ export default new Vuex.Store({
     },
 
     // Fetch the posts by tag
-    async fetchPostsByTag({ commit }, page = 1, tagID) {
+    async fetchPostsByTag({ commit }, page = 1, tagId) {
       try {
-        const response = await GetPostsByTag(page, tagID);
+        const response = await GetPostsByTag(page, tagId);
 
         commit(SET_POSTS, response.data.data);
         commit("setLastPage", response.data.last_page);
-        await router.push({ name: "PostsByTag", params: { tagID: tagID } });
+        await router.push({ name: "PostsByTag", params: { tagId: tagId } });
       } catch (e) {
         console.log(e);
         if (e.response) {

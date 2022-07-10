@@ -32,7 +32,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "LikeButton",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
@@ -65,8 +65,9 @@ export default {
       if (this.isAuthenticated) {
         try {
           const res = await HealthyFormWebApi().get(
-            `/posts/${this.postID}/likes/is-exist`
+            `/posts/${this.postId}/likes/is-exist`
           );
+          console.log("check Like", res);
           if (res) {
             this.isExistLike = res.data;
           }
@@ -85,9 +86,13 @@ export default {
      */
     async handleLikePost() {
       try {
-        await HealthyFormWebApi().post(`/posts/${this.postID}/likes`);
+        const res = await HealthyFormWebApi().post(
+          `/posts/${this.postId}/likes`
+        );
+        console.log("LIKE", res);
         await this.checkLikeIsExist();
-        await this.getTotalLikeOfPost(this.postID);
+        const demo = await this.getTotalLikeOfPost(this.postId);
+        console.log("DEMO", demo);
       } catch (e) {
         if (e) {
           console.log("Like error", e);
@@ -102,9 +107,12 @@ export default {
      */
     async handleUnlikePost() {
       try {
-        await HealthyFormWebApi().delete(`/posts/${this.postID}/likes`);
+        const res = await HealthyFormWebApi().delete(
+          `/posts/${this.postId}/likes`
+        );
+        console.log("UNLIKE", res);
         await this.checkLikeIsExist();
-        await this.getTotalLikeOfPost(this.postID);
+        await this.getTotalLikeOfPost(this.postId);
       } catch (e) {
         if (e) {
           console.log(e);

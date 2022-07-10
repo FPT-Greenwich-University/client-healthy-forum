@@ -17,15 +17,15 @@ const GetDetailPost = (postId) => {
 /**
  * Get tags by post
  */
-const GetTagsByPost = (postID) => {
-  return HealthyFormWebApi().get(`/posts/${postID}/tags`);
+const GetTagsByPost = (postId) => {
+  return HealthyFormWebApi().get(`/posts/${postId}/tags`);
 };
-const GetTotalLikeOfPost = (postID) => {
-  return HealthyFormWebApi().get(`/posts/${postID}/tags`);
+const GetTotalLikeOfPost = (postId) => {
+  return HealthyFormWebApi().get(`/posts/${postId}/total-likes`);
 };
 const GetCommentsByPost = (payload) => {
   return HealthyFormWebApi().get(
-    `posts/${payload.postID}/comments?page=${payload.page}`
+    `posts/${payload.postId}/comments?page=${payload.page}`
   );
 };
 

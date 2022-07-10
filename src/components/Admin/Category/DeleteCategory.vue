@@ -102,13 +102,13 @@ export default {
     /**
      * Check if the category id is null
      */
-    checkIsNullCategoryId() {
+    checkIsNullcategoryId() {
       return this.categoryId === null;
     },
 
     async handleDeleteCategory() {
       try {
-        if (this.checkIsNullCategoryId() !== true) {
+        if (this.checkIsNullcategoryId() !== true) {
           const res = await DeleteCategory(this.categoryId);
 
           if (res) {

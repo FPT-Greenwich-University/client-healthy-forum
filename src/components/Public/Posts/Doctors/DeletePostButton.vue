@@ -4,11 +4,11 @@
       <v-dialog v-model="dialog" max-width="290" persistent>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-              color="red"
-              v-bind="attrs"
-              x-small
-              @click="dialog === true"
-              v-on="on"
+            color="red"
+            v-bind="attrs"
+            x-small
+            @click="dialog === true"
+            v-on="on"
           >
             Delete Post
             <v-icon right x-small> fas fa-trash</v-icon>
@@ -25,9 +25,9 @@
               Disagree
             </v-btn>
             <v-btn
-                color="green darken-1"
-                text
-                @click="handleDeletePost(postID)"
+              color="green darken-1"
+              text
+              @click="handleDeletePost(postId)"
             >
               Agree
             </v-btn>
@@ -39,13 +39,13 @@
 </template>
 <script>
 import router from "@/router";
-import {mapActions, mapState} from "vuex";
-import {DoctorDeletePost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import { mapActions, mapState } from "vuex";
+import { DoctorDeletePost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DeletePostButton",
   props: {
-    postID: {
+    postId: {
       required: true,
       type: Number,
     },
@@ -63,21 +63,21 @@ export default {
   methods: {
     ...mapActions("POSTS", ["deletePost"]),
 
-    async handleDeletePost(postID) {
+    async handleDeletePost(postId) {
       if (!(this.userAuthenticated && this.userRoles.includes("doctor"))) {
         return;
       }
 
       try {
-        let userID = this.userAuthenticated.id;
+        let userId = this.userAuthenticated.id;
 
-        const response = await DoctorDeletePost({userID, postID})
+        const response = await DoctorDeletePost({ userId, postId });
 
         if (response) {
           this.dialog = false;
           await router.push({
             name: "UserProfiles",
-            params: {userID: this.userAuthenticated.id},
+            params: { userId: this.userAuthenticated.id },
           });
         }
       } catch (e) {

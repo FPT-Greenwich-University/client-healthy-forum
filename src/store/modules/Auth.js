@@ -64,10 +64,10 @@ const Auth = {
         state.isAuthenticated &&
         router.currentRoute.name === "UserProfiles"
       ) {
-        let userIDParam = Number(router.currentRoute.params.userID); // Get userID param
+        let userIdParam = Number(router.currentRoute.params.userId); // Get userId param
 
-        // Check if the current user id equal to the userID param url
-        if (state.userAuthenticated.id === userIDParam) {
+        // Check if the current user id equal to the userId param url
+        if (state.userAuthenticated.id === userIdParam) {
           commit(UPDATE_OWNER_STATUS, true); // Set owner of profile is true
         } else {
           commit(UPDATE_OWNER_STATUS, false);
@@ -84,12 +84,12 @@ const Auth = {
      * @param dispatch
      * @param commit
      * @param state
-     * @param userID
+     * @param userId
      * @returns {Promise<void>}
      */
-    async fetchProfile({ dispatch, commit, state }, userID) {
+    async fetchProfile({ dispatch, commit, state }, userId) {
       try {
-        const response = await GetUserProfile(userID);
+        const response = await GetUserProfile(userId);
 
         if (response) {
           commit(UPDATE_USER_INFO, response.data);
