@@ -30,7 +30,7 @@ const GetCommentsByPost = (payload) => {
 };
 
 const GetPostsByTag = (page, tagId) => {
-  return HealthyFormWebApi().get(`/posts?tag=${tagId}&page=${page}`);
+  return HealthyFormWebApi().get(`/posts?filter[tag_id]=${tagId}&page=${page}`);
 };
 
 const GetCategories = () => {

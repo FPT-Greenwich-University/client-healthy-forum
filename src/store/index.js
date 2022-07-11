@@ -46,13 +46,12 @@ export default new Vuex.Store({
     },
 
     // Fetch the posts by tag
-    async fetchPostsByTag({ commit }, page = 1, tagId) {
+    async fetchPostsByTag({ commit }, payload) {
       try {
-        const response = await GetPostsByTag(page, tagId);
+        const response = await GetPostsByTag(payload.page, payload.tagId);
 
         commit(SET_POSTS, response.data.data);
         commit("setLastPage", response.data.last_page);
-        await router.push({ name: "PostsByTag", params: { tagId: tagId } });
       } catch (e) {
         console.log(e);
         if (e.response) {

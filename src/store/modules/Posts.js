@@ -56,11 +56,9 @@ const Posts = {
         console.log(response);
         commit(SET_DETAIL_POST, response.data);
       } catch (e) {
-        // if (e.response) {
-        //   if (e.response.status === 404) {
-        //     await router.push({ name: "NotFounds" });
-        //   }
-        // }
+        if (e) {
+          console.log(e);
+        }
       }
     },
 
