@@ -25,16 +25,16 @@
       <v-card-subtitle>Category: {{ post.category.name }}</v-card-subtitle>
       <v-card-actions>
         <v-btn
+          :to="{
+            name: 'TheDoctorPostDetails',
+            params: { userId: post.user.id, postId: post.id },
+          }"
           class="text-decoration-underline"
           color="primary"
           depressed
           plain
           text
           tile
-          :to="{
-            name: 'TheDoctorPostDetails',
-            params: { userId: post.user.id, postId: post.id },
-          }"
         >
           Read more
         </v-btn>
@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: "Postpost",
+  name: "PostItem",
   props: {
     post: {
       type: Object,
