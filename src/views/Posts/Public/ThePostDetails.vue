@@ -4,16 +4,30 @@
     <v-row justify="center">
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
         <v-card class="mx-auto text-center" elevation="0">
-          <v-card-subtitle>
+          <v-card-subtitle v-if="isPublishedPost">
             Published At {{ postDetail.published_at }}
           </v-card-subtitle>
+
+          <v-card-subtitle v-else>Not Published</v-card-subtitle>
         </v-card>
       </v-col>
     </v-row>
 
     <!--  Tags  -->
     <v-row justify="center">
-      <TheTags :postId="postId" />
+      <TheTags :postId="postId"/>
+    </v-row>
+
+    <v-row>
+      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
+        <v-btn
+            :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
+            primary
+            x-small
+        >
+          Category: {{ postDetail.category.name }}
+        </v-btn>
+      </v-col>
     </v-row>
 
     <!--  Introduce title and description  -->
@@ -32,13 +46,13 @@
     <!--  Image  -->
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-img
-          v-if="postDetail.image"
-          :src="`${backEndURL}/${postDetail.image.path}`"
-          alt="post image"
-          class="rounded-lg"
+            v-if="postDetail.image"
+            :src="`${backEndURL}/${postDetail.image.path}`"
+            alt="post image"
+            class="rounded-lg"
         >
         </v-img>
       </v-col>
@@ -47,7 +61,7 @@
     <!--  Divider  -->
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-divider></v-divider>
       </v-col>
@@ -56,7 +70,7 @@
     <!--  Body text  -->
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-card elevation="0">
           <v-card-text class="text-left">
@@ -67,18 +81,18 @@
     </v-row>
 
     <!--  Delete button  -->
-    <DeletePostButton v-if="isThePostOwner" :postId="postId" />
+    <DeletePostButton v-if="isThePostOwner" :postId="postId"/>
 
     <!--  Total like  -->
     <TotalLike> {{ totalLikes }}</TotalLike>
     <!--  Like button  -->
-    <LikeButton :postId="postId" />
+    <LikeButton :postId="postId"/>
 
     <!--  Form comment  -->
-    <FormInputComment :postId="postId" />
+    <FormInputComment :postId="postId"/>
 
     <!--List Comments-->
-    <TheComments :postId="postId" />
+    <TheComments :postId="postId"/>
   </v-container>
 </template>
 
@@ -86,7 +100,7 @@
 /**
  * Vue x
  */
-import { mapActions, mapGetters, mapState } from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 /**
  * Components
  */
@@ -96,8 +110,8 @@ import FormInputComment from "@/components/User/Comment/FormInputComment";
 import LikeButton from "@/components/User/Like/LikeButton";
 import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
-import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
-import { SET_DETAIL_POST } from "@/store/mutation-types/post-mutation-types";
+import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import {SET_DETAIL_POST} from "@/store/mutation-types/post-mutation-types";
 
 export default {
   name: "ThePostDetails",
@@ -117,20 +131,23 @@ export default {
     isThePostOwner() {
       return this.userAuthenticated.id === this.postDetail.user_id;
     },
+
+    isPublishedPost() {
+      return this.postDetail.is_published;
+    },
   },
   watch: {
     fetchPost: {
       handler: function () {
+        const userId = this.$route.params.userId;
+        const postId = this.$route.params.postId;
         if (this.$route.name === "TheDoctorPostDetails" && this.isDoctor) {
-          this.doctorGetDetailPost(
-            this.$route.params.userId,
-            this.$route.params.postId
-          );
+          this.doctorGetDetailPost(userId, postId);
         } else {
-          this.getDetailPost(this.$route.params.postId);
+          this.getDetailPost(postId);
         }
 
-        this.getTotalLikeOfPost(this.$route.params.postId);
+        this.getTotalLikeOfPost(postId);
       },
       immediate: true,
     },
@@ -148,14 +165,9 @@ export default {
       "doctorGetDetailPost",
     ]),
 
-    /**
-     * Get Detail Doctor's Post
-     * @param {*} userId
-     * @param {*} postId
-     */
     async doctorGetDetailPost(userId, postId) {
       try {
-        const response = await DoctorGetDetailPost({ userId, postId });
+        const response = await DoctorGetDetailPost({userId, postId});
         this.$store.commit(`POSTS/${SET_DETAIL_POST}`, response.data);
       } catch (e) {
         console.log(e);
