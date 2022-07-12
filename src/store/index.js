@@ -8,13 +8,21 @@ import Comments from "@/store/modules/Comments";
 import Common from "@/store/modules/Common";
 import createPersistedState from "vuex-persistedstate";
 
+/**
+ * Mutations
+ */
 import {
   SET_COMMENTS,
   SET_POSTS,
 } from "@/store/mutation-types/post-mutation-types";
+
+/**
+ * Apis
+ */
 import {
   FilterPosts,
   GetCommentsByPost,
+  GetPostByCategory,
   GetPostsByTag,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 
@@ -30,7 +38,6 @@ export default new Vuex.Store({
     lastPage: 0,
   },
   actions: {
-    // Fetch the posts
     async fetchPosts({ commit }, payload) {
       try {
         const response = await FilterPosts(
@@ -45,7 +52,20 @@ export default new Vuex.Store({
       }
     },
 
-    // Fetch the posts by tag
+    async fetchPostByCategory({ commit }, payload) {
+      try {
+        const response = await GetPostByCategory(
+          payload.page,
+          payload.categoryId
+        );
+
+        commit(SET_POSTS, response.data.data);
+        commit("setLastPage", response.data.last_page);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     async fetchPostsByTag({ commit }, payload) {
       try {
         const response = await GetPostsByTag(payload.page, payload.tagId);
@@ -90,6 +110,7 @@ export default new Vuex.Store({
       state.comments = data;
     },
   },
+
   modules: {
     AUTH: Auth,
     POSTS: Posts,

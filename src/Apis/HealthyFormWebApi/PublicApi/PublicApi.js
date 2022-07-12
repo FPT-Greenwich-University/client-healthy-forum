@@ -1,9 +1,6 @@
 import HealthyFormWebApi from "../HealthyFormWebApi";
 
 // Public resource api
-const GetPublishedPosts = (page) => {
-  return HealthyFormWebApi().get(`/posts?page=${page}`);
-};
 
 const GetPublishedPostsByUser = (userId, page) => {
   return HealthyFormWebApi().get(
@@ -26,6 +23,12 @@ const GetTotalLikeOfPost = (postId) => {
 const GetCommentsByPost = (payload) => {
   return HealthyFormWebApi().get(
     `posts/${payload.postId}/comments?page=${payload.page}`
+  );
+};
+
+const GetPostByCategory = (page, categoryId) => {
+  return HealthyFormWebApi().get(
+    `/posts?filter[category_id]=${categoryId}&page=${page}`
   );
 };
 
@@ -87,6 +90,7 @@ const FilterPosts = (categoryId, tagId, page) => {
 export {
   GetUserProfile,
   GetPublishedPostsByUser,
+  GetPostByCategory,
   GetPostsByTag,
   GetCommentsByPost,
   GetDetailPost,
@@ -94,7 +98,6 @@ export {
   GetTags,
   GetTotalLikeOfPost,
   GetTagsByPost,
-  GetPublishedPosts,
   GetCites,
   GetDistricts,
   SearchPosts,

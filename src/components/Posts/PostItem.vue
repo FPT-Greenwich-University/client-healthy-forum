@@ -10,6 +10,7 @@
       </v-card-text>
 
       <v-card-title>{{ post.title }}</v-card-title>
+
       <v-card-subtitle>
         Author:
         <v-btn
@@ -22,7 +23,17 @@
           {{ post.user.name }}
         </v-btn>
       </v-card-subtitle>
-      <v-card-subtitle>Category: {{ post.category.name }}</v-card-subtitle>
+
+      <v-card-subtitle>
+        <v-btn
+          :to="{ name: 'Posts', query: { category: post.category.id } }"
+          primary
+          x-small
+        >
+          Category: {{ post.category.name }}
+        </v-btn>
+      </v-card-subtitle>
+
       <v-card-actions>
         <v-btn
           :to="{
