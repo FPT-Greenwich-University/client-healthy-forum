@@ -19,7 +19,9 @@
     </v-row>
 
     <v-row>
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center">
+      <v-col
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+      >
         <v-btn
             :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
             primary
@@ -93,6 +95,8 @@
 
     <!--List Comments-->
     <TheComments :postId="postId"/>
+
+    <RelatedPosts :category-id="postDetail.category_id"/>
   </v-container>
 </template>
 
@@ -101,6 +105,7 @@
  * Vue x
  */
 import {mapActions, mapGetters, mapState} from "vuex";
+import {SET_DETAIL_POST} from "@/store/mutation-types/post-mutation-types";
 /**
  * Components
  */
@@ -110,8 +115,11 @@ import FormInputComment from "@/components/User/Comment/FormInputComment";
 import LikeButton from "@/components/User/Like/LikeButton";
 import DeletePostButton from "@/components/Public/Posts/Doctors/DeletePostButton";
 import TotalLike from "@/components/User/Like/TotalLike";
+import RelatedPosts from "@/components/Posts/PostDetail/RelatedPosts";
+/**
+ * Api
+ */
 import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
-import {SET_DETAIL_POST} from "@/store/mutation-types/post-mutation-types";
 
 export default {
   name: "ThePostDetails",
@@ -122,6 +130,7 @@ export default {
     FormInputComment,
     TheTags,
     TheComments,
+    RelatedPosts,
   },
 
   computed: {
@@ -137,19 +146,15 @@ export default {
     },
   },
   watch: {
-    fetchPost: {
+    handleFetchPost: {
       handler: function () {
-        const userId = this.$route.params.userId;
-        const postId = this.$route.params.postId;
-        if (this.$route.name === "TheDoctorPostDetails" && this.isDoctor) {
-          this.doctorGetDetailPost(userId, postId);
-        } else {
-          this.getDetailPost(postId);
-        }
-
-        this.getTotalLikeOfPost(postId);
+        this.fetchPost();
       },
       immediate: true,
+    },
+    // If current route change then callback fetch detail post
+    $route(to, from) {
+      this.fetchPost();
     },
   },
   data() {
@@ -165,6 +170,28 @@ export default {
       "doctorGetDetailPost",
     ]),
 
+    /**
+     * Fetch detail post when rendering page
+     */
+    fetchPost() {
+      const userId = this.$route.params.userId;
+      const postId = this.$route.params.postId;
+
+      if (this.$route.name === "TheDoctorPostDetails" && this.isDoctor) {
+        this.doctorGetDetailPost(userId, postId);
+      } else {
+        this.getDetailPost(postId);
+      }
+
+      this.getTotalLikeOfPost(postId);
+    },
+
+    /**
+     * Get Detail post if user auth have role doctor
+     * @param userId
+     * @param postId
+     * @returns {Promise<void>}
+     */
     async doctorGetDetailPost(userId, postId) {
       try {
         const response = await DoctorGetDetailPost({userId, postId});

@@ -36,9 +36,26 @@
 
       <v-card-actions>
         <v-btn
+          v-if="this.$route.name === 'TheDoctorPosts'"
           :to="{
             name: 'TheDoctorPostDetails',
             params: { userId: post.user.id, postId: post.id },
+          }"
+          class="text-decoration-underline"
+          color="primary"
+          depressed
+          plain
+          text
+          tile
+        >
+          Read more
+        </v-btn>
+
+        <v-btn
+          v-else
+          :to="{
+            name: 'ThePostDetails',
+            params: { postId: post.id },
           }"
           class="text-decoration-underline"
           color="primary"
