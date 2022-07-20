@@ -69,6 +69,10 @@ const VerifyAccount = (formData) => {
   return HealthyFormWebApi().put(`/verify-account`, formData);
 };
 
+const UpdatePassword = (userId, formData) => {
+  return HealthyFormWebApi().put(`/users/${userId}/passwords`, formData);
+};
+
 export {
   Register,
   Login,
@@ -80,4 +84,5 @@ export {
   ResetPassword,
   VerifyAccount,
   SendMailVerifyAccount,
+  UpdatePassword,
 };
