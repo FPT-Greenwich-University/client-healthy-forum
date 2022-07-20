@@ -57,8 +57,16 @@
       <v-col class="col-5">
         <v-card id="introduce" elevation="1">
           <v-card-title>Introduce</v-card-title>
-          <v-card-actions v-if="isOwnProfile">
+          <v-card-actions
+            v-if="isOwnProfile"
+            class="d-flex flex-column justify-space-between"
+          >
             <ChangeProfile @update-profile="handleFetchProfile" />
+
+            <v-divider></v-divider>
+
+            <!-- Change password dialog -->
+            <ChangePassword />
           </v-card-actions>
 
           <v-divider class="m-4"></v-divider>
@@ -86,6 +94,7 @@
 </template>
 <script>
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
+import ChangePassword from "@/components/Auth/ChangePassword";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 
 import { mapActions, mapGetters, mapState } from "vuex";
@@ -95,6 +104,7 @@ export default {
   components: {
     DoctorPosts,
     ChangeProfile,
+    ChangePassword,
   },
   data() {
     return {
