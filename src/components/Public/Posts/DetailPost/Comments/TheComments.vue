@@ -18,27 +18,40 @@
                 <img v-if="item.user.image" :src="item.user.image.path" />
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title v-html="item.user.email"></v-list-item-title>
                 <v-list-item-subtitle
-                  v-html="item.content"
+                  v-html="item.user.email"
                 ></v-list-item-subtitle>
+                <v-list-item-title v-html="item.content"></v-list-item-title>
 
-                <v-btn
-                  v-if="isAuthenticated"
-                  max-width="20%"
-                  x-small
-                  @click="handleOpenDialog(item.id)"
-                  >Reply
-                </v-btn>
+                <div class="flex flex-row">
+                  <v-btn
+                    v-if="isAuthenticated"
+                    class="mr-2"
+                    max-width="20%"
+                    x-small
+                    @click="handleOpenDialog(item.id)"
+                    >Reply
+                  </v-btn>
+
+                  <!-- Edit comment component -->
+                  <template v-if="item.user_id === userAuthenticated.id">
+                    <EditComment
+                      :comment-id="item.id"
+                      @handle-fetch-comments="handleFetchComments(1)"
+                    />
+                  </template>
+                </div>
               </v-list-item-content>
             </v-list-item>
 
             <!-- The reply comment -->
+            <!-- When click list group, this will open the reply comment component and fetching reply comment  -->
             <v-list-group>
               <TheReplyComments :commentId="item.id" :postId="postId" />
             </v-list-group>
           </template>
         </v-list>
+
         <v-dialog
           v-model="dialog"
           max-width="600"
@@ -112,10 +125,11 @@ import Paginate from "@/components/Paginate";
 import TheReplyComments from "@/components/Public/Posts/DetailPost/Comments/TheReplyComments";
 import { SET_COMMENT_ID } from "@/store/mutation-types/comment-mutation-types";
 import { ReplyComment } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
+import EditComment from "@/components/Comments/EditComment";
 
 export default {
   name: "TheComments",
-  components: { TheReplyComments, Paginate },
+  components: { EditComment, TheReplyComments, Paginate },
   props: {
     postId: {
       type: Number,
@@ -123,7 +137,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("AUTH", ["isAuthenticated"]),
+    ...mapState("AUTH", ["isAuthenticated", "userAuthenticated"]),
     ...mapState("COMMENTS", ["commentId"]),
     ...mapState(["comments"]),
   },
