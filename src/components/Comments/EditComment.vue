@@ -2,13 +2,13 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        v-if="isAuthenticated"
-        color="deep-purple lighten-2"
-        dark
-        max-width="20%"
-        v-bind="attrs"
-        x-small
-        v-on="on"
+          v-if="isAuthenticated"
+          color="deep-purple lighten-2"
+          dark
+          max-width="20%"
+          v-bind="attrs"
+          x-small
+          v-on="on"
       >
         Edit
       </v-btn>
@@ -19,12 +19,12 @@
 
       <v-card-text>
         <v-textarea
-          v-model="content"
-          clear-icon="mdi-close-circle"
-          clearable
-          counter
-          label="Content"
-          value=""
+            v-model="content"
+            clear-icon="mdi-close-circle"
+            clearable
+            counter
+            label="Content"
+            value=""
         ></v-textarea>
       </v-card-text>
 
@@ -39,12 +39,15 @@
   </v-dialog>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 /**
  * Apis
  */
-import { UpdateComment } from "@/Apis/HealthyFormWebApi/PostApi/CommentApi";
+import {
+  GetDetailComment,
+  UpdateComment,
+} from "@/Apis/HealthyFormWebApi/PostApi/CommentApi";
 
 export default {
   name: "EditComment",
@@ -63,8 +66,35 @@ export default {
       content: "",
     };
   },
+  watch: {
+    dialog(newValue, oldValue) {
+      if (newValue === true) {
+        this.fetchDetailComment();
+      }
+    },
+    // fetchDetailComment: {
+    //   handler() {
+    //     this.fetchDetailComment();
+    //   },
+    //   immediate: true,
+    // },
+  },
   methods: {
     ...mapActions(["fetchComments"]),
+
+    async fetchDetailComment() {
+      let payload = {
+        postId: this.$route.params.postId,
+        commentId: this.commentId,
+      };
+
+      try {
+        const response = await GetDetailComment(payload);
+        this.content = response.data.content
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
     cancelEdit() {
       this.content = "";

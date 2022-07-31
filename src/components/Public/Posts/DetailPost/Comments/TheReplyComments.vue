@@ -11,16 +11,34 @@
             <v-list-item-title v-html="item.user.email"></v-list-item-title>
             <v-list-item-subtitle v-html="item.content"></v-list-item-subtitle>
           </v-list-item-content>
+          <template v-if="item.user_id === userAuthenticated.id">
+            <EditComment
+              :comment-id="item.id"
+              @handle-fetch-comments="fetchReplyComments()"
+            />
+          </template>
         </v-list-item>
       </v-list>
     </template>
   </div>
 </template>
 <script>
+/**
+ * Api call
+ */
 import { GetReplyComments } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
+/**
+ * Component
+ */
+import EditComment from "@/components/Comments/EditComment";
+/**
+ * Vuex
+ */
+import { mapState } from "vuex";
 
 export default {
   name: "TheReplyComments",
+  components: { EditComment },
   props: {
     postId: {
       required: true,
@@ -30,6 +48,9 @@ export default {
       required: true,
       type: Number,
     },
+  },
+  computed: {
+    ...mapState("AUTH", ["userAuthenticated", "isAuthenticated"]),
   },
   watch: {
     handleFetchReplyComments: {
