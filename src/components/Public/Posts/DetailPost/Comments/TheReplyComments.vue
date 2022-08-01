@@ -5,7 +5,7 @@
         <v-divider></v-divider>
         <v-list-item :key="item.id" class="mx-10">
           <v-list-item-avatar>
-            <img v-if="item.user.image" :src="item.user.image.path" />
+            <img v-if="item.user.image" :src="item.user.image.path" alt="Image"/>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title v-html="item.user.email"></v-list-item-title>
@@ -13,8 +13,14 @@
           </v-list-item-content>
           <template v-if="item.user_id === userAuthenticated.id">
             <EditComment
-              :comment-id="item.id"
-              @handle-fetch-comments="fetchReplyComments()"
+                :comment-id="item.id"
+                @handle-fetch-comments="handleFetchReplyComments()"
+            />
+          </template>
+          <template v-if="item.user_id === userAuthenticated.id">
+            <DeleteComment
+                :comment-id="item.id"
+                @handle-fetch-comments="handleFetchReplyComments()"
             />
           </template>
         </v-list-item>
@@ -26,19 +32,19 @@
 /**
  * Api call
  */
-import { GetReplyComments } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 /**
  * Component
  */
 import EditComment from "@/components/Comments/EditComment";
+import DeleteComment from "@/components/Comments/DeleteComment";
 /**
  * Vuex
  */
-import { mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "TheReplyComments",
-  components: { EditComment },
+  components: {DeleteComment, EditComment},
   props: {
     postId: {
       required: true,
@@ -51,31 +57,29 @@ export default {
   },
   computed: {
     ...mapState("AUTH", ["userAuthenticated", "isAuthenticated"]),
+    ...mapState("COMMENTS", ["replyComments"]),
   },
   watch: {
     handleFetchReplyComments: {
       handler() {
-        console.log("commentId", this.commentId);
-        this.fetchReplyComments();
+        this.handleFetchReplyComments();
       },
       immediate: true,
     },
   },
   data() {
-    return {
-      replyComments: [],
-    };
+    return {};
   },
   methods: {
-    async fetchReplyComments() {
-      try {
-        const res = await GetReplyComments(this.postId, this.commentId);
-        this.replyComments = res.data;
-      } catch (e) {
-        if (e) {
-          console.log("Error fetch reply comment", e);
-        }
-      }
+    ...mapActions("COMMENTS", ["fetchReplyComments"]),
+
+    async handleFetchReplyComments() {
+      let payload = {
+        postId: this.$route.params.postId,
+        commentId: this.commentId,
+      };
+
+      await this.fetchReplyComments(payload);
     },
   },
 };

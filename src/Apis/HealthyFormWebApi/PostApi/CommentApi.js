@@ -13,4 +13,10 @@ const UpdateComment = (payload) => {
   );
 };
 
-export { GetDetailComment, UpdateComment };
+const DeleteComment = (payload) => {
+  return HealthyFormWebApi().delete(
+    `/posts/${payload.postId}/comments/${payload.commentId}`
+  );
+};
+
+export { GetDetailComment, UpdateComment, DeleteComment };

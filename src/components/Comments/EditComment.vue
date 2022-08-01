@@ -72,12 +72,6 @@ export default {
         this.fetchDetailComment();
       }
     },
-    // fetchDetailComment: {
-    //   handler() {
-    //     this.fetchDetailComment();
-    //   },
-    //   immediate: true,
-    // },
   },
   methods: {
     ...mapActions(["fetchComments"]),
@@ -90,7 +84,7 @@ export default {
 
       try {
         const response = await GetDetailComment(payload);
-        this.content = response.data.content
+        this.content = response.data.content;
       } catch (error) {
         console.log(error);
       }
@@ -115,8 +109,8 @@ export default {
           this.dialog = false;
           this.$emit("handle-fetch-comments");
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     },
   },
