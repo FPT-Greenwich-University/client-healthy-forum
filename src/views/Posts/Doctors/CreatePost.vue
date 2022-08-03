@@ -245,6 +245,12 @@ export default {
         console.log(e);
       }
     },
+
+    resetForm()
+    {
+      this.formData = {};
+      this.errors = {};
+    }
   },
 };
 </script>
