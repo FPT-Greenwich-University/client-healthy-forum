@@ -12,6 +12,7 @@
 
         <v-tab :to="{ name: 'About' }">About</v-tab>
 
+        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }">Create Post</v-tab>
         <v-tab v-if="isAdmin" :to="{ name: 'AdminDashBoard' }">
           Dashboard
         </v-tab>
@@ -26,12 +27,7 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item v-if="isDoctor">
-            <v-list-item-title>
-              <CreatePost />
-            </v-list-item-title>
-          </v-list-item>
-
+          <!--    Guest      -->
           <v-list-item v-if="!isDoctor && !isAdmin && isCustomer">
             <v-list-item-title>
               <RegisterDoctorButton />

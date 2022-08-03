@@ -1,7 +1,17 @@
-import { checkAuthenticated, checkIsDoctor } from "@/router/guards";
+import {checkAuthenticated, checkIsDoctor} from "@/router/guards";
 
 const PostRoutes = () => {
   return [
+    /**
+     * Create new post
+     */
+    {
+      path: "/posts/create",
+      name: "CreatePost",
+      beforeEnter: checkIsDoctor,
+      component: () => import("@/views/Posts/Doctors/CreatePost"),
+    },
+
     /**
      * List all the posts
      */
@@ -34,16 +44,6 @@ const PostRoutes = () => {
       name: "TheDoctorPostDetails",
       component: () => import("@/views/Posts/Public/ThePostDetails"),
       beforeEnter: checkIsDoctor,
-    },
-
-    /**
-     * Create new post
-     */
-    {
-      path: "/doctors/posts/create",
-      name: "CreatePost",
-      beforeEnter: checkIsDoctor,
-      component: () => import("@/views/Posts/Doctors/CreatePost"),
     },
 
     /**
