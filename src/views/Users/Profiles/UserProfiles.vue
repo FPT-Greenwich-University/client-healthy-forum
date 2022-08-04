@@ -67,6 +67,16 @@
 
             <!-- Change password dialog -->
             <ChangePassword />
+
+            <v-divider></v-divider>
+          </v-card-actions>
+
+          <v-card-actions
+            v-if="!isOwnProfile"
+            class="d-flex flex-column justify-space-between"
+          >
+            <!--Form contract-->
+            <ContractDoctor :doctor-email="userInfo.email" />
           </v-card-actions>
 
           <v-divider class="m-4"></v-divider>
@@ -96,12 +106,14 @@
 import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import ChangePassword from "@/components/Auth/ChangePassword";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
+import ContractDoctor from "@/components/Mail/ContractDoctor";
 
 import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "UserProfile",
   components: {
+    ContractDoctor,
     DoctorPosts,
     ChangeProfile,
     ChangePassword,
