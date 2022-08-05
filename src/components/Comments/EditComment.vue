@@ -2,13 +2,13 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-          v-if="isAuthenticated"
-          color="deep-purple lighten-2"
-          dark
-          max-width="20%"
-          v-bind="attrs"
-          x-small
-          v-on="on"
+        v-if="isAuthenticated"
+        color="deep-purple lighten-2"
+        dark
+        max-width="20%"
+        v-bind="attrs"
+        x-small
+        v-on="on"
       >
         Edit
       </v-btn>
@@ -19,12 +19,12 @@
 
       <v-card-text>
         <v-textarea
-            v-model="content"
-            clear-icon="mdi-close-circle"
-            clearable
-            counter
-            label="Content"
-            value=""
+          v-model="content"
+          clear-icon="mdi-close-circle"
+          clearable
+          counter
+          label="Content"
+          value=""
         ></v-textarea>
       </v-card-text>
 
@@ -39,7 +39,7 @@
   </v-dialog>
 </template>
 <script>
-import {mapActions, mapState} from "vuex";
+import { mapActions, mapState } from "vuex";
 
 /**
  * Apis
@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     ...mapActions(["fetchComments"]),
-
     async fetchDetailComment() {
       let payload = {
         postId: this.$route.params.postId,
@@ -84,7 +83,10 @@ export default {
 
       try {
         const response = await GetDetailComment(payload);
-        this.content = response.data.content;
+
+        if (response.status === 200) {
+          this.content = response.data.content;
+        }
       } catch (error) {
         console.log(error);
       }

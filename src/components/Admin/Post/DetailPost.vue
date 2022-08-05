@@ -85,7 +85,7 @@ export default {
       this.dialog = true;
 
       try {
-        const res = await AdminGetDetailPost(this.postId); // console.log('Detail post', res.data)
+        const res = await AdminGetDetailPost(this.postId);
         this.post = res.data;
       } catch (e) {
         if (e) {
@@ -94,11 +94,14 @@ export default {
       }
     },
 
+    /**
+     * Admin update status of post
+     */
     async publishPost() {
       try {
         const res = await AdminUpdateStatusPost(this.postId);
 
-        if (res) {
+        if (res.status === 204) {
           this.dialog = false;
           this.$emit("update-status");
         }

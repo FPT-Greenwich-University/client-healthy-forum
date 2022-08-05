@@ -98,10 +98,12 @@ export default {
       try {
         const response = await GetPostsMostLike(page);
 
-        this.posts = response.data.data;
-        this.$store.commit("setCurrentPage", response.data.current_page);
-        this.$store.commit("setLastPage", response.data.last_page);
-      } catch (e) {
+        if (response.status === 200) {
+          this.posts = response.data.data;
+          this.$store.commit("setCurrentPage", response.data.current_page);
+          this.$store.commit("setLastPage", response.data.last_page);
+        }
+      } catch (error) {
         if (error) {
           console.log(error);
         }

@@ -3,26 +3,26 @@
     <v-card-title>Create Category</v-card-title>
     <v-form ref="form" class="mx-10" lazy-validation>
       <v-text-field
-        v-model="formData.name"
-        :counter="100"
-        label="Name"
-        required
+          v-model="formData.name"
+          :counter="100"
+          label="Name"
+          required
       ></v-text-field>
       <template v-if="errors.description"
-        ><p class="red--text">{{ errors.name[0] }}</p></template
+      ><p class="red--text">{{ errors.name[0] }}</p></template
       >
 
       <v-text-field
-        v-model="formData.description"
-        :counter="100"
-        label="Description"
-        required
+          v-model="formData.description"
+          :counter="100"
+          label="Description"
+          required
       ></v-text-field>
       <template v-if="errors.description"
-        ><p class="red--text">{{ errors.description[0] }}</p></template
+      ><p class="red--text">{{ errors.description[0] }}</p></template
       >
 
-      <v-btn class="mr-4 my-2" color="error" @click="reset"> Reset</v-btn>
+      <v-btn class="mr-4 my-2" color="error" @click="resetForm"> Reset</v-btn>
 
       <v-btn class="mr-4 my-2" color="primary" @click="handleCreateCategory">
         Submit
@@ -31,9 +31,9 @@
     <v-row>
       <v-col>
         <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { CreateNewCategory } from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
+import {CreateNewCategory} from "@/Apis/HealthyFormWebApi/AdminApi/AdminApi";
 
 export default {
   name: "CreateCategory",
@@ -68,24 +68,25 @@ export default {
     };
   },
   methods: {
-    reset() {
+    resetForm() {
       this.$refs.form.reset();
     },
+
     async handleCreateCategory() {
       try {
-        const res = await CreateNewCategory(this.formData);
+        const response = await CreateNewCategory(this.formData);
 
-        if (res) {
+        if (response.status === 201) {
           this.errors = {}; // delete all error
-          this.snackbar.content = res.data;
+          this.snackbar.content = response.data;
           this.snackbar.color = "success";
           this.snackbar.status = true;
           this.formData = {};
         }
-      } catch (e) {
-        if (e) {
-          if (e.response.status === 422) {
-            this.errors = e.response.data;
+      } catch (error) {
+        if (error) {
+          if (error.response.status === 422) {
+            this.errors = error.response.data;
             this.snackbar.color = "red";
             this.snackbar.content = "Failed to update the post";
             this.snackbar.status = true;

@@ -51,6 +51,5 @@ export default {
       dialog: false,
     };
   },
-  methods: {},
 };
 </script>

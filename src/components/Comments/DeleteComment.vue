@@ -2,14 +2,14 @@
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-          v-if="isAuthenticated"
-          class="mx-2"
-          color="red"
-          dark
-          max-width="20%"
-          v-bind="attrs"
-          x-small
-          v-on="on"
+        v-if="isAuthenticated"
+        class="mx-2"
+        color="red"
+        dark
+        max-width="20%"
+        v-bind="attrs"
+        x-small
+        v-on="on"
       >
         Delete
       </v-btn>
@@ -33,8 +33,8 @@
   </v-dialog>
 </template>
 <script>
-import {mapState} from "vuex";
-import {DeleteComment} from "@/Apis/HealthyFormWebApi/PostApi/CommentApi";
+import { mapState } from "vuex";
+import { DeleteComment } from "@/Apis/HealthyFormWebApi/PostApi/CommentApi";
 
 export default {
   name: "DeleteComment",
@@ -64,8 +64,11 @@ export default {
           commentId: this.commentId,
         };
 
-        await DeleteComment(payload);
-        this.$emit("handle-fetch-comments");
+        const response = await DeleteComment(payload);
+
+        if (response.status === 204) {
+          this.$emit("handle-fetch-comments");
+        }
       } catch (error) {
         console.log(error);
       }

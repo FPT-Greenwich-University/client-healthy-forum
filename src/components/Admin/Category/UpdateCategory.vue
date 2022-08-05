@@ -110,7 +110,7 @@ export default {
         if (this.checkIsNullcategoryId() !== true) {
           const response = await UpdateCategory(this.categoryId, this.formData);
 
-          if (response) {
+          if (response.status === 204) {
             this.errors = {}; // remove all error
             this.snackbar.content = "Update success";
             this.snackbar.color = "success";
@@ -146,12 +146,14 @@ export default {
       try {
         const response = await GetCategories();
 
-        this.categories = response.data.map((e) => {
-          return {
-            id: e.id,
-            name: e.name,
-          };
-        });
+        if (response.status === 200) {
+          this.categories = response.data.map((e) => {
+            return {
+              id: e.id,
+              name: e.name,
+            };
+          });
+        }
       } catch (e) {
         if (e) {
           console.log(e);

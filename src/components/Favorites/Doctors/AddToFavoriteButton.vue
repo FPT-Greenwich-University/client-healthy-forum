@@ -85,7 +85,7 @@ export default {
       try {
         const response = await AddFollow(doctorId);
 
-        if (response) {
+        if (response.status === 201) {
           await this.checkFollow(this.userAuthenticated.id, doctorId);
         }
       } catch (error) {
@@ -98,7 +98,7 @@ export default {
         userId = this.userAuthenticated.id;
         const response = await UnFollow(userId, doctorId);
 
-        if (response) {
+        if (response.status === 204) {
           await this.checkFollow(this.userAuthenticated.id, doctorId);
         }
       } catch (error) {

@@ -54,7 +54,7 @@ export default {
       try {
         const res = await DeletePost(this.postId);
 
-        if (res) {
+        if (res.status === 204) {
           this.dialog = false;
           setTimeout(
             () => this.$emit("delete-post", "Delete post success"),

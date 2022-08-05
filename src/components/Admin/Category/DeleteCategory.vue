@@ -111,7 +111,7 @@ export default {
         if (this.checkIsNullcategoryId() !== true) {
           const res = await DeleteCategory(this.categoryId);
 
-          if (res) {
+          if (res.status === 204) {
             this.errors = {}; // remove all errors
             this.snackbar = {
               content: "Delete Success",
