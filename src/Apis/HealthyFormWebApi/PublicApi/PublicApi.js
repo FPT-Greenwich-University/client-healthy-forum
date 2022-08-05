@@ -91,6 +91,10 @@ const FilterPosts = (categoryId, tagId, page) => {
   }
 };
 
+const SearchUsers = (query, page) => {
+  return HealthyFormWebApi().get(`/search/users?query=${query}&page=${page}`);
+};
+
 export {
   GetUserProfile,
   GetPublishedPostsByUser,
@@ -108,4 +112,5 @@ export {
   SearchPosts,
   GetWards,
   FilterPosts,
+  SearchUsers,
 };

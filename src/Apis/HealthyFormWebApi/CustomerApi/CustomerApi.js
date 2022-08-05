@@ -49,9 +49,10 @@ const GetFavoritePosts = (userId, page) => {
   );
 };
 
-// TODO: Fix api to /users/userId/favorites/doctors
-const GetFavoriteDoctors = (page) => {
-  return HealthyFormWebApi().get(`/users/favorites/doctors?page=${page}`);
+const GetFavoriteDoctors = (userId, page) => {
+  return HealthyFormWebApi().get(
+    `/users/${userId}/favorites/doctors?page=${page}`
+  );
 };
 
 export {
@@ -61,4 +62,5 @@ export {
   AddFollow,
   UnFollow,
   GetFavoritePosts,
+  GetFavoriteDoctors,
 };

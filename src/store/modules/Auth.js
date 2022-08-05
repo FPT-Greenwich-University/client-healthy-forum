@@ -23,13 +23,6 @@ const Auth = {
     providerID: null,
   },
   getters: {
-    getFullName: (state) => {
-      if (state.userInfo.profile !== undefined) {
-        return `${state.userInfo.profile.city}, ${state.userInfo.profile.district}, ${state.userInfo.profile.ward}`;
-      } else {
-        return "";
-      }
-    },
     isGoogleAccount: (state) => {
       return state.providerID !== null;
     },
