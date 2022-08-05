@@ -95,17 +95,19 @@ export default {
   },
   methods: {
     async searchUsers(page = 1) {
-      try {
-        const response = await SearchUsers(this.query, page);
+      if (this.query !== "") {
+        try {
+          const response = await SearchUsers(this.query, page);
 
-        if (response.status === 200) {
-          this.users = response.data.data;
-          this.$store.commit("setCurrentPage", response.data.current_page);
-          this.$store.commit("setLastPage", response.data.last_page);
-        }
-      } catch (error) {
-        if (error) {
-          console.log("Search user", error);
+          if (response.status === 200) {
+            this.users = response.data.data;
+            this.$store.commit("setCurrentPage", response.data.current_page);
+            this.$store.commit("setLastPage", response.data.last_page);
+          }
+        } catch (error) {
+          if (error) {
+            console.log("Search user", error);
+          }
         }
       }
     },
