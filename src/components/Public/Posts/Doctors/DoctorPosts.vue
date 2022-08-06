@@ -36,12 +36,13 @@ import { GetPublishedPostsByUser } from "@/Apis/HealthyFormWebApi/PublicApi/Publ
 /**
  * Vuex
  */
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "DoctorPosts",
   components: { EditPostButton, PostItem, ReadMorePostsButton },
   computed: {
     ...mapState("AUTH", ["isOwnProfile"]),
+    ...mapGetters("AUTH", ["isDoctor"]),
 
     isEmptyPosts() {
       return this.userPosts.length < 0;
@@ -73,16 +74,19 @@ export default {
   },
   methods: {
     async doctorFetchPosts(userId, page = 1) {
-      try {
-        const response = await DoctorGetOwnPosts(userId, page);
+      // If user is doctor
+      if (this.isDoctor) {
+        try {
+          const response = await DoctorGetOwnPosts(userId, page);
 
-        this.userPosts = response.data.data.filter((element, index) => {
-          if (index < 2) {
-            return element;
-          }
-        });
-      } catch (error) {
-        console.log(error);
+          this.userPosts = response.data.data.filter((element, index) => {
+            if (index < 2) {
+              return element;
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
 

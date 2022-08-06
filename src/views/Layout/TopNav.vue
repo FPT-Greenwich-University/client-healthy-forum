@@ -1,16 +1,16 @@
 <template>
   <div>
-    <v-app-bar app dark flat tile>
+    <v-app-bar app color="bananaGreen" flat tile>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-tabs centered>
-        <v-tab to="/">Home</v-tab>
+        <v-tab class="white--text" to="/">Home</v-tab>
 
-        <v-tab :to="{ name: 'Posts' }">Posts</v-tab>
+        <v-tab class="white--text" :to="{ name: 'Posts' }">Posts</v-tab>
 
-        <v-tab :to="{ name: 'Search' }">Search</v-tab>
+        <v-tab class="white--text" :to="{ name: 'Search' }">Search</v-tab>
 
-        <v-tab :to="{ name: 'About' }">About</v-tab>
+        <v-tab class="white--text" :to="{ name: 'About' }">About</v-tab>
 
         <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }">Create Post</v-tab>
         <v-tab v-if="isAdmin" :to="{ name: 'AdminDashBoard' }">
@@ -21,7 +21,13 @@
       <ItemMenu />
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" bottom fixed temporary>
+    <v-navigation-drawer
+      color="bananaGrey"
+      v-model="drawer"
+      bottom
+      fixed
+      temporary
+    >
       <v-list dense nav>
         <v-list-item-group
           v-model="group"

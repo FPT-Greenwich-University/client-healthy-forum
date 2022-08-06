@@ -3,7 +3,7 @@
     <!--  Top profile  -->
     <v-row>
       <v-col class="col-12" transition="slide-x-transition">
-        <v-card class="mt-2" color="#26c6da" dark elevation="0">
+        <v-card class="mt-2" color="bananaBrown" dark elevation="0">
           <v-card-title>
             <v-icon large left> mdi-twitter</v-icon>
             <span class="text-h6 font-weight-light">Twitter</span>
@@ -38,7 +38,7 @@
                 <v-list-item-title>{{ userInfo.name }}</v-list-item-title>
               </v-list-item-content>
 
-              <v-row :align="center" justify="end">
+              <v-row align="center" justify="end">
                 <v-icon class="mr-1"> mdi-heart</v-icon>
                 <span class="subheading mr-2">256</span>
                 <span class="mr-1">·</span>
@@ -55,7 +55,7 @@
 
     <v-row>
       <v-col class="col-5">
-        <v-card id="introduce" elevation="1">
+        <v-card id="introduce" elevation="0" color="bananaGrey">
           <v-card-title>Introduce</v-card-title>
           <v-card-actions
             v-if="isOwnProfile && userInfo.provider_id == null"
