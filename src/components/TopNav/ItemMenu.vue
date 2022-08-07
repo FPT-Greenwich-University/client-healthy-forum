@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-menu offset-y transition="slide-x-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" color="primary" v-on="on" icon>
+        <v-btn color="blackMoodBoard1" icon v-bind="attrs" v-on="on">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
@@ -10,7 +10,7 @@
         <v-list>
           <v-list-item>
             <v-list-item-title>
-              <v-tab :to="{ name: 'Login' }" block plain text> Login </v-tab>
+              <v-tab :to="{ name: 'Login' }" block plain text> Login</v-tab>
             </v-list-item-title>
           </v-list-item>
         </v-list>

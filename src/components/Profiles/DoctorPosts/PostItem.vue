@@ -1,5 +1,5 @@
 <template>
-  <v-card class="my-5" elevation="1">
+  <v-card class="my-5" color="blackMoodBoard4" elevation="0">
     <v-card-text>
       <v-img
         v-if="item.image.path"
@@ -11,8 +11,8 @@
       <p class="font-weight-bold mt-5">{{ item.title }}</p>
       <p>Rating: 4.5</p>
       <p>Like: 55</p>
-      <p class="green-text" v-if="item.is_published">Have published</p>
-      <p class="red--text" v-else>Not published</p>
+      <p v-if="item.is_published" class="green-text">Have published</p>
+      <p v-else class="red--text">Not published</p>
     </v-card-text>
 
     <v-card-actions>
@@ -21,16 +21,16 @@
           <!-- Post detail of doctor -->
           <v-btn
             v-if="isOwnProfile"
+            :to="{
+              name: 'TheDoctorPostDetails',
+              params: { postId: item.id },
+            }"
             class="text-decoration-underline"
             color="primary"
             depressed
             plain
             text
             tile
-            :to="{
-              name: 'TheDoctorPostDetails',
-              params: { postId: item.id },
-            }"
           >
             Read more
           </v-btn>
@@ -38,16 +38,16 @@
           <!-- Post detail published -->
           <v-btn
             v-else
+            :to="{
+              name: 'ThePostDetails',
+              params: { postId: item.id },
+            }"
             class="text-decoration-underline"
             color="primary"
             depressed
             plain
             text
             tile
-            :to="{
-              name: 'ThePostDetails',
-              params: { postId: item.id },
-            }"
           >
             Read more
           </v-btn>
@@ -74,6 +74,7 @@
 <script>
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
 import { mapState } from "vuex";
+
 export default {
   name: "PostItem",
   props: {

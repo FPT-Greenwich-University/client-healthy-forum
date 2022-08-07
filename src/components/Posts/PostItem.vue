@@ -1,6 +1,6 @@
 <template>
   <v-col class="col-12 col-xl-6 col-lg-6 col-md-6">
-    <v-card elevation="0">
+    <v-card color="white" elevation="0" class="">
       <v-card-text>
         <v-img
           v-if="post.image.path"
@@ -9,64 +9,57 @@
         ></v-img>
       </v-card-text>
 
-      <v-card-title>{{ post.title }}</v-card-title>
+      <v-card-title class="white--text">{{ post.title }}</v-card-title>
 
       <v-card-subtitle>
-        Author:
         <v-btn
           :to="{ name: 'UserProfiles', params: { userId: post.user.id } }"
-          class="px-0 my-0"
+          class="px-0 my-0 "
           plain
           small
           text
         >
-          {{ post.user.name }}
+          Author: {{ post.user.name }}
         </v-btn>
       </v-card-subtitle>
 
       <v-card-subtitle>
         <v-btn
           :to="{ name: 'Posts', query: { category: post.category.id } }"
-          primary
-          x-small
+          small
+          color="White"
         >
           Category: {{ post.category.name }}
         </v-btn>
       </v-card-subtitle>
 
-      <v-card-actions>
+      <v-card-subtitle>
+        <!--   View detail post by doctor  -->
         <v-btn
           v-if="this.$route.name === 'TheDoctorPosts'"
           :to="{
             name: 'TheDoctorPostDetails',
             params: { userId: post.user.id, postId: post.id },
           }"
-          class="text-decoration-underline"
-          color="primary"
-          depressed
-          plain
-          text
-          tile
+          color="White"
+          small
         >
           Read more
         </v-btn>
 
+        <!--   View detail post   -->
         <v-btn
           v-else
           :to="{
             name: 'ThePostDetails',
             params: { postId: post.id },
           }"
-          class="text-decoration-underline"
-          color="primary"
-          depressed
-          plain
-          text
-          tile
+          color="White"
+          small
         >
           Read more
         </v-btn>
-      </v-card-actions>
+      </v-card-subtitle>
     </v-card>
   </v-col>
 </template>

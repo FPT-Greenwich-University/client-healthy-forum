@@ -1,7 +1,7 @@
 <template>
   <v-col class="col-7">
-    <v-card elevation="1">
-      <v-card-title>Post articles</v-card-title>
+    <v-card elevation="0" color="greenMoodBoard3">
+      <v-card-title class="white--text">Post articles</v-card-title>
     </v-card>
 
     <v-divider class="my-5"></v-divider>

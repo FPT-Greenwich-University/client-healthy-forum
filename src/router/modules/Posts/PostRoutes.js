@@ -1,4 +1,4 @@
-import {checkAuthenticated, checkIsDoctor} from "@/router/guards";
+import { checkAuthenticated, checkIsDoctor } from "@/router/guards";
 
 const PostRoutes = () => {
   return [
@@ -40,7 +40,7 @@ const PostRoutes = () => {
      * Doctor detail their post
      */
     {
-      path: "/users/:userId/my-posts/:postId", //TODO :: fix route path
+      path: "/users/:userId/my-posts/:postId",
       name: "TheDoctorPostDetails",
       component: () => import("@/views/Posts/Public/ThePostDetails"),
       beforeEnter: checkIsDoctor,

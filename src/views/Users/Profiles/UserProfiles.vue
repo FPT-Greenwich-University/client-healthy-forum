@@ -3,7 +3,7 @@
     <!--  Top profile  -->
     <v-row>
       <v-col class="col-12" transition="slide-x-transition">
-        <v-card class="mt-2" color="bananaBrown" dark elevation="0">
+        <v-card class="mt-2" color="greenMoodBoard2" dark elevation="0">
           <v-card-title>
             <v-icon large left> mdi-twitter</v-icon>
             <span class="text-h6 font-weight-light">Twitter</span>
@@ -55,8 +55,8 @@
 
     <v-row>
       <v-col class="col-5">
-        <v-card id="introduce" elevation="0" color="bananaGrey">
-          <v-card-title>Introduce</v-card-title>
+        <v-card id="introduce" elevation="0" color="greenMoodBoard3">
+          <v-card-title class="white--text">Introduce</v-card-title>
           <v-card-actions
             v-if="isOwnProfile && userInfo.provider_id == null"
             class="d-flex flex-column justify-space-between"

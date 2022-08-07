@@ -1,19 +1,25 @@
 <template>
   <div>
-    <v-app-bar app color="bananaGreen" flat tile>
+    <v-app-bar app color="GreenLeaf" flat tile>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-tabs centered>
+      <v-tabs center-active centered>
         <v-tab class="white--text" to="/">Home</v-tab>
 
-        <v-tab class="white--text" :to="{ name: 'Posts' }">Posts</v-tab>
+        <v-tab :to="{ name: 'Posts' }" class="white--text">Posts</v-tab>
 
-        <v-tab class="white--text" :to="{ name: 'Search' }">Search</v-tab>
+        <v-tab :to="{ name: 'Search' }" class="white--text">Search</v-tab>
 
-        <v-tab class="white--text" :to="{ name: 'About' }">About</v-tab>
+        <v-tab :to="{ name: 'About' }" class="white--text">About</v-tab>
 
-        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }">Create Post</v-tab>
-        <v-tab v-if="isAdmin" :to="{ name: 'AdminDashBoard' }">
+        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="white--text"
+          >Create Post
+        </v-tab>
+        <v-tab
+          v-if="isAdmin"
+          :to="{ name: 'AdminDashBoard' }"
+          class="white--text"
+        >
           Dashboard
         </v-tab>
       </v-tabs>
@@ -21,13 +27,7 @@
       <ItemMenu />
     </v-app-bar>
 
-    <v-navigation-drawer
-      color="bananaGrey"
-      v-model="drawer"
-      bottom
-      fixed
-      temporary
-    >
+    <v-navigation-drawer v-model="drawer" bottom fixed temporary>
       <v-list dense nav>
         <v-list-item-group
           v-model="group"

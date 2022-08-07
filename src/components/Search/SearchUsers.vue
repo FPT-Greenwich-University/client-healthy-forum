@@ -1,15 +1,17 @@
 <template>
   <div>
-    <v-row class="mt-10 mx-auto col-11 col-xl-12 col-lg-12 col-md-12">
-      <v-text-field
-          v-model="query"
-          append-icon="mdi-magnify"
-          clearable
-          filled
-          label="Search Users"
-          placeholder="Enter the user name or email"
-          solo
-      ></v-text-field>
+    <v-row>
+      <v-col>
+        <v-text-field
+            v-model="query"
+            append-icon="mdi-magnify"
+            background-color="blackMoodBoard1"
+            clearable
+            label="Search Users"
+            placeholder="Enter the user name or email"
+            solo
+        ></v-text-field>
+      </v-col>
     </v-row>
 
     <v-row>
