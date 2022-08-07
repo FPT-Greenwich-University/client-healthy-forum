@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" width="800">
+  <v-dialog v-model="dialog" width="800px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+          block
           class="white--text"
-          color="greenMoodBoard2"
+          color="DustyRose"
           v-bind="attrs"
-          x-small
           v-on="on"
       >
         Change Password

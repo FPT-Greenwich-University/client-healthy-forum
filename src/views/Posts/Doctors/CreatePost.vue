@@ -76,13 +76,13 @@
               {{ errors.thumbnail[0] }}
             </div>
 
-            <v-btn class="mx-2" color="primary" @click="resetForm"
+            <v-btn class="mx-2" color="DustyRose" @click="resetForm"
             >Reset Form
             </v-btn>
             <v-btn
                 :disabled="!canCreateAPost"
                 class="mx-auto"
-                color="success"
+                color="MutedGreen"
                 @click="createPost"
             >Submit
             </v-btn>

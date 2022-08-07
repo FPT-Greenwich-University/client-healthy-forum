@@ -3,7 +3,7 @@
     <!--  Top profile  -->
     <v-row>
       <v-col class="col-12" transition="slide-x-transition">
-        <v-card class="mt-2" color="greenMoodBoard2" dark elevation="0">
+        <v-card class="mt-2" color="MaroonBrown" dark elevation="1">
           <v-card-title>
             <v-icon large left> mdi-twitter</v-icon>
             <span class="text-h6 font-weight-light">Twitter</span>
@@ -17,20 +17,20 @@
             <v-list-item class="grow">
               <!--  if user is google account-->
               <v-list-item-avatar
-                v-if="userInfo.provider_id !== null"
-                color="grey darken-3"
+                  v-if="userInfo.provider_id !== null"
+                  color="grey darken-3"
               >
                 <v-img
-                  :src="userInfo.image_url"
-                  alt=""
-                  class="elevation-6"
+                    :src="userInfo.image_url"
+                    alt=""
+                    class="elevation-6"
                 ></v-img>
               </v-list-item-avatar>
               <v-list-item-avatar v-else color="grey darken-3">
                 <v-img
-                  alt=""
-                  class="elevation-6"
-                  src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
+                    alt="Avatar"
+                    class="elevation-6"
+                    src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
                 ></v-img>
               </v-list-item-avatar>
 
@@ -55,28 +55,26 @@
 
     <v-row>
       <v-col class="col-5">
-        <v-card id="introduce" elevation="0" color="greenMoodBoard3">
+        <v-card id="introduce" color="MutedGreen" elevation="1">
           <v-card-title class="white--text">Introduce</v-card-title>
           <v-card-actions
-            v-if="isOwnProfile && userInfo.provider_id == null"
-            class="d-flex flex-column justify-space-between"
+              v-if="isOwnProfile && userInfo.provider_id == null"
+              class="d-flex flex-column"
           >
-            <ChangeProfile @update-profile="handleFetchProfile" />
-
-            <v-divider></v-divider>
+            <ChangeProfile @update-profile="handleFetchProfile"/>
 
             <!-- Change password dialog -->
-            <ChangePassword />
+            <ChangePassword/>
 
             <v-divider></v-divider>
           </v-card-actions>
 
           <v-card-actions
-            v-if="!isOwnProfile"
-            class="d-flex flex-column justify-space-between"
+              v-if="!isOwnProfile"
+              class="d-flex flex-column justify-space-between"
           >
             <!--Form contract-->
-            <ContractDoctor :doctor-email="userInfo.email" />
+            <ContractDoctor :doctor-email="userInfo.email"/>
           </v-card-actions>
 
           <v-divider class="m-4"></v-divider>
@@ -96,7 +94,7 @@
       </v-col>
       <v-spacer></v-spacer>
 
-      <DoctorPosts v-if="userInfo.id" :userId="userInfo.id" />
+      <DoctorPosts v-if="userInfo.id" :userId="userInfo.id"/>
     </v-row>
   </v-container>
 </template>
@@ -106,7 +104,7 @@ import ChangePassword from "@/components/Auth/ChangePassword";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 import ContractDoctor from "@/components/Mail/ContractDoctor";
 
-import { mapActions, mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "UserProfile",

@@ -6,7 +6,7 @@
       :total-visible="7"
       circle
       light
-      color="greenMoodBoard2"
+      color="GreenLeaf"
     ></v-pagination>
   </div>
 </template>

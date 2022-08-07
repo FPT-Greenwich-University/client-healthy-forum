@@ -1,11 +1,11 @@
 <template>
   <v-col class="col-12 col-xl-6 col-lg-6 col-md-6">
-    <v-card color="white" elevation="0" class="">
+    <v-card color="White" elevation="1">
       <v-card-text>
         <v-img
-          v-if="post.image.path"
-          :src="`${backEndURL}/${post.image.path}`"
-          aspect-ratio="2"
+            v-if="post.image.path"
+            :src="`${backEndURL}/${post.image.path}`"
+            aspect-ratio="2"
         ></v-img>
       </v-card-text>
 
@@ -13,11 +13,10 @@
 
       <v-card-subtitle>
         <v-btn
-          :to="{ name: 'UserProfiles', params: { userId: post.user.id } }"
-          class="px-0 my-0 "
-          plain
-          small
-          text
+            :to="{ name: 'UserProfiles', params: { userId: post.user.id } }"
+            class="white--text"
+            color="greenMoodBoard3"
+            small
         >
           Author: {{ post.user.name }}
         </v-btn>
@@ -25,37 +24,42 @@
 
       <v-card-subtitle>
         <v-btn
-          :to="{ name: 'Posts', query: { category: post.category.id } }"
-          small
-          color="White"
+            :to="{ name: 'Posts', query: { category: post.category.id } }"
+            class="white--text"
+            color="greenMoodBoard3"
+            small
+            text
         >
-          Category: {{ post.category.name }}
+          <span class="black--text">Category: </span> {{ post.category.name }}
         </v-btn>
       </v-card-subtitle>
 
       <v-card-subtitle>
         <!--   View detail post by doctor  -->
         <v-btn
-          v-if="this.$route.name === 'TheDoctorPosts'"
-          :to="{
+            v-if="this.$route.name === 'TheDoctorPosts'"
+            :to="{
             name: 'TheDoctorPostDetails',
             params: { userId: post.user.id, postId: post.id },
           }"
-          color="White"
-          small
+            class="white--text"
+            color="greenMoodBoard3"
+            small
         >
           Read more
         </v-btn>
 
         <!--   View detail post   -->
         <v-btn
-          v-else
-          :to="{
+            v-else
+            :to="{
             name: 'ThePostDetails',
             params: { postId: post.id },
           }"
-          color="White"
-          small
+            class="white--text text-decoration-underline"
+            color="greenMoodBoard3"
+            small
+            text
         >
           Read more
         </v-btn>

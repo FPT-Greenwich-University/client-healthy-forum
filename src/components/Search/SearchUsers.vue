@@ -5,7 +5,7 @@
         <v-text-field
             v-model="query"
             append-icon="mdi-magnify"
-            background-color="blackMoodBoard1"
+            background-color="Tanly"
             clearable
             label="Search Users"
             placeholder="Enter the user name or email"

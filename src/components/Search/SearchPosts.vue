@@ -5,7 +5,7 @@
         <v-text-field
           v-model="title"
           append-icon="mdi-magnify"
-          background-color="blackMoodBoard1"
+          background-color="Tanly"
           clearable
           label="Search Posts"
           placeholder="Enter the post title"

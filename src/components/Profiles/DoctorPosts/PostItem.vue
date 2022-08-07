@@ -1,11 +1,11 @@
 <template>
-  <v-card class="my-5" color="blackMoodBoard4" elevation="0">
+  <v-card class="my-5" color="White" elevation="1">
     <v-card-text>
       <v-img
-        v-if="item.image.path"
-        :src="`${backEndURL}/${item.image.path}`"
-        aspect-ratio="2"
-        class="rounded"
+          v-if="item.image.path"
+          :src="`${backEndURL}/${item.image.path}`"
+          aspect-ratio="2"
+          class="rounded"
       >
       </v-img>
       <p class="font-weight-bold mt-5">{{ item.title }}</p>
@@ -20,34 +20,32 @@
         <v-col class="text-left">
           <!-- Post detail of doctor -->
           <v-btn
-            v-if="isOwnProfile"
-            :to="{
+              v-if="isOwnProfile"
+              :to="{
               name: 'TheDoctorPostDetails',
               params: { postId: item.id },
             }"
-            class="text-decoration-underline"
-            color="primary"
-            depressed
-            plain
-            text
-            tile
+              class="white--text text-decoration-underline"
+              color="greenMoodBoard3"
+              small
+              text
           >
             Read more
           </v-btn>
 
           <!-- Post detail published -->
           <v-btn
-            v-else
-            :to="{
+              v-else
+              :to="{
               name: 'ThePostDetails',
               params: { postId: item.id },
             }"
-            class="text-decoration-underline"
-            color="primary"
-            depressed
-            plain
-            text
-            tile
+              class="text-decoration-underline"
+              color="primary"
+              depressed
+              plain
+              text
+              tile
           >
             Read more
           </v-btn>
@@ -57,11 +55,11 @@
         <v-col v-if="isOwnProfile" class="text-right">
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn dark small v-bind="attrs" v-on="on"> Action</v-btn>
+              <v-btn small v-bind="attrs" color="greenMoodBoard3" class="white--text" v-on="on"> Action</v-btn>
             </template>
             <v-list>
               <v-list-item>
-                <EditPostButton :postId="item.id" />
+                <EditPostButton :postId="item.id"/>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -73,7 +71,7 @@
 
 <script>
 import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: "PostItem",

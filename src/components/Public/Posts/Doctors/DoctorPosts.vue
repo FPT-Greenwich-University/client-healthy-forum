@@ -1,6 +1,6 @@
 <template>
   <v-col class="col-7">
-    <v-card elevation="0" color="greenMoodBoard3">
+    <v-card elevation="1" color="MutedGreen">
       <v-card-title class="white--text">Post articles</v-card-title>
     </v-card>
 

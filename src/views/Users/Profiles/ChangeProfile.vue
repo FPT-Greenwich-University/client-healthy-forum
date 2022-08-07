@@ -3,8 +3,8 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
           block
-          class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
-          color="greenMoodBoard2"
+          class="mb-2 text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
+          color="Beige"
           v-bind="attrs"
           v-on="on"
       >
@@ -12,7 +12,7 @@
         <v-icon right> fas fa-address-card</v-icon>
       </v-btn>
       <v-btn
-          class="mx-2 d-block d-xl-none d-lg-none d-md-none d-sm-none"
+          class="mx-2 mb-2 d-block d-xl-none d-lg-none d-md-none d-sm-none"
           color="cyan"
           dark
           fab
