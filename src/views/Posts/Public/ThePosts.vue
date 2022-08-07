@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container >
     <v-row class="d-flex flex-row mx-auto">
       <v-col class="col-3">
         <v-select

@@ -1,11 +1,10 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <v-col class="col-12">
-        <v-tabs class="mx-auto">
-          <v-tab @click="changeComponent('SearchPosts')">Search Posts</v-tab>
-          <v-tab @click="changeComponent('SearchUsers')">Search Users</v-tab>
-          <v-tab>Item Three</v-tab>
+        <v-tabs center-active centered>
+          <v-tab @click="changeComponent('SearchPosts')">Posts</v-tab>
+          <v-tab @click="changeComponent('SearchUsers')">Users</v-tab>
         </v-tabs>
       </v-col>
     </v-row>
@@ -22,7 +21,7 @@ import SearchUsers from "@/components/Search/SearchUsers";
 
 export default {
   name: "Search",
-  components: {SearchPosts, SearchUsers},
+  components: { SearchPosts, SearchUsers },
   data() {
     return {
       isCurrentTabComponent: "SearchPosts", // Default component render
