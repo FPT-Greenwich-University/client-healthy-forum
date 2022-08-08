@@ -55,7 +55,7 @@
         <v-col v-if="isOwnProfile" class="text-right">
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn small v-bind="attrs" color="greenMoodBoard3" class="white--text" v-on="on"> Action</v-btn>
+              <v-btn class="white--text" color="greenMoodBoard3" small v-bind="attrs" v-on="on"> Action</v-btn>
             </template>
             <v-list>
               <v-list-item>

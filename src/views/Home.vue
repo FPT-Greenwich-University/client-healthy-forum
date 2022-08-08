@@ -19,6 +19,7 @@ export default {
   components: {
     TopNav,
   },
+
   watch: {
     getUserInfo: {
       handler() {
