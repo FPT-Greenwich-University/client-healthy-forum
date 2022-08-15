@@ -1,38 +1,17 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title>Chat Form</v-card-title>
-          <v-card-text>
-            <v-text-field v-model="newMessage" label="Message"></v-text-field>
-          </v-card-text>
+    <v-row justify="space-between">
+      <!-- List of chat rooms -->
+      <v-col class="col-3">
+        <ChatRooms :chat-rooms="chatRooms" @select-room="fetchMessages" />
+      </v-col>
 
-          <v-card-actions>
-            <v-btn class="white--text" color="Olive" @click="sendMessage">
-              Send
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-
+      <v-col class="col-9">
+        <!-- List of messages -->
+        <ChatMessages :messages="messages" />
         <v-divider class="ma-10"></v-divider>
-        <v-card>
-          <v-card-title>Message</v-card-title>
-          <v-card-text>
-            <v-card
-              v-for="item in messages"
-              :key="item.id"
-              color="Olive"
-              class="my-5"
-              elevation="1"
-            >
-              <v-card-text>
-                <p class="white--text">{{ item.user.name }}</p>
-                <p class="black-text">{{ item.message }}</p>
-              </v-card-text>
-            </v-card>
-          </v-card-text>
-        </v-card>
+        <!-- Form input -->
+        <ChatForm @message-sent="addMessage" />
       </v-col>
     </v-row>
   </v-container>
@@ -40,45 +19,80 @@
 
 <script>
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import ChatForm from "@/components/Chat/ChatForm";
+import ChatMessages from "@/components/Chat/ChatMessages";
+import ChatRooms from "@/components/Chat/ChatRooms";
+import { mapState } from "vuex";
 
 export default {
   name: "Chat",
+  components: { ChatRooms, ChatMessages, ChatForm },
   mounted() {
-    this.fetchMessages();
+    this.fetchChatRooms();
 
     Echo.private("chat").listen("MessageSent", (e) => {
-      console.log(e);
-      this.messages.push({
-        message: e.message.message,
-        user: e.user,
-      });
+      console.log("Broadcast", e);
+      if (e.user.id !== this.userAuthenticated.id) {
+        this.messages.push({
+          message: e.message.message,
+          user: e.user,
+        });
+      }
     });
+  },
+  computed: {
+    ...mapState("AUTH", ["userAuthenticated"]),
+    ...mapState("CHATS", ["targetUserId", "chatRoomId"]),
   },
   data() {
     return {
-      newMessage: "",
       messages: [],
+      chatRooms: [],
     };
   },
+
   methods: {
-    async fetchMessages() {
+    async fetchChatRooms() {
       try {
-        const response = await HealthyFormWebApi().get(`/messages`);
-        this.messages = response.data;
+        const response = await HealthyFormWebApi().get("/chat-rooms");
+        this.chatRooms = response.data;
+        console.log(this.chatRooms);
       } catch (e) {
         console.log(e);
       }
     },
 
-    async sendMessage() {
+    async fetchMessages() {
       try {
-        const response = await HealthyFormWebApi().post(`/messages`, {
-          message: this.newMessage,
-        });
+        const response = await HealthyFormWebApi().get(
+          `/chat-rooms/${this.chatRoomId}/messages`,
+          {
+            params: {
+              targetId: this.targetUserId,
+            },
+          }
+        );
+        this.messages = response.data;
+        console.log("Messages", response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
 
-        if (response.status === 201) {
-          this.newMessage = "";
-        }
+    async addMessage(message) {
+      //Pushes it to the messages array
+      this.messages.push(message);
+
+      try {
+        let formData = {
+          message: message.message,
+          targetId: this.targetUserId,
+        };
+        const response = await HealthyFormWebApi().post(
+          `/chat-rooms/${this.chatRoomId}/messages`,
+          formData
+        );
+        console.log("Add message", response.data);
       } catch (e) {
         console.log(e);
       }
