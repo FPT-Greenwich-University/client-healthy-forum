@@ -6,6 +6,7 @@ import Auth from "@/store/modules/Auth";
 import Posts from "@/store/modules/Posts";
 import Comments from "@/store/modules/Comments";
 import Common from "@/store/modules/Common";
+import Chats from "@/store/modules/Chats";
 import createPersistedState from "vuex-persistedstate";
 
 /**
@@ -116,5 +117,6 @@ export default new Vuex.Store({
     POSTS: Posts,
     COMMENTS: Comments,
     COMMON: Common,
+    CHATS: Chats,
   },
 });

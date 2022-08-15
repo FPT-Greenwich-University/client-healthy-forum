@@ -10,6 +10,7 @@
                 v-model="email"
                 counter
                 label="E-mail"
+                placeholder="Enter your email"
               ></v-text-field>
               <small v-if="error.email" class="red--text">{{
                 error.email[0]
@@ -20,6 +21,7 @@
                 :type="show1 ? 'text' : 'password'"
                 counter
                 label="Password"
+                placeholder="Enter you password"
                 @click:append="show1 = !show1"
               ></v-text-field>
               <small v-if="error.password" class="red--text">{{

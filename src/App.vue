@@ -1,5 +1,5 @@
 <template>
-  <Home/>
+  <Home />
 </template>
 
 <script>
@@ -10,5 +10,11 @@ export default {
   components: {
     Home,
   },
+  // created() {
+  //   window.Echo.channel("hello").listen("Hello", (e) => {
+  //     console.log(e);
+  //     alert("OK");
+  //   });
+  // },
 };
 </script>

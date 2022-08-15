@@ -6,6 +6,8 @@ import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
 import PostRoutes from "@/router/modules/Posts/PostRoutes";
 import AdminRoutes from "@/router/modules/Admin/AdminRoutes";
 import Favorites from "@/router/modules/Users/Favorites";
+import Chat from "@/views/Chat/Chat";
+import { checkAuthenticated } from "@/router/guards";
 
 Vue.use(VueRouter);
 
@@ -30,6 +32,13 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
+    beforeEnter: checkAuthenticated,
   },
 
   // 404 not found page
