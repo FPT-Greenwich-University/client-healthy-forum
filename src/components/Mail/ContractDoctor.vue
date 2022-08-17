@@ -2,7 +2,14 @@
   <div>
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary lighten-2" dark v-bind="attrs" v-on="on">
+        <v-btn
+          class="mb-5"
+          color="primary lighten-2"
+          dark
+          small
+          v-bind="attrs"
+          v-on="on"
+        >
           Contract
         </v-btn>
       </template>
@@ -15,25 +22,25 @@
         <v-card-text>
           <!--   Title input    -->
           <v-text-field
-              v-model="formContract.title"
-              class="ma-4"
-              clearable
-              filled
-              label="Title"
-              placeholder="The email title"
+            v-model="formContract.title"
+            class="ma-4"
+            clearable
+            filled
+            label="Title"
+            placeholder="The email title"
           ></v-text-field>
           <p v-if="errors.title" class="red--text mx-4">
             {{ errors.title[0] }}
           </p>
           <!--    Body input    -->
           <v-textarea
-              v-model="formContract.body"
-              class="ma-4"
-              clear-icon="mdi-close-circle"
-              clearable
-              filled
-              label="Body content"
-              placeholder="The content of email"
+            v-model="formContract.body"
+            class="ma-4"
+            clear-icon="mdi-close-circle"
+            clearable
+            filled
+            label="Body content"
+            placeholder="The content of email"
           ></v-textarea>
           <p v-if="errors.body" class="red--text mx-4">{{ errors.body[0] }}</p>
         </v-card-text>
@@ -52,9 +59,9 @@
 
     <!--  Toast notification  -->
     <v-snackbar
-        v-model="snackbar.status"
-        :color="snackbar.color"
-        :timeout="snackbar.timeout"
+      v-model="snackbar.status"
+      :color="snackbar.color"
+      :timeout="snackbar.timeout"
     >
       {{ snackbar.content }}
       <template v-slot:action="{ attrs }">
@@ -67,8 +74,8 @@
 </template>
 
 <script>
-import {SendMailContract} from "@/Apis/HealthyFormWebApi/MailApi/MailApi";
-import {mapState} from "vuex";
+import { SendMailContract } from "@/Apis/HealthyFormWebApi/MailApi/MailApi";
+import { mapState } from "vuex";
 
 export default {
   name: "ContractDoctor",
