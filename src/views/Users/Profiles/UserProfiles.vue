@@ -75,6 +75,8 @@
           >
             <!--Form contract-->
             <ContractDoctor :doctor-email="userInfo.email" />
+            <!-- Chat -->
+            <ChatButton />
           </v-card-actions>
 
           <v-divider class="m-4"></v-divider>
@@ -105,10 +107,12 @@ import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 import ContractDoctor from "@/components/Mail/ContractDoctor";
 
 import { mapActions, mapState } from "vuex";
+import ChatButton from "@/components/Buttons/Chats/ChatButton";
 
 export default {
   name: "UserProfile",
   components: {
+    ChatButton,
     ContractDoctor,
     DoctorPosts,
     ChangeProfile,
