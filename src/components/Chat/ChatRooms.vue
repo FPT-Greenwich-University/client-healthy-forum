@@ -29,6 +29,7 @@
 
 <script>
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import { FetchChatRoomUsers } from "@/Apis/HealthyFormWebApi/ChatApi";
 import { mapMutations, mapState } from "vuex";
 import {
   UPDATE_CHAT_ROOM_ID,
@@ -63,13 +64,13 @@ export default {
 
     async fetchChatRoomsUsers(chatRoomId) {
       try {
-        const response = await HealthyFormWebApi().get(
-          `/chat-rooms/${chatRoomId}/users`
-        );
-        console.log("USers", response.data);
+        const response = await FetchChatRoomUsers(chatRoomId);
+
         this.chatRoomUsers = response.data.chat_room_users;
 
-        if (this.userAuthenticated.id === response.data.chat_room_users.source_id) {
+        if (
+          this.userAuthenticated.id === response.data.chat_room_users.source_id
+        ) {
           // alert("OK");
           this.UPDATE_TARGET_USER_ID({
             targetUserId: this.chatRoomUsers.target_id,

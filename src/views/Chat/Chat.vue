@@ -23,6 +23,11 @@ import ChatForm from "@/components/Chat/ChatForm";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatRooms from "@/components/Chat/ChatRooms";
 import { mapState } from "vuex";
+import {
+  FetchMessages,
+  FetchChatRooms,
+  SendMessage,
+} from "@/Apis/HealthyFormWebApi/ChatApi";
 
 export default {
   name: "Chat",
@@ -32,6 +37,7 @@ export default {
 
     Echo.private("chat").listen("MessageSent", (e) => {
       console.log("Broadcast", e);
+      // Only target user update a message from broadcast
       if (e.user.id !== this.userAuthenticated.id) {
         this.messages.push({
           message: e.message.message,
@@ -54,9 +60,9 @@ export default {
   methods: {
     async fetchChatRooms() {
       try {
-        const response = await HealthyFormWebApi().get("/chat-rooms");
+        const response = await FetchChatRooms();
+
         this.chatRooms = response.data;
-        console.log(this.chatRooms);
       } catch (e) {
         console.log(e);
       }
@@ -64,16 +70,12 @@ export default {
 
     async fetchMessages() {
       try {
-        const response = await HealthyFormWebApi().get(
-          `/chat-rooms/${this.chatRoomId}/messages`,
-          {
-            params: {
-              targetId: this.targetUserId,
-            },
-          }
+        const response = await FetchMessages(
+          this.chatRoomId,
+          this.targetUserId
         );
+
         this.messages = response.data;
-        console.log("Messages", response.data);
       } catch (e) {
         console.log(e);
       }
@@ -88,11 +90,8 @@ export default {
           message: message.message,
           targetId: this.targetUserId,
         };
-        const response = await HealthyFormWebApi().post(
-          `/chat-rooms/${this.chatRoomId}/messages`,
-          formData
-        );
-        console.log("Add message", response.data);
+
+        await SendMessage(formData);
       } catch (e) {
         console.log(e);
       }
