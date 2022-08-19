@@ -18,8 +18,8 @@ const FetchChatRoomUsers = (chatRoomId) => {
   return HealthyFormWebApi().get(`/chat-rooms/${chatRoomId}/users`);
 };
 
-const SendMessage = ({ message, targetId }) => {
-  return HealthyFormWebApi().post(`/chat-rooms/${this.chatRoomId}/messages`, {
+const SendMessage = ({ message, targetId, chatRoomId }) => {
+  return HealthyFormWebApi().post(`/chat-rooms/${chatRoomId}/messages`, {
     message: message,
     targetId: targetId,
   });

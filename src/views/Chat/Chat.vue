@@ -89,6 +89,7 @@ export default {
         let formData = {
           message: message.message,
           targetId: this.targetUserId,
+          chatRoomId: this.chatRoomId,
         };
 
         await SendMessage(formData);
