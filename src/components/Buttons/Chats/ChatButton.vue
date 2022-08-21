@@ -21,10 +21,13 @@ export default {
         const targetId = this.$route.params.userId;
 
         const response = await CreateChatRoom(sourceId, targetId);
-        console.log(response.data);
+        // console.log(response.data);
 
         await this.$router.push({ name: "Chat" });
       } catch (e) {
+        if (e.response.status === 401) {
+          alert("Please login!!");
+        }
         console.log(e);
       }
     },

@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 import ChatForm from "@/components/Chat/ChatForm";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatRooms from "@/components/Chat/ChatRooms";
@@ -35,8 +34,23 @@ export default {
   mounted() {
     this.fetchChatRooms();
 
+    // Broadcast for new chat room created
+    Echo.private("chat-room").listen("ChatRoomCreated", (e) => {
+      // console.log("Created new chat room", e);
+
+      // If the target user is the current user then push new chat room
+      if (e.targetUserId === this.userAuthenticated.id) {
+        console.log("OK bro");
+        this.chatRooms.push({
+          id: e.newChatRoom.id,
+          name: e.newChatRoom.name,
+        });
+      }
+    });
+
+    // Broadcast for new message sent
     Echo.private("chat").listen("MessageSent", (e) => {
-      console.log("Broadcast", e);
+      // console.log("Broadcast", e);
       // Only target user update a message from broadcast
       if (e.user.id !== this.userAuthenticated.id) {
         this.messages.push({
