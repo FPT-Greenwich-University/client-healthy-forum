@@ -10,6 +10,10 @@
 
         <v-tab :to="{ name: 'Search' }" class="white--text">Search</v-tab>
 
+        <v-tab v-if="isAuthenticated" :to="{ name: 'Chat' }" class="white--text"
+          >Chat</v-tab
+        >
+
         <v-tab :to="{ name: 'About' }" class="white--text">About</v-tab>
 
         <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="white--text"

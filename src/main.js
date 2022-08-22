@@ -32,7 +32,6 @@ window.Echo = new Echo({
   disableStats: true,
   encrypted: true,
   authorizer: (channel, options) => {
-    console.log(options);
     return {
       authorize: (socketId, callback) => {
         HealthyFormWebApi()

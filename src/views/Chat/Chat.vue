@@ -6,12 +6,31 @@
         <ChatRooms :chat-rooms="chatRooms" @select-room="fetchMessages" />
       </v-col>
 
-      <v-col class="col-9">
+      <v-col v-if="messages.length > 0" class="col-9">
         <!-- List of messages -->
         <ChatMessages :messages="messages" />
         <v-divider class="ma-10"></v-divider>
         <!-- Form input -->
         <ChatForm @message-sent="addMessage" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-snackbar
+          v-model="snackbar.status"
+          :color="snackbar.color"
+          :timeout="snackbar.timeout"
+          centered
+          right
+        >
+          {{ snackbar.content }}
+          <template v-slot:action="{ attrs }">
+            <v-btn text v-bind="attrs" @click="snackbar.status = false">
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-col>
     </v-row>
   </v-container>
@@ -68,6 +87,12 @@ export default {
     return {
       messages: [],
       chatRooms: [],
+      snackbar: {
+        status: false,
+        color: "",
+        content: "",
+        timeout: 3000,
+      },
     };
   },
 
@@ -77,6 +102,7 @@ export default {
         const response = await FetchChatRooms();
 
         this.chatRooms = response.data;
+        this.isSelectedRoom = true;
       } catch (e) {
         console.log(e);
       }
@@ -100,15 +126,31 @@ export default {
       this.messages.push(message);
 
       try {
-        let formData = {
-          message: message.message,
-          targetId: this.targetUserId,
-          chatRoomId: this.chatRoomId,
-        };
+        let formData = new FormData();
+        formData.append("message", message.message);
+        formData.append("targetId", this.targetId);
+        formData.append("chatRoomId", this.chatRoomId);
 
-        await SendMessage(formData);
+        if (message.files.length > 0) {
+          for (let i = 0; i < message.files.length; i++) {
+            formData.append("files[" + i + "]", message.files[i]);
+          }
+        }
+
+        const response = await SendMessage(this.chatRoomId, formData);
+        console.log("Send message", response);
+        this.snackbar = {
+          content: response.data.status,
+          color: "success",
+          status: true,
+        };
       } catch (e) {
         console.log(e);
+        this.snackbar = {
+          content: "Error to send message",
+          color: "success",
+          status: true,
+        };
       }
     },
   },

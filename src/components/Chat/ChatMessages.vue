@@ -14,6 +14,7 @@
             <v-card-text>
               <p class="white--text">{{ item.user.name }}</p>
               <p class="black-text">{{ item.message }}</p>
+              <MessageFiles :files="item.files" />
             </v-card-text>
           </v-card>
         </v-card-text>
@@ -23,8 +24,11 @@
 </template>
 
 <script>
+import MessageFiles from "@/components/Chat/MessageFiles";
+
 export default {
   name: "ChatMessages",
+  components: { MessageFiles },
   props: {
     messages: {
       type: Array,
