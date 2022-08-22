@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 import { FetchChatRoomUsers } from "@/Apis/HealthyFormWebApi/ChatApi";
 import { mapMutations, mapState } from "vuex";
 import {
