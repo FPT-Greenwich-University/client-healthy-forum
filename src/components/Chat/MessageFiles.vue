@@ -25,6 +25,7 @@
           fab
           v-bind="attrs"
           x-small
+          @click="downloadAllFile"
           v-on="on"
         >
           <v-icon x-small> mdi-download</v-icon>
@@ -49,6 +50,10 @@ export default {
     },
   },
   props: {
+    messageId: {
+      type: Number,
+      required: true,
+    },
     files: {
       type: Array,
       required: true,
@@ -58,6 +63,11 @@ export default {
   methods: {
     downloadFile(fileId) {
       const URL = `${process.env.VUE_APP_BACKEND_API_URL}/files/${fileId}`;
+      window.open(URL);
+    },
+
+    downloadAllFile(messageId) {
+      const URL = `${process.env.VUE_APP_BACKEND_API_URL}/messages/${this.messageId}/files`;
       window.open(URL);
     },
   },
