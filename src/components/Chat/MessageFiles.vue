@@ -2,7 +2,13 @@
   <div>
     <v-tooltip v-for="file in files" :key="file.id" bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="ma-1" rounded v-bind="attrs" x-small v-on="on"
+        <v-btn
+          class="ma-1"
+          rounded
+          v-bind="attrs"
+          x-small
+          @click="downloadFile(file.id)"
+          v-on="on"
           >{{ file.name }}
           <v-icon color="Perriwinkle" x-small> mdi-download</v-icon>
         </v-btn>
@@ -30,9 +36,14 @@
 </template>
 
 <script>
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import { mapState } from "vuex";
+
 export default {
   name: "MessageFiles",
   computed: {
+    ...mapState("CHATS", ["chatRoomId"]),
+
     isEmptyFiles() {
       return this.files.length === 0;
     },
@@ -41,6 +52,13 @@ export default {
     files: {
       type: Array,
       required: true,
+    },
+  },
+
+  methods: {
+    downloadFile(fileId) {
+      const URL = `${process.env.VUE_APP_BACKEND_API_URL}/files/${fileId}`;
+      window.open(URL);
     },
   },
 };
