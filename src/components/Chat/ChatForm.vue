@@ -14,22 +14,28 @@
             rounded
             @keyup.enter="sendMessage"
           ></v-text-field>
-        </v-card-text>
-        <v-file-input
-          v-model="files"
-          chips
-          counter
-          dense
-          filled
-          full-width
-          label="File input"
-          multiple
-          placeholder="Pick your files"
-          rounded
-          show-size
-          small-chips
-        ></v-file-input>
+          <v-card-subtitle v-if="errors.message" class="red--text"
+            >{{ errors.message[0] }}
+          </v-card-subtitle>
 
+          <v-file-input
+            v-model="files"
+            chips
+            counter
+            dense
+            filled
+            full-width
+            label="File input"
+            multiple
+            placeholder="Pick your files"
+            rounded
+            show-size
+            small-chips
+          ></v-file-input>
+          <v-card-subtitle v-if="errors.files" class="red--text"
+            >{{ errors.files[0] }}
+          </v-card-subtitle>
+        </v-card-text>
         <v-card-actions>
           <v-btn class="white--text" color="Olive" @click="sendMessage">
             Send
@@ -46,6 +52,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "ChatForm",
+  props: {
+    errors: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
   },

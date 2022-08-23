@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 import { mapState } from "vuex";
+import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 
 export default {
   name: "MessageFiles",
@@ -61,14 +61,45 @@ export default {
   },
 
   methods: {
-    downloadFile(fileId) {
-      const URL = `${process.env.VUE_APP_BACKEND_API_URL}/files/${fileId}`;
-      window.open(URL);
+    async downloadFile(fileId) {
+      try {
+        const response = await HealthyFormWebApi().get(
+          `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${this.chatRoomId}/messages/${this.messageId}/files/${fileId}`
+        );
+        console.log(response);
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileLink = document.createElement("a");
+
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "file.zip");
+        document.body.appendChild(fileLink);
+
+        fileLink.click();
+      } catch (e) {
+        console.log(e);
+      }
     },
 
-    downloadAllFile(messageId) {
-      const URL = `${process.env.VUE_APP_BACKEND_API_URL}/messages/${this.messageId}/files`;
-      window.open(URL);
+    async downloadAllFile() {
+      try {
+        const response = await HealthyFormWebApi().get(
+          `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${this.chatRoomId}/messages/${this.messageId}/files`,
+          {
+            responseType: "blob",
+          }
+        );
+        console.log(response);
+        const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+        const fileLink = document.createElement("a");
+
+        fileLink.href = fileURL;
+        fileLink.setAttribute("download", "files.zip");
+        document.body.appendChild(fileLink);
+
+        fileLink.click();
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

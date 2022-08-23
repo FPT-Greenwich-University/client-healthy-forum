@@ -11,10 +11,11 @@
         <ChatMessages :messages="messages" />
         <v-divider class="ma-10"></v-divider>
         <!-- Form input -->
-        <ChatForm @message-sent="addMessage" />
+        <ChatForm :errors="errors" @message-sent="addMessage" />
       </v-col>
     </v-row>
 
+    <!-- Toast notification -->
     <v-row>
       <v-col>
         <v-snackbar
@@ -55,11 +56,8 @@ export default {
 
     // Broadcast for new chat room created
     Echo.private("chat-room").listen("ChatRoomCreated", (e) => {
-      // console.log("Created new chat room", e);
-
       // If the target user is the current user then push new chat room
       if (e.targetUserId === this.userAuthenticated.id) {
-        console.log("OK bro");
         this.chatRooms.push({
           id: e.newChatRoom.id,
           name: e.newChatRoom.name,
@@ -69,14 +67,7 @@ export default {
 
     // Broadcast for new message sent
     Echo.private("chat").listen("MessageSent", (e) => {
-      // console.log("Broadcast", e);
-      // Only target user update a message from broadcast
-      if (e.user.id !== this.userAuthenticated.id) {
-        this.messages.push({
-          message: e.message.message,
-          user: e.user,
-        });
-      }
+      this.fetchMessages();
     });
   },
   computed: {
@@ -93,6 +84,7 @@ export default {
         content: "",
         timeout: 3000,
       },
+      errors: {},
     };
   },
 
@@ -102,7 +94,6 @@ export default {
         const response = await FetchChatRooms();
 
         this.chatRooms = response.data;
-        this.isSelectedRoom = true;
       } catch (e) {
         console.log(e);
       }
@@ -122,9 +113,6 @@ export default {
     },
 
     async addMessage(message) {
-      //Pushes it to the messages array
-      this.messages.push(message);
-
       try {
         let formData = new FormData();
         formData.append("message", message.message);
@@ -138,17 +126,22 @@ export default {
         }
 
         const response = await SendMessage(this.chatRoomId, formData);
-        console.log("Send message", response);
+
         this.snackbar = {
           content: response.data.status,
           color: "success",
           status: true,
         };
+        this.errors = {};
       } catch (e) {
         console.log(e);
+        if (e.response.status === 422) {
+          this.errors = e.response.data;
+        }
+
         this.snackbar = {
-          content: "Error to send message",
-          color: "success",
+          content: "Error to send message!!!",
+          color: "pink",
           status: true,
         };
       }

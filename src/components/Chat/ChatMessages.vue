@@ -14,7 +14,7 @@
             <v-card-text>
               <p class="white--text">{{ item.user.name }}</p>
               <p class="black-text">{{ item.message }}</p>
-              <MessageFiles :files="item.files" :message-id="item.id" />
+              <MessageFiles :files="item.files" :message-id="Number(item.id)" />
             </v-card-text>
           </v-card>
         </v-card-text>
