@@ -68,6 +68,10 @@ export default {
     // Broadcast for new message sent
     Echo.private("chat").listen("MessageSent", (e) => {
       this.fetchMessages();
+
+      if (e.user.id !== this.userAuthenticated.id) {
+        this.playSound();
+      }
     });
   },
   computed: {
@@ -78,6 +82,7 @@ export default {
     return {
       messages: [],
       chatRooms: [],
+      soundUrl: require("@/sounds/facebook/FacebookMsgTone.mp3"),
       snackbar: {
         status: false,
         color: "",
@@ -145,6 +150,11 @@ export default {
           status: true,
         };
       }
+    },
+
+    playSound() {
+      const audio = new Audio(this.soundUrl);
+      audio.play();
     },
   },
 };

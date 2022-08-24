@@ -1,6 +1,6 @@
 <template>
   <v-col class="col-7">
-    <v-card elevation="1" color="MutedGreen">
+    <v-card color="MutedGreen" elevation="1">
       <v-card-title class="white--text">Post articles</v-card-title>
     </v-card>
 
@@ -37,6 +37,7 @@ import { GetPublishedPostsByUser } from "@/Apis/HealthyFormWebApi/PublicApi/Publ
  * Vuex
  */
 import { mapState, mapGetters } from "vuex";
+
 export default {
   name: "DoctorPosts",
   components: { EditPostButton, PostItem, ReadMorePostsButton },
@@ -52,7 +53,7 @@ export default {
     handleFetchUserPosts: {
       handler() {
         // if is owner profile
-        if (this.isOwnProfile) {
+        if (this.isOwnProfile && this.isDoctor) {
           this.doctorFetchPosts(this.userId, 1); // Get all the posts
         } else {
           this.fetchPublishedPosts(this.userId, 1); // Get only published posts
