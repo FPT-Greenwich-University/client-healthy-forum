@@ -35,23 +35,8 @@
       </v-card-subtitle>
 
       <v-card-subtitle>
-        <!--   View detail post by doctor  -->
-        <v-btn
-          v-if="this.$route.name === 'TheDoctorPosts'"
-          :to="{
-            name: 'TheDoctorPostDetails',
-            params: { userId: post.user.id, postId: post.id },
-          }"
-          class="white--text"
-          color="greenMoodBoard3"
-          small
-        >
-          Read more
-        </v-btn>
-
         <!--   View detail post   -->
         <v-btn
-          v-else
           :to="{
             name: 'ThePostDetails',
             params: { postId: post.id },
@@ -70,7 +55,7 @@
 
 <script>
 export default {
-  name: "PostItem",
+  name: "PublishDoctorPostItem",
   props: {
     post: {
       type: Object,
@@ -84,3 +69,5 @@ export default {
   },
 };
 </script>
+
+<style scoped></style>

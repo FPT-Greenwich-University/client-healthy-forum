@@ -9,18 +9,7 @@
           :elevation="hover ? 12 : 2"
           @click="selectRoom(item.id)"
         >
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-img
-                src="https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"
-              ></v-img>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title v-html="item.name"></v-list-item-title>
-              <v-list-item-subtitle v-html=""></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+          <TargetUserInfo :chat-room-id="Number(item.id)" />
         </v-card>
       </div>
     </v-card>
@@ -34,9 +23,11 @@ import {
   UPDATE_CHAT_ROOM_ID,
   UPDATE_TARGET_USER_ID,
 } from "@/store/mutation-types/chat-mutation-types";
+import TargetUserInfo from "@/components/Chat/TargetUserInfo";
 
 export default {
   name: "ChatRooms",
+  components: { TargetUserInfo },
   props: {
     chatRooms: {
       type: Array,
@@ -45,10 +36,12 @@ export default {
   },
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
+    ...mapState("CHATS", ["targetUserId"]),
   },
   data() {
     return {
       chatRoomUsers: {},
+      targetUserInfo: {},
     };
   },
   methods: {
@@ -67,10 +60,7 @@ export default {
 
         this.chatRoomUsers = response.data.chat_room_users;
 
-        if (
-          this.userAuthenticated.id === response.data.chat_room_users.source_id
-        ) {
-          // alert("OK");
+        if (this.userAuthenticated.id === this.chatRoomUsers.source_id) {
           this.UPDATE_TARGET_USER_ID({
             targetUserId: this.chatRoomUsers.target_id,
           });

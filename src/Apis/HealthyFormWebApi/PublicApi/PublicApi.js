@@ -51,6 +51,10 @@ const GetUserProfile = (userId) => {
   return HealthyFormWebApi().get(`/users/${userId}/profiles`);
 };
 
+const GetUserWithRoles = (userId) => {
+  return HealthyFormWebApi().get(`/users/${userId}/roles`);
+};
+
 const SearchPosts = (title, page) => {
   return HealthyFormWebApi().get(`/search?title=${title}&page=${page}`);
 };
@@ -97,6 +101,7 @@ const SearchUsers = (query, page) => {
 
 export {
   GetUserProfile,
+  GetUserWithRoles,
   GetPublishedPostsByUser,
   GetRelatedPostsByCategory,
   GetPostByCategory,

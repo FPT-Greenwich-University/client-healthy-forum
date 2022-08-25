@@ -2,7 +2,31 @@
   <div>
     <v-row class="text-center">
       <v-col>
-        <v-btn :to="{ name: 'TheDoctorPosts' }" color="greenMoodBoard3" class="white--text" small>
+        <!--Doctor get more posts-->
+        <v-btn
+          v-if="isOwnProfile"
+          :to="{
+            name: 'TheDoctorPosts',
+            params: { userId: $route.params.userId },
+          }"
+          class="white--text"
+          color="greenMoodBoard3"
+          small
+        >
+          More My Posts
+        </v-btn>
+
+        <!--Another user get more posts-->
+        <v-btn
+          v-else
+          :to="{
+            name: 'PublishDoctorPosts',
+            params: { userId: $route.params.userId },
+          }"
+          class="white--text"
+          color="greenMoodBoard3"
+          small
+        >
           more posts
         </v-btn>
       </v-col>
@@ -11,7 +35,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "ReadMorePostsButton",
+  computed: {
+    ...mapState("AUTH", ["isOwnProfile"]),
+  },
 };
 </script>
