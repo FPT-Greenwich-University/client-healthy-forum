@@ -16,10 +16,7 @@
           <v-card-actions>
             <v-list-item class="grow">
               <!--  if user is google account-->
-              <v-list-item-avatar
-                v-if="userInfo.provider_id !== null"
-                color="grey darken-3"
-              >
+              <v-list-item-avatar v-if="isGoogleAccount" color="grey darken-3">
                 <v-img
                   :src="userInfo.image_url"
                   alt=""
@@ -28,9 +25,10 @@
               </v-list-item-avatar>
               <v-list-item-avatar v-else color="grey darken-3">
                 <v-img
+                  v-if="userInfo.image !== null"
+                  :src="`${backEndUrl}/${userInfo.image.path}`"
                   alt="Avatar"
                   class="elevation-6"
-                  src="https://kenh14cdn.com/2018/10/19/photo-1-15399608173151918722731.png"
                 ></v-img>
               </v-list-item-avatar>
 
@@ -94,9 +92,12 @@
           </v-card-text>
         </v-card>
       </v-col>
+
       <v-spacer></v-spacer>
 
-      <DoctorPosts v-if="userInfo.id" :userId="userInfo.id" />
+      <template v-if="doctorRole">
+        <DoctorPosts :userId="userInfo.id" />
+      </template>
     </v-row>
   </v-container>
 </template>
@@ -105,7 +106,7 @@ import ChangeProfile from "@/views/Users/Profiles/ChangeProfile";
 import ChangePassword from "@/components/Auth/ChangePassword";
 import DoctorPosts from "@/components/Public/Posts/Doctors/DoctorPosts";
 import ContractDoctor from "@/components/Mail/ContractDoctor";
-
+import { GetUserWithRoles } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 import { mapActions, mapState } from "vuex";
 import ChatButton from "@/components/Buttons/Chats/ChatButton";
 
@@ -118,19 +119,30 @@ export default {
     ChangeProfile,
     ChangePassword,
   },
+  computed: {
+    ...mapState("AUTH", ["userInfo", "isOwnProfile", "userAuthenticated"]),
+    isGoogleAccount() {
+      if (this.userInfo) {
+        return this.userInfo.provider_id !== null;
+      }
+    },
+    doctorRole() {
+      return this.userRoles.includes("doctor");
+    },
+  },
   data() {
     return {
       isOwn: false, // is current user authenticated own this profile
+      backEndUrl: process.env.VUE_APP_BACKEND_URL,
+      userRoles: [],
     };
-  },
-  computed: {
-    ...mapState("AUTH", ["userInfo", "isOwnProfile", "userAuthenticated"]),
   },
   watch: {
     handleFetchProfile: {
       handler() {
         let userId = this.$route.params.userId;
         this.fetchProfile(userId);
+        this.fetchUserRoles(userId);
       },
       immediate: true,
     },
@@ -139,6 +151,19 @@ export default {
     ...mapActions("AUTH", ["fetchProfile"]),
     handleFetchProfile(userId) {
       this.fetchProfile(userId);
+    },
+
+    /**
+     * Fetch user roles by id param url of profile page
+     */
+    async fetchUserRoles(userId) {
+      try {
+        const res = await GetUserWithRoles(userId);
+        console.log("User Roles", res);
+        this.userRoles = res.data.roles.map((e) => e.name);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

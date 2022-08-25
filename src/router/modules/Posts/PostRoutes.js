@@ -46,6 +46,11 @@ const PostRoutes = () => {
       beforeEnter: checkIsDoctor,
     },
 
+    {
+      path: "/users/:userId/posts",
+      name: "PublishDoctorPosts",
+      component: () => import("@/views/Posts/Public/PublishDoctorPosts"),
+    },
     /**
      * List the posts by tag
      */

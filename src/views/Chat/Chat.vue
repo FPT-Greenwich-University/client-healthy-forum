@@ -62,6 +62,7 @@ export default {
           id: e.newChatRoom.id,
           name: e.newChatRoom.name,
         });
+        this.playSound();
       }
     });
 

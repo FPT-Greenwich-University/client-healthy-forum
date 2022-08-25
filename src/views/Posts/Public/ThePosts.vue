@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-row class="d-flex flex-row mx-auto">
       <v-col class="col-3">
         <v-select
@@ -146,10 +146,6 @@ export default {
       } else {
         this.fetchPosts(payload); // Default fetch posts by filter
       }
-    },
-
-    handleDetailPost(postId) {
-      this.$router.push(`/posts/${postId}`);
     },
 
     async fetchCategories() {
