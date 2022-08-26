@@ -78,17 +78,15 @@ export default {
     },
   },
   methods: {
-    async fetchFavoritePosts(page = 1) {
+    async fetchFavoritePosts(page) {
       const userId = this.userAuthenticated.id;
 
       try {
         const response = await GetFavoritePosts(userId, page);
 
-        if (response) {
-          this.posts = response.data.data;
-          this.$store.commit("setCurrentPage", response.data.current_page);
-          this.$store.commit("setLastPage", response.data.last_page);
-        }
+        this.posts = response.data.data;
+        this.$store.commit("setCurrentPage", response.data.current_page);
+        this.$store.commit("setLastPage", response.data.last_page);
       } catch (error) {
         console.log(error);
       }
