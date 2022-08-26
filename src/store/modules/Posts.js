@@ -53,12 +53,9 @@ const Posts = {
     async doctorGetDetailPost({ commit }, payload) {
       try {
         const response = await DoctorGetDetailPost(payload);
-        console.log(response);
         commit(SET_DETAIL_POST, response.data);
       } catch (e) {
-        if (e) {
-          console.log(e);
-        }
+        console.log(e);
       }
     },
 
@@ -92,12 +89,9 @@ const Posts = {
     async getTotalLikeOfPost({ commit }, postId) {
       try {
         const res = await GetTotalLikeOfPost(postId);
-        console.log("TOTAL LIKE:", res);
         commit(SET_TOTAL_LIKE, res.data);
       } catch (e) {
-        if (e) {
-          console.log(e);
-        }
+        console.log(e);
       }
     },
 

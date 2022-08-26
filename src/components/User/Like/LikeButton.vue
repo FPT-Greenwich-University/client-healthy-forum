@@ -67,7 +67,7 @@ export default {
           const res = await HealthyFormWebApi().get(
             `/posts/${this.postId}/likes/is-exist`
           );
-          console.log("check Like", res);
+          // console.log("check Like", res);
           if (res) {
             this.isExistLike = res.data;
           }
@@ -86,17 +86,11 @@ export default {
      */
     async handleLikePost() {
       try {
-        const res = await HealthyFormWebApi().post(
-          `/posts/${this.postId}/likes`
-        );
-        console.log("LIKE", res);
+        await HealthyFormWebApi().post(`/posts/${this.postId}/likes`);
         await this.checkLikeIsExist();
-        const demo = await this.getTotalLikeOfPost(this.postId);
-        console.log("DEMO", demo);
+        await this.getTotalLikeOfPost(this.postId);
       } catch (e) {
-        if (e) {
-          console.log("Like error", e);
-        }
+        console.log("Like error", e);
       }
     },
 
@@ -107,16 +101,11 @@ export default {
      */
     async handleUnlikePost() {
       try {
-        const res = await HealthyFormWebApi().delete(
-          `/posts/${this.postId}/likes`
-        );
-        console.log("UNLIKE", res);
+        await HealthyFormWebApi().delete(`/posts/${this.postId}/likes`);
         await this.checkLikeIsExist();
         await this.getTotalLikeOfPost(this.postId);
       } catch (e) {
-        if (e) {
-          console.log(e);
-        }
+        console.log(e);
       }
     },
   },
