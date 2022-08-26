@@ -1,18 +1,39 @@
 <template>
   <v-row v-if="isAuthenticated" justify="center">
     <v-col class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+      <!--Add follow button-->
       <v-btn
+        v-if="!isFollowed"
         block
-        dark
+        class="white--text"
+        color="Olive"
         elevation="2"
         x-small
-        @click="isFollowed ? unFollow(userId, postId) : addFollow(postId)"
+        @click="addFollow(postId)"
       >
         {{ followStatus.message }}
-        <v-icon dark x-small>
+        <v-icon color="red" right x-small>
           {{ followStatus.icon }}
         </v-icon>
       </v-btn>
+      <!---->
+
+      <!--Unfollow button-->
+      <v-btn
+        v-else
+        block
+        class="white--text"
+        color="red"
+        elevation="2"
+        x-small
+        @click="unFollow(userId, postId)"
+      >
+        {{ followStatus.message }}
+        <v-icon color="white" right x-small>
+          {{ followStatus.icon }}
+        </v-icon>
+      </v-btn>
+      <!-- -->
     </v-col>
   </v-row>
 </template>
