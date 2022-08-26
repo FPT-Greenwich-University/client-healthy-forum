@@ -63,9 +63,9 @@
 
             <!-- Change password dialog -->
             <ChangePassword />
-
-            <v-divider></v-divider>
           </v-card-actions>
+
+          <v-divider></v-divider>
 
           <v-card-actions
             v-if="!isOwnProfile"
@@ -90,6 +90,11 @@
           <v-card-text v-else>
             <p>No information</p>
           </v-card-text>
+
+          <template v-if="doctorRole && isAuthenticated && !isOwnProfile">
+            <v-divider></v-divider>
+            <AddFavoriteDoctor />
+          </template>
         </v-card>
       </v-col>
 
@@ -109,10 +114,12 @@ import ContractDoctor from "@/components/Mail/ContractDoctor";
 import { GetUserWithRoles } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 import { mapActions, mapState } from "vuex";
 import ChatButton from "@/components/Buttons/Chats/ChatButton";
+import AddFavoriteDoctor from "@/components/Favorites/Doctors/AddFavoriteDoctor";
 
 export default {
   name: "UserProfile",
   components: {
+    AddFavoriteDoctor,
     ChatButton,
     ContractDoctor,
     DoctorPosts,
@@ -120,7 +127,12 @@ export default {
     ChangePassword,
   },
   computed: {
-    ...mapState("AUTH", ["userInfo", "isOwnProfile", "userAuthenticated"]),
+    ...mapState("AUTH", [
+      "userInfo",
+      "isOwnProfile",
+      "userAuthenticated",
+      "isAuthenticated",
+    ]),
     isGoogleAccount() {
       if (this.userInfo) {
         return this.userInfo.provider_id !== null;

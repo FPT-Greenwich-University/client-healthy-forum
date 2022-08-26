@@ -2,29 +2,65 @@
   <v-container v-if="isAuthenticated">
     <v-row>
       <v-col>
-        <v-btn
-          block
-          class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
-          dark
-          elevation="2"
-          @click="isFollowed ? unFollow(userId, doctorId) : addFollow(doctorId)"
-        >
-          {{ followStatus.message }}
-          <v-icon dark small>
-            {{ followStatus.icon }}
-          </v-icon>
-        </v-btn>
-        <v-btn
-          class="d-block d-xl-none d-lg-none d-md-none d-sm-none"
-          dark
-          fab
-          x-small
-          @click="isFollowed ? unFollow(userId, doctorId) : addFollow(doctorId)"
-        >
-          <v-icon dark>
-            {{ followStatus.icon }}
-          </v-icon>
-        </v-btn>
+        <!--Add Follow doctor-->
+        <template v-if="!isFollowed">
+          <v-btn
+            block
+            class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
+            color="Olive"
+            dark
+            elevation="2"
+            @click="addFollow(doctorId)"
+          >
+            {{ followStatus.message }}
+            <v-icon dark small color="red">
+              {{ followStatus.icon }}
+            </v-icon>
+          </v-btn>
+
+          <v-btn
+            class="d-block d-xl-none d-lg-none d-md-none d-sm-none"
+            color="Olive"
+            dark
+            fab
+            x-small
+            @click="addFollow(doctorId)"
+          >
+            <v-icon dark color="red">
+              {{ followStatus.icon }}
+            </v-icon>
+          </v-btn>
+        </template>
+
+        <!-- Remove follow doctor -->
+        <template v-else>
+          <v-btn
+            block
+            class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
+            color="greenMoodBoard4"
+            dark
+            elevation="2"
+            @click="unFollow(doctorId)"
+          >
+            {{ followStatus.message }}
+            <v-icon small color="red">
+              {{ followStatus.icon }}
+            </v-icon>
+          </v-btn>
+
+          <v-btn
+            class="d-block d-xl-none d-lg-none d-md-none d-sm-none"
+            color="greenMoodBoard4"
+            dark
+            fab
+            x-small
+            @click="unFollow(doctorId)"
+          >
+            <v-icon dark color="red">
+              {{ followStatus.icon }}
+            </v-icon>
+          </v-btn>
+        </template>
       </v-col>
     </v-row>
   </v-container>
@@ -34,12 +70,12 @@
 import { mapState } from "vuex";
 import {
   AddFollow,
-  CheckIsFollow,
+  CheckIsFollowDoctor,
   UnFollow,
 } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 
 export default {
-  name: "AddToFavoriteButton",
+  name: "AddFavoriteDoctor",
   computed: {
     ...mapState("AUTH", ["userAuthenticated", "isAuthenticated"]),
 
@@ -93,11 +129,10 @@ export default {
       }
     },
 
-    async unFollow(userId, doctorId) {
+    async unFollow(doctorId) {
       try {
-        userId = this.userAuthenticated.id;
+        const userId = this.userAuthenticated.id;
         const response = await UnFollow(userId, doctorId);
-
         if (response.status === 204) {
           await this.checkFollow(this.userAuthenticated.id, doctorId);
         }
@@ -116,7 +151,7 @@ export default {
      */
     async checkFollow(userId, doctorId) {
       try {
-        const response = await CheckIsFollow(userId, doctorId);
+        const response = await CheckIsFollowDoctor(userId, doctorId);
 
         if (response) {
           if (response.data === false) {
