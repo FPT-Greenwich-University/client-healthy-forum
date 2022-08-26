@@ -31,8 +31,8 @@ const ReplyComment = (postId, commentId, formData) => {
 /**
  * Check user is follow the doctor
  */
-const CheckIsFollow = (userId, doctorId) => {
-  return HealthyFormWebApi().delete(
+const CheckIsFollowDoctor = (userId, doctorId) => {
+  return HealthyFormWebApi().get(
     `/users/${userId}/favorites/doctors/${doctorId}`
   );
 };
@@ -56,7 +56,7 @@ const GetFavoriteDoctors = (userId, page) => {
 };
 
 export {
-  CheckIsFollow,
+  CheckIsFollowDoctor,
   GetReplyComments,
   ReplyComment,
   AddFollow,
