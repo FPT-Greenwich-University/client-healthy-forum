@@ -61,6 +61,28 @@
             </v-icon>
           </v-btn>
         </template>
+
+        <!-- Toast notification -->
+        <v-snackbar
+          v-model="snackbar.status"
+          centered
+          left
+          :color="snackbar.color"
+          :timeout="snackbar.timeout"
+        >
+          {{ snackbar.content }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn
+              color="white"
+              text
+              v-bind="attrs"
+              @click="snackbar.status = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-col>
     </v-row>
   </v-container>
@@ -108,6 +130,7 @@ export default {
         color: "",
         icon: "",
       },
+      snackbar: {}, // Toast
     };
   },
   methods: {
@@ -123,6 +146,12 @@ export default {
 
         if (response.status === 201) {
           await this.checkFollow(this.userAuthenticated.id, doctorId);
+
+          this.snackbar = {
+            content: "Follow success",
+            color: "greenMoodBoard3",
+            status: true,
+          };
         }
       } catch (error) {
         console.log(error);
@@ -135,6 +164,12 @@ export default {
         const response = await UnFollow(userId, doctorId);
         if (response.status === 204) {
           await this.checkFollow(this.userAuthenticated.id, doctorId);
+
+          this.snackbar = {
+            content: "Unfollow success",
+            color: "greenMoodBoard3",
+            status: true,
+          };
         }
       } catch (error) {
         console.log(error);
@@ -164,7 +199,7 @@ export default {
           } else {
             this.followStatus = {
               status: true,
-              message: "Unfollow",
+              message: "Un follow",
               color: "red",
               icon: "fas fa-unlink",
             };

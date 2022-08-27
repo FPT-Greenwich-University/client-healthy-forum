@@ -16,7 +16,7 @@
       </v-col>
     </v-row>
 
-        <AddFavoritePost/>
+    <AddFavoritePost />
 
     <!--  Tags  -->
     <v-row justify="center">

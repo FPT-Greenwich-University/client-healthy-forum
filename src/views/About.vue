@@ -74,12 +74,8 @@ export default {
   methods: {
     async handleFetchAuthorInfo() {
       try {
-        const myLoginName = "ngocphuocha";
-        const response = await GetAuthorInformation(myLoginName);
-        console.log(response);
-        if (response) {
-          this.userInfo = response.data;
-        }
+        const response = await GetAuthorInformation("ngocphuocha");
+        this.userInfo = response.data;
       } catch (error) {
         console.log(error);
       }

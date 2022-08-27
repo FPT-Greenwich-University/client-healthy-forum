@@ -55,6 +55,20 @@ const GetFavoriteDoctors = (userId, page) => {
   );
 };
 
+const AddPostToFavorite = (postId) => {
+  return HealthyFormWebApi().post("/users/favorites/posts", {
+    postId: postId,
+  });
+};
+const RemovePostFromFavorite = (userId, postId) => {
+  return HealthyFormWebApi().delete(
+    `/users/${userId}/favorites/posts/${postId}`
+  );
+};
+
+const CheckPostFavoriteExisted = (userId, postId) => {
+  return HealthyFormWebApi().get(`/users/${userId}/favorites/posts/${postId}`);
+};
 export {
   CheckIsFollowDoctor,
   GetReplyComments,
@@ -63,4 +77,7 @@ export {
   UnFollow,
   GetFavoritePosts,
   GetFavoriteDoctors,
+  AddPostToFavorite,
+  CheckPostFavoriteExisted,
+  RemovePostFromFavorite,
 };

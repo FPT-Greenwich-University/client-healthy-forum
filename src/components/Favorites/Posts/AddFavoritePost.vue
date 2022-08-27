@@ -16,7 +16,6 @@
           {{ followStatus.icon }}
         </v-icon>
       </v-btn>
-      <!---->
 
       <!--Unfollow button-->
       <v-btn
@@ -26,27 +25,49 @@
         color="red"
         elevation="2"
         x-small
-        @click="unFollow(userId, postId)"
+        @click="removePostFavorite(postId)"
       >
         {{ followStatus.message }}
         <v-icon color="white" right x-small>
           {{ followStatus.icon }}
         </v-icon>
       </v-btn>
-      <!-- -->
     </v-col>
+
+    <!-- Toast notification -->
+    <v-snackbar
+      v-model="snackbar.status"
+      :color="snackbar.color"
+      :timeout="snackbar.timeout"
+    >
+      {{ snackbar.content }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbar.status = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import {
+  AddPostToFavorite,
+  CheckPostFavoriteExisted,
+  RemovePostFromFavorite,
+} from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi.js";
 
 export default {
   name: "AddButton.vue",
   computed: {
     ...mapState("AUTH", ["userAuthenticated", "isAuthenticated"]),
-
     isFollowed() {
       return this.followStatus.status;
     },
@@ -56,13 +77,14 @@ export default {
       handler() {
         if (this.isAuthenticated) {
           this.userId = this.userAuthenticated.id;
-
           if (this.userId !== undefined) {
-            this.checkFollow(this.userAuthenticated.id, this.postId);
+            this.checkPostFavoriteExisted(
+              this.userAuthenticated.id,
+              this.postId
+            );
           }
         }
       },
-
       immediate: true,
     },
   },
@@ -75,6 +97,7 @@ export default {
         message: "",
         icon: "",
       },
+      snackbar: {}, // Toast
     };
   },
   methods: {
@@ -86,34 +109,43 @@ export default {
      */
     async addFollow(postId) {
       try {
-        const response = await HealthyFormWebApi().post(
-          "/users/favorites/posts",
-          { post_id: postId }
-        );
+        const response = await AddPostToFavorite(postId);
+        if (response.status === 201) {
+          await this.checkPostFavoriteExisted(
+            this.userAuthenticated.id,
+            postId
+          );
 
-        if (response) {
-          await this.checkFollow(this.userAuthenticated.id, postId);
+          this.snackbar = {
+            content: "Add success",
+            color: "greenMoodBoard3",
+            status: true,
+          };
         }
       } catch (error) {
         console.log(error);
       }
     },
-
-    async unFollow(userId, postId) {
+    async removePostFavorite(postId) {
       try {
-        const response = await HealthyFormWebApi().delete(
-          `/users/${userId}/favorites/posts/${postId}`
-        );
+        const userId = this.userAuthenticated.id;
+        const response = await RemovePostFromFavorite(userId, postId);
+        if (response.status === 204) {
+          await this.checkPostFavoriteExisted(
+            this.userAuthenticated.id,
+            postId
+          );
 
-        console.log(response);
-        if (response) {
-          await this.checkFollow(this.userAuthenticated.id, postId);
+          this.snackbar = {
+            content: "Remove success",
+            color: "greenMoodBoard3",
+            status: true,
+          };
         }
       } catch (error) {
         console.log(error);
       }
     },
-
     /**
      * If post in list favorite, then return true
      * otherwise false
@@ -122,27 +154,21 @@ export default {
      * @param postId
      * @returns {Promise<void>}
      */
-    async checkFollow(userId, postId) {
+    async checkPostFavoriteExisted(userId, postId) {
       try {
-        const response = await HealthyFormWebApi().get(
-          `/users/${userId}/favorites/posts/${postId}`
-        );
-        console.log("check", response);
-
-        if (response) {
-          if (response.data === false) {
-            this.followStatus = {
-              status: false,
-              message: "Add favorite",
-              icon: "fas fa-heart",
-            };
-          } else {
-            this.followStatus = {
-              status: true,
-              message: "Remove favorite",
-              icon: "fas fa-unlink",
-            };
-          }
+        const response = await CheckPostFavoriteExisted(userId, postId);
+        if (response.data === false) {
+          this.followStatus = {
+            status: false,
+            message: "Add favorite",
+            icon: "fas fa-heart",
+          };
+        } else {
+          this.followStatus = {
+            status: true,
+            message: "Remove favorite",
+            icon: "fas fa-unlink",
+          };
         }
       } catch (error) {
         console.log(error);
