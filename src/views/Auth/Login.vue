@@ -145,6 +145,7 @@ export default {
         this.$store.commit("AUTH/UPDATE_AUTH", true);
         let previousUrl = this.$router.history._startLocation;
 
+        // Return previous url
         if (previousUrl !== "/login") {
           await this.$router.replace({ path: previousUrl });
         } else {
@@ -168,36 +169,42 @@ export default {
     },
 
     /**
-     * Login with sanctum token Healthy forum website
+     * Login with sanctum token server side
      */
     async apiLogin() {
-      let formData = new FormData();
-
-      formData.append("email", this.email);
-      formData.append("password", this.password);
-
       try {
+        let formData = new FormData();
+        formData.append("email", this.email);
+        formData.append("password", this.password);
+
         const res = await Login(formData);
 
         localStorage.setItem("token", JSON.stringify(res.data.token));
+
         this.$store.commit("AUTH/UPDATE_AUTH", true);
+
         await this.fetchUserAuthInfo();
+
         let previousUrl = this.$router.history._startLocation;
 
+        // Return previous url
         if (previousUrl !== "/login") {
           await this.$router.replace({ path: previousUrl });
         } else {
           await this.$router.replace({ path: "/" });
         }
       } catch (e) {
+        // If email or password is not correct
         if (e.response.status === 401) {
           this.errorStatus = 401;
           this.error = e.response.data;
         }
 
+        // If failed request validation
         if (e.response.status === 422) {
           this.error = e.response.data;
         }
+
         // if user is not verify account
         if (e.response.status === 403) {
           this.errorStatus = 403;
@@ -206,6 +213,10 @@ export default {
       }
     },
 
+    /**
+     * Send a notification to user verify email
+     * @returns {Promise<void>}
+     */
     async verifyAccount() {
       try {
         await SendMailVerifyAccount(this.email);
