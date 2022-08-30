@@ -5,7 +5,7 @@
       <v-textarea
         v-model="content"
         auto-grow
-        background-color="grey lighten-5"
+        background-color="white1"
         clear-icon="mdi-close-circle"
         clearable
         filled
@@ -17,7 +17,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="indigo"
+            color="blackBrown"
             dark
             elevation="1"
             small

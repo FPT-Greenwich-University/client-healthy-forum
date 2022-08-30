@@ -7,6 +7,11 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
+        white1: "#F4F4F4",
+        white2: "#DFDEE4",
+        gray: "#C4C4C4",
+        blackBrown: "#45413E",
+
         greenMoodBoard1: "#003A34",
         greenMoodBoard2: "#19582E",
         greenMoodBoard3: "#97B68E",

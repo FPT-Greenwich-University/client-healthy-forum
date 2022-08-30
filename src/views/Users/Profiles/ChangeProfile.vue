@@ -3,8 +3,8 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
           block
-          class="mb-2 text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
-          color="Beige"
+          class="mb-2 text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block white--text"
+          color="blackBrown"
           v-bind="attrs"
           v-on="on"
       >

@@ -1,28 +1,28 @@
 <template>
   <div>
-    <v-app-bar app color="GreenLeaf" flat tile>
+    <v-app-bar app color="white1" flat tile>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-tabs center-active centered>
-        <v-tab class="white--text" to="/">Home</v-tab>
+        <v-tab class="black--text" to="/">Home</v-tab>
 
-        <v-tab :to="{ name: 'Posts' }" class="white--text">Posts</v-tab>
+        <v-tab :to="{ name: 'Posts' }" class="black--text">Posts</v-tab>
 
-        <v-tab :to="{ name: 'Search' }" class="white--text">Search</v-tab>
+        <v-tab :to="{ name: 'Search' }" class="black--text">Search</v-tab>
 
-        <v-tab v-if="isAuthenticated" :to="{ name: 'Chat' }" class="white--text"
-          >Chat</v-tab
-        >
+        <v-tab v-if="isAuthenticated" :to="{ name: 'Chat' }" class="black--text"
+          >Chat
+        </v-tab>
 
-        <v-tab :to="{ name: 'About' }" class="white--text">About</v-tab>
+        <v-tab :to="{ name: 'About' }" class="black--text">About</v-tab>
 
-        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="white--text"
+        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="black--text"
           >Create Post
         </v-tab>
         <v-tab
           v-if="isAdmin"
           :to="{ name: 'AdminDashBoard' }"
-          class="white--text"
+          class="black--text"
         >
           Dashboard
         </v-tab>

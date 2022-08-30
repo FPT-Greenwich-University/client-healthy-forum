@@ -7,7 +7,7 @@
           <v-btn
             block
             class="text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block"
-            color="Olive"
+            color="blackBrown1"
             dark
             elevation="2"
             @click="addFollow(doctorId)"

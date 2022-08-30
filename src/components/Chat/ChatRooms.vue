@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card class="overflow-auto" max-width="450">
-      <v-toolbar color="greenMoodBoard3" dark>Chat</v-toolbar>
+      <v-toolbar class="black--text" color="white1" dark>Chat</v-toolbar>
       <div>
         <v-card
           v-for="item in chatRooms"

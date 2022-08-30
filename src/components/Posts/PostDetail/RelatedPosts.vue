@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col class="col-12">
-      <v-card>
+      <v-card elevation="0">
         <v-card-title>Related Posts</v-card-title>
       </v-card>
     </v-col>

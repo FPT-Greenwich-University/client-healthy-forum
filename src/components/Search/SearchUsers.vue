@@ -3,30 +3,28 @@
     <v-row>
       <v-col>
         <v-text-field
-            v-model="query"
-            append-icon="mdi-magnify"
-            background-color="Tanly"
-            clearable
-            label="Search Users"
-            placeholder="Enter the user name or email"
-            solo
+          v-model="query"
+          append-icon="mdi-magnify"
+          clearable
+          label="Search Users"
+          placeholder="Enter the user name or email"
         ></v-text-field>
       </v-col>
     </v-row>
 
     <v-row>
       <v-col
-          v-for="item in users"
-          :key="item.id"
-          class="col-12 col-xl-6 col-lg-6 col-md-6"
+        v-for="item in users"
+        :key="item.id"
+        class="col-12 col-xl-6 col-lg-6 col-md-6"
       >
         <v-card elevation="0">
           <v-card-text>
             <template v-if="item.provider_id === null">
               <v-img
-                  v-if="item.image"
-                  :src="`${backEndURL}/${item.image.path}`"
-                  aspect-ratio="2"
+                v-if="item.image"
+                :src="`${backEndURL}/${item.image.path}`"
+                aspect-ratio="2"
               ></v-img>
             </template>
 
@@ -40,13 +38,13 @@
           <v-card-subtitle></v-card-subtitle>
           <v-card-actions>
             <v-btn
-                :to="{ name: 'UserProfiles', params: { userId: item.id } }"
-                class="text-decoration-underline"
-                color="primary"
-                depressed
-                plain
-                text
-                tile
+              :to="{ name: 'UserProfiles', params: { userId: item.id } }"
+              class="text-decoration-underline"
+              color="primary"
+              depressed
+              plain
+              text
+              tile
             >
               View Profile
             </v-btn>
@@ -58,19 +56,19 @@
     <!-- Paginate  -->
     <v-row v-if="!isEmptyUsers">
       <v-col>
-        <Paginate @change-page="searchUsers"/>
+        <Paginate @change-page="searchUsers" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import {SearchUsers} from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+import { SearchUsers } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 import Paginate from "@/components/Paginate";
 
 export default {
   name: "SearchUsers",
-  components: {Paginate},
+  components: { Paginate },
   computed: {
     isEmptyUsers() {
       return this.users.length === 0;

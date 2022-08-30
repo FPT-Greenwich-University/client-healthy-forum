@@ -5,11 +5,9 @@
         <v-text-field
           v-model="title"
           append-icon="mdi-magnify"
-          background-color="Tanly"
           clearable
           label="Search Posts"
           placeholder="Enter the post title"
-          solo
         ></v-text-field>
       </v-col>
     </v-row>

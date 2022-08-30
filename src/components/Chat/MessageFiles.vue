@@ -10,7 +10,7 @@
           @click="downloadFile(file.id)"
           v-on="on"
           >{{ file.name }}
-          <v-icon color="Perriwinkle" x-small> mdi-download</v-icon>
+          <v-icon color="blackBrown" x-small> mdi-download</v-icon>
         </v-btn>
       </template>
       <span>Download {{ file.name }}</span>
@@ -21,7 +21,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           v-if="!isEmptyFiles"
-          color="Perriwinkle"
+          color="gray"
           fab
           v-bind="attrs"
           x-small

@@ -6,7 +6,7 @@
         v-if="!isFollowed"
         block
         class="white--text"
-        color="Olive"
+        color="blackBrown"
         elevation="2"
         x-small
         @click="addFollow(postId)"

@@ -4,7 +4,7 @@
       <v-btn
           block
           class="white--text"
-          color="DustyRose"
+          color="blackBrown"
           v-bind="attrs"
           v-on="on"
       >

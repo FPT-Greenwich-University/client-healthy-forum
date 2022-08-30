@@ -30,6 +30,7 @@
         <v-btn
           :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
           primary
+          color="white2"
           x-small
         >
           Category: {{ postDetail.category.name }}

@@ -8,7 +8,7 @@
             src="https://images.pexels.com/photos/2383010/pexels-photo-2383010.jpeg"
           ></v-img>
           <v-card-title class="text-body-1 text-xl-h3 text-lg-h5 text-md-h6">
-            My favorite posts
+            Favorite posts
           </v-card-title>
         </v-card>
       </v-col>

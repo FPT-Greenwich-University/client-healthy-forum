@@ -29,8 +29,14 @@
       </v-col>
 
       <v-col class="text-end d-flex align-center">
-        <v-btn color="blue" plain text @click="handleGetPosts(1)">filter</v-btn>
-        <v-btn plain text @click="resetFilter">reset</v-btn>
+        <v-btn
+          class="white--text mr-3"
+          color="blackBrown"
+          rounded
+          @click="handleGetPosts(1)"
+          >filter
+        </v-btn>
+        <v-btn color="gray" rounded @click="resetFilter">reset</v-btn>
       </v-col>
     </v-row>
 

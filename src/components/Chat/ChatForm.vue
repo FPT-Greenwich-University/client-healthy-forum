@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-card elevation="1">
+      <v-card color="white" elevation="1">
         <!--<v-card-title>Chat Form</v-card-title>-->
         <v-card-text>
           <v-text-field
@@ -37,7 +37,13 @@
           </v-card-subtitle>
         </v-card-text>
         <v-card-actions>
-          <v-btn class="white--text" color="Olive" @click="sendMessage">
+          <v-btn
+            class="black--text"
+            depressed
+            outlined
+            text
+            @click="sendMessage"
+          >
             Send
             <v-icon dark right> mdi-send</v-icon>
           </v-btn>

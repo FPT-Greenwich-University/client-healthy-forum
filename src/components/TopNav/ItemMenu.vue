@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-menu offset-y transition="slide-x-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="blackMoodBoard1" icon v-bind="attrs" v-on="on">
+        <v-btn color="blackBrown" icon v-bind="attrs" v-on="on">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>

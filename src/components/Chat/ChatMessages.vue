@@ -1,19 +1,21 @@
 <template>
   <v-row>
     <v-col>
-      <v-card>
+      <v-card elevation="1" rounded>
         <v-card-title>Message</v-card-title>
         <v-card-text>
           <v-card
             v-for="item in messages"
             :key="item.id"
             class="my-5"
-            color="Olive"
+            color="white"
             elevation="1"
+            outlined
+            shaped
           >
             <v-card-text>
-              <p class="white--text">{{ item.user.name }}</p>
-              <p class="black-text">{{ item.message }}</p>
+              <p class="black--text">{{ item.user.name }}</p>
+              <p class="black--text">{{ item.message }}</p>
               <MessageFiles :files="item.files" :message-id="Number(item.id)" />
             </v-card-text>
           </v-card>

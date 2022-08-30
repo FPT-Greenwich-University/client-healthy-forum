@@ -1,6 +1,6 @@
 <template>
   <v-col class="col-12 col-xl-6 col-lg-6 col-md-6">
-    <v-card color="White" elevation="1">
+    <v-card color="white" elevation="1">
       <v-card-text>
         <v-img
           v-if="post.image.path"
@@ -15,7 +15,8 @@
         <v-btn
           :to="{ name: 'UserProfiles', params: { userId: post.user.id } }"
           class="white--text"
-          color="greenMoodBoard3"
+          color="blackBrown"
+          rounded
           small
         >
           Author: {{ post.user.name }}
@@ -25,12 +26,14 @@
       <v-card-subtitle>
         <v-btn
           :to="{ name: 'Posts', query: { category: post.category.id } }"
-          class="white--text"
-          color="greenMoodBoard3"
+          class="black--text text-decoration-underline"
+          color="blackBrown"
+          rounded
           small
           text
         >
-          <span class="black--text">Category: </span> {{ post.category.name }}
+          <span class="black--text">Category: </span>
+          <span class="black--text">{{ post.category.name }}</span>
         </v-btn>
       </v-card-subtitle>
 
@@ -42,8 +45,9 @@
             name: 'TheDoctorPostDetails',
             params: { userId: post.user.id, postId: post.id },
           }"
-          class="white--text"
-          color="greenMoodBoard3"
+          class="white--text text-decoration-underline"
+          color="blackBrown"
+          rounded
           small
         >
           Read more
@@ -57,7 +61,8 @@
             params: { postId: post.id },
           }"
           class="white--text text-decoration-underline"
-          color="greenMoodBoard3"
+          color="blackBrown"
+          rounded
           small
           text
         >
