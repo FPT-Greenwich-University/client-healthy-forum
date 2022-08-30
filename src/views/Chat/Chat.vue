@@ -22,8 +22,6 @@
           v-model="snackbar.status"
           :color="snackbar.color"
           :timeout="snackbar.timeout"
-          centered
-          right
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -147,7 +145,7 @@ export default {
 
         this.snackbar = {
           content: "Error to send message!!!",
-          color: "pink",
+          color: "red",
           status: true,
         };
       }

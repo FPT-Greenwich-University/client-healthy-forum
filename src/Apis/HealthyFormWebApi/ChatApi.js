@@ -29,10 +29,28 @@ const SendMessage = (chatRoomId, formData) => {
     }
   );
 };
+
+const DownloadFile = (payload) => {
+  return HealthyFormWebApi().get(
+    `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files/${payload.fileId}`
+  );
+};
+
+const DownloadAllFile = (payload) => {
+  return HealthyFormWebApi().get(
+    `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files`,
+    {
+      responseType: "blob",
+    }
+  );
+};
+
 export {
   CreateChatRoom,
   FetchChatRoomUsers,
   FetchChatRooms,
   FetchMessages,
   SendMessage,
+  DownloadFile,
+  DownloadAllFile
 };

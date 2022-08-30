@@ -38,8 +38,10 @@
 
 <script>
 import { mapState } from "vuex";
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
-
+import {
+  DownloadFile,
+  DownloadAllFile,
+} from "@/Apis/HealthyFormWebApi/ChatApi.js";
 export default {
   name: "MessageFiles",
   computed: {
@@ -63,10 +65,13 @@ export default {
   methods: {
     async downloadFile(fileId) {
       try {
-        const response = await HealthyFormWebApi().get(
-          `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${this.chatRoomId}/messages/${this.messageId}/files/${fileId}`
-        );
-        console.log(response);
+        const payload = {
+          chatRoomId: this.chatRoomId,
+          messageId: this.messageId,
+          fileId: fileId,
+        };
+        const response = await DownloadFile(payload);
+
         const fileURL = window.URL.createObjectURL(new Blob([response.data]));
         const fileLink = document.createElement("a");
 
@@ -82,13 +87,11 @@ export default {
 
     async downloadAllFile() {
       try {
-        const response = await HealthyFormWebApi().get(
-          `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${this.chatRoomId}/messages/${this.messageId}/files`,
-          {
-            responseType: "blob",
-          }
-        );
-        console.log(response);
+        const payload = {
+          chatRoomId: this.chatRoomId,
+          messageId: this.messageId,
+        };
+        const response = await DownloadAllFile(payload); // console.log(response);
         const fileURL = window.URL.createObjectURL(new Blob([response.data]));
         const fileLink = document.createElement("a");
 
