@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-card color="white" elevation="1">
+      <v-card outlined rounded>
         <!--<v-card-title>Chat Form</v-card-title>-->
         <v-card-text>
           <v-text-field

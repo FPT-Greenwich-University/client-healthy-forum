@@ -8,8 +8,10 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          color="primary"
-          dark
+          color="blackBrown"
+          x-small
+          class="white--text"
+          rounded
           v-bind="attrs"
           @click="fetchUserDetail"
           v-on="on"

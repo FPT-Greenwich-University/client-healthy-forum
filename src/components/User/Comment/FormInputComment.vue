@@ -19,6 +19,7 @@
           <v-btn
             color="blackBrown"
             dark
+            rounded
             elevation="1"
             small
             v-bind="attrs"

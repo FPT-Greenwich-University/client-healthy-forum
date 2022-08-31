@@ -1,12 +1,13 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="overflow-auto" max-width="450">
-      <v-toolbar class="black--text" color="white1" dark>Chat</v-toolbar>
+    <v-card class="overflow-auto" rounded max-width="450" out outlined>
+      <v-card-title>Chat</v-card-title>
       <div>
         <v-card
           v-for="item in chatRooms"
           :key="item.id"
           :elevation="hover ? 12 : 2"
+          outlined
           @click="selectRoom(item.id)"
         >
           <TargetUserInfo :chat-room-id="Number(item.id)" />
@@ -37,6 +38,10 @@ export default {
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
     ...mapState("CHATS", ["targetUserId"]),
+
+    isEmptyChatRooms() {
+      return this.chatRooms.length === 0;
+    },
   },
   data() {
     return {

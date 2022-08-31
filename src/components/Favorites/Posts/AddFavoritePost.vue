@@ -17,12 +17,13 @@
         </v-icon>
       </v-btn>
 
-      <!--Unfollow button-->
+      <!--Remove favorite post button-->
       <v-btn
         v-else
         block
         class="white--text"
-        color="red"
+        rounded
+        color="blackBrown"
         elevation="2"
         x-small
         @click="removePostFavorite(postId)"

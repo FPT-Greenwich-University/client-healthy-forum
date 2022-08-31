@@ -35,8 +35,12 @@
           rounded
           @click="handleGetPosts(1)"
           >filter
+          <v-icon>mdi-filter</v-icon>
         </v-btn>
-        <v-btn color="gray" rounded @click="resetFilter">reset</v-btn>
+        <v-btn color="gray" rounded @click="resetFilter"
+          >reset
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
 

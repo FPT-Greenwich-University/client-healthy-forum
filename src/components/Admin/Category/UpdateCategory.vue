@@ -34,12 +34,22 @@
         ><p class="red--text">{{ errors.description[0] }}</p></template
       >
 
-      <v-btn class="mr-4 my-2" color="error" @click="reset">
+      <v-btn
+        rounded
+        class="mr-4 my-2 white--text"
+        color="blackBrown"
+        @click="reset"
+      >
         Reset
         <v-icon> mdi-update</v-icon>
       </v-btn>
 
-      <v-btn class="mr-4 my-2" color="primary" @click="handleCreateCategory">
+      <v-btn
+        rounded
+        class="mr-4 my-2"
+        color="white1"
+        @click="handleCreateCategory"
+      >
         Submit
         <v-icon> fas fa-paper-plane</v-icon>
       </v-btn>

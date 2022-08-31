@@ -1,15 +1,13 @@
 <template>
   <v-row>
     <v-col>
-      <v-card elevation="1" rounded>
+      <v-card outlined rounded>
         <v-card-title>Message</v-card-title>
         <v-card-text>
           <v-card
             v-for="item in messages"
             :key="item.id"
             class="my-5"
-            color="white"
-            elevation="1"
             outlined
             shaped
           >

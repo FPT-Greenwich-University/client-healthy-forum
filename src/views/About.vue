@@ -13,7 +13,12 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn @click="redirectGitHubProfile" color="orange lighten-2" text>
+            <v-btn
+              @click="redirectGitHubProfile"
+              rounded
+              color="blackBrown"
+              text
+            >
               Explore</v-btn
             >
 

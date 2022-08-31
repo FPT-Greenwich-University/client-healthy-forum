@@ -29,8 +29,9 @@
       >
         <v-btn
           :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
-          primary
           color="white2"
+          primary
+          rounded
           x-small
         >
           Category: {{ postDetail.category.name }}
@@ -102,6 +103,7 @@
     <!--List Comments-->
     <TheComments :postId="postId" />
 
+    <!-- The related posts-->
     <RelatedPosts :category-id="postDetail.category_id" />
   </v-container>
 </template>

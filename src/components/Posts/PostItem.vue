@@ -1,6 +1,6 @@
 <template>
   <v-col class="col-12 col-xl-6 col-lg-6 col-md-6">
-    <v-card color="white" elevation="1">
+    <v-card color="white" elevation="0">
       <v-card-text>
         <v-img
           v-if="post.image.path"
@@ -9,15 +9,17 @@
         ></v-img>
       </v-card-text>
 
-      <v-card-title class="white--text">{{ post.title }}</v-card-title>
+      <v-card-title class="black--text">{{ post.title }}</v-card-title>
 
       <v-card-subtitle>
         <v-btn
           :to="{ name: 'UserProfiles', params: { userId: post.user.id } }"
           class="white--text"
           color="blackBrown"
+          plain
           rounded
           small
+          title
         >
           Author: {{ post.user.name }}
         </v-btn>
@@ -26,14 +28,16 @@
       <v-card-subtitle>
         <v-btn
           :to="{ name: 'Posts', query: { category: post.category.id } }"
-          class="black--text text-decoration-underline"
+          class="black--text"
           color="blackBrown"
           rounded
           small
           text
         >
           <span class="black--text">Category: </span>
-          <span class="black--text">{{ post.category.name }}</span>
+          <span class="black--text text-decoration-underline">{{
+            post.category.name
+          }}</span>
         </v-btn>
       </v-card-subtitle>
 
@@ -45,7 +49,7 @@
             name: 'TheDoctorPostDetails',
             params: { userId: post.user.id, postId: post.id },
           }"
-          class="white--text text-decoration-underline"
+          class="white--text text-decoration-underline heading"
           color="blackBrown"
           rounded
           small

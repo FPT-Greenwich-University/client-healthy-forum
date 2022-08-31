@@ -1,29 +1,33 @@
 <template>
-  <v-row>
-    <v-col class="col-12">
-      <v-card elevation="0">
-        <v-card-title>Related Posts</v-card-title>
-      </v-card>
-    </v-col>
-    <v-col
-      v-for="post in posts"
-      :key="post.id"
-      class="col-12 col-lg-4 col-xl-4 col-md-6 col-sm-6"
-    >
-      <v-card class="">
-        <PostItem :post="post" />
-      </v-card>
-    </v-col>
-  </v-row>
+  <div>
+    <v-row>
+      <v-col class="col-12">
+        <v-card elevation="1">
+          <v-card-title>Related Posts</v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col
+        v-for="post in posts"
+        :key="post.id"
+        class="col-12 col-xl-6 col-lg-6"
+      >
+        <RelatedPostItem :post="post" />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
 import { GetRelatedPostsByCategory } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 import PostItem from "@/components/Posts/PostItem";
+import RelatedPostItem from "@/components/Posts/RelatedPost/RelatedPostItem";
 
 export default {
   name: "RelatedPosts",
-  components: { PostItem },
+  components: { RelatedPostItem, PostItem },
   props: {
     categoryId: {
       type: Number,

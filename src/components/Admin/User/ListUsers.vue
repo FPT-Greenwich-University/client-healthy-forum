@@ -14,7 +14,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
             <td>
-              <v-btn small>
+              <v-btn color="blackBrown" x-small>
                 <DetailUser :userId="item.id" />
               </v-btn>
             </td>

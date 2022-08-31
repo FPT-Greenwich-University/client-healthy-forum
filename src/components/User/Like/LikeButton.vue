@@ -4,7 +4,13 @@
       <!--   Like button   -->
       <v-tooltip v-if="isExistLike === false" bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" @click="handleLikePost" v-on="on">
+          <v-btn
+            v-bind="attrs"
+            color="white1"
+            rounded
+            @click="handleLikePost"
+            v-on="on"
+          >
             Like
             <v-icon color="red" dark dense right> fas fa-heart</v-icon>
           </v-btn>

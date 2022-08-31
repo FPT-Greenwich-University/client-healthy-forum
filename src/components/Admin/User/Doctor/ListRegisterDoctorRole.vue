@@ -35,9 +35,14 @@
         v-if="users.length > 0"
         @change-page="fetchListRegisterDoctor"
       />
-      <v-btn color="success" outlined @click="fetchListRegisterDoctor"
-        >Refresh</v-btn
-      >
+      <v-btn
+        class="black--text"
+        color="white2"
+        @click="fetchListRegisterDoctor"
+        rounded
+        >Refresh
+        <v-icon> mdi-update</v-icon>
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

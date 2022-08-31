@@ -3,6 +3,7 @@
     <v-btn class="ma-1 d-inline-block black--text" text x-small>Tags:</v-btn>
     <v-btn
       v-for="tag in postTags"
+      rounded
       :key="tag.id"
       :title="tag.description"
       :to="{ name: 'Posts', query: { tag: tag.id } }"

@@ -18,8 +18,9 @@
       <!--  Action delete    -->
       <v-btn
         :disabled="invalid"
-        class="mr-4 my-2"
-        color="red"
+        class="mr-4 my-2 white--text"
+        color="blackBrown"
+        rounded
         outlined
         @click="handleDeleteCategory"
       >
@@ -27,7 +28,12 @@
         <v-icon right> mdi-delete</v-icon>
       </v-btn>
 
-      <v-btn class="mr-4 my-2" color="#66bb6a" outlined @click="resetForm">
+      <v-btn
+        class="mr-4 my-2 white--text"
+        color="blackBrown"
+        rounded
+        @click="resetForm"
+      >
         Reset
         <v-icon> mdi-update</v-icon>
       </v-btn>
