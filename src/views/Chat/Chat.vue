@@ -3,7 +3,12 @@
     <v-row justify="space-between">
       <!-- List of chat rooms -->
       <v-col class="col-3">
-        <ChatRooms :chat-rooms="chatRooms" @select-room="fetchMessages" />
+        <ChatRooms
+          :chat-rooms="chatRooms"
+          @notification="playSound"
+          @select-room="fetchMessages"
+          @retrieve-message="fetchMessages"
+        />
       </v-col>
 
       <v-col v-if="messages.length > 0" class="col-9">
@@ -60,15 +65,6 @@ export default {
           id: e.newChatRoom.id,
           name: e.newChatRoom.name,
         });
-        this.playSound();
-      }
-    });
-
-    // Broadcast for new message sent
-    Echo.private("chat").listen("MessageSent", (e) => {
-      this.fetchMessages();
-
-      if (e.user.id !== this.userAuthenticated.id) {
         this.playSound();
       }
     });
