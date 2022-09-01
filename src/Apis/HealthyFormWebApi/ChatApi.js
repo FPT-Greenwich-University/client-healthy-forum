@@ -32,7 +32,10 @@ const SendMessage = (chatRoomId, formData) => {
 
 const DownloadFile = (payload) => {
   return HealthyFormWebApi().get(
-    `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files/${payload.fileId}`
+    `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files/${payload.fileId}`,
+    {
+      responseType: "blob",
+    }
   );
 };
 
@@ -52,5 +55,5 @@ export {
   FetchMessages,
   SendMessage,
   DownloadFile,
-  DownloadAllFile
+  DownloadAllFile,
 };

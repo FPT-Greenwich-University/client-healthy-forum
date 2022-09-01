@@ -42,6 +42,7 @@ import {
   DownloadFile,
   DownloadAllFile,
 } from "@/Apis/HealthyFormWebApi/ChatApi.js";
+
 export default {
   name: "MessageFiles",
   computed: {
@@ -70,6 +71,7 @@ export default {
           messageId: this.messageId,
           fileId: fileId,
         };
+
         const response = await DownloadFile(payload);
 
         const fileURL = window.URL.createObjectURL(new Blob([response.data]));
