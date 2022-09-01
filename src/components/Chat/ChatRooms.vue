@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="overflow-auto" rounded max-width="450" out outlined>
+    <v-card class="overflow-auto" max-width="450" out outlined rounded>
       <v-card-title>Chat</v-card-title>
       <div>
         <v-card
@@ -29,6 +29,16 @@ import TargetUserInfo from "@/components/Chat/TargetUserInfo";
 export default {
   name: "ChatRooms",
   components: { TargetUserInfo },
+  mounted() {
+    // Broadcast for new message sent
+    Echo.private(`chatRoom.${this.chatRoomId}`).listen("MessageSent", (e) => {
+      this.$emit("retrieve-message");
+
+      if (e.user.id !== this.userAuthenticated.id) {
+        this.$emit("notification");
+      }
+    });
+  },
   props: {
     chatRooms: {
       type: Array,
@@ -38,11 +48,13 @@ export default {
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
     ...mapState("CHATS", ["targetUserId"]),
+    ...mapState("CHATS", ["chatRoomId"]),
 
     isEmptyChatRooms() {
       return this.chatRooms.length === 0;
     },
   },
+
   data() {
     return {
       chatRoomUsers: {},
@@ -53,7 +65,6 @@ export default {
     ...mapMutations("CHATS", [UPDATE_CHAT_ROOM_ID, UPDATE_TARGET_USER_ID]),
 
     async selectRoom(chatRoomId) {
-      this.chatRoomId = chatRoomId;
       this.UPDATE_CHAT_ROOM_ID({ chatRoomId: chatRoomId });
       await this.fetchChatRoomsUsers(chatRoomId);
       this.$emit("select-room");
