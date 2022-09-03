@@ -14,7 +14,7 @@
       <v-col v-if="messages.length > 0" class="col-9">
         <!-- List of messages -->
         <ChatMessages :messages="messages" />
-        <v-divider class="ma-10"></v-divider>
+
         <!-- Form input -->
         <ChatForm :errors="errors" @message-sent="addMessage" />
       </v-col>
@@ -57,17 +57,17 @@ export default {
   mounted() {
     this.fetchChatRooms();
 
-    // Broadcast for new chat room created
-    Echo.private("chat-room").listen("ChatRoomCreated", (e) => {
-      // If the target user is the current user then push new chat room
-      if (e.targetUserId === this.userAuthenticated.id) {
-        this.chatRooms.push({
-          id: e.newChatRoom.id,
-          name: e.newChatRoom.name,
-        });
-        this.playSound();
+    // Listen for new chat room created
+    Echo.private(`chat-room.${this.userAuthenticated.id}`).listen(
+      "ChatRoomCreated",
+      (e) => {
+        console.log(e);
+        this.fetchChatRooms();
+        setTimeout(() => {
+          this.playSound();
+        }, 3000);
       }
-    });
+    );
   },
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
@@ -101,10 +101,7 @@ export default {
 
     async fetchMessages() {
       try {
-        const response = await FetchMessages(
-          this.chatRoomId,
-          this.targetUserId
-        );
+        const response = await FetchMessages(this.chatRoomId);
 
         this.messages = response.data;
       } catch (e) {
@@ -116,7 +113,7 @@ export default {
       try {
         let formData = new FormData();
         formData.append("message", message.message);
-        formData.append("targetId", this.targetId);
+        formData.append("targetUserId", this.targetId);
         formData.append("chatRoomId", this.chatRoomId);
 
         if (message.files.length > 0) {
@@ -147,6 +144,9 @@ export default {
       }
     },
 
+    /**
+     * Play sound when retrieve new message
+     */
     playSound() {
       const audio = new Audio(this.soundUrl);
       audio.play();

@@ -1,16 +1,27 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card class="overflow-auto" max-width="450" out outlined rounded>
-      <v-card-title>Chat</v-card-title>
+      <v-card-title
+        ><small class="text-caption">{{
+          userAuthenticated.name
+        }}</small></v-card-title
+      >
       <div>
         <v-card
           v-for="item in chatRooms"
           :key="item.id"
           :elevation="hover ? 12 : 2"
           outlined
-          @click="selectRoom(item.id)"
+          @click="
+            selectRoom(item.chat_room_id);
+            setTargetUser(item.target_user_id);
+          "
         >
-          <TargetUserInfo :chat-room-id="Number(item.id)" />
+          <TargetUserInfo
+            @retrieve-message="emitRetrieveMessage"
+            @notification="emitNotification"
+            :chat-room="item"
+          />
         </v-card>
       </div>
     </v-card>
@@ -18,27 +29,24 @@
 </template>
 
 <script>
-import { FetchChatRoomUsers } from "@/Apis/HealthyFormWebApi/ChatApi";
+/**
+ * Vuex
+ */
 import { mapMutations, mapState } from "vuex";
 import {
   UPDATE_CHAT_ROOM_ID,
   UPDATE_TARGET_USER_ID,
 } from "@/store/mutation-types/chat-mutation-types";
+
+/**
+ * Components
+ */
 import TargetUserInfo from "@/components/Chat/TargetUserInfo";
 
 export default {
   name: "ChatRooms",
   components: { TargetUserInfo },
-  mounted() {
-    // Broadcast for new message sent
-    Echo.private(`chatRoom.${this.chatRoomId}`).listen("MessageSent", (e) => {
-      this.$emit("retrieve-message");
 
-      if (e.user.id !== this.userAuthenticated.id) {
-        this.$emit("notification");
-      }
-    });
-  },
   props: {
     chatRooms: {
       type: Array,
@@ -49,10 +57,6 @@ export default {
     ...mapState("AUTH", ["userAuthenticated"]),
     ...mapState("CHATS", ["targetUserId"]),
     ...mapState("CHATS", ["chatRoomId"]),
-
-    isEmptyChatRooms() {
-      return this.chatRooms.length === 0;
-    },
   },
 
   data() {
@@ -64,30 +68,31 @@ export default {
   methods: {
     ...mapMutations("CHATS", [UPDATE_CHAT_ROOM_ID, UPDATE_TARGET_USER_ID]),
 
+    /**
+     * Set chat room
+     * @param chatRoomId
+     * @returns {Promise<void>}
+     */
     async selectRoom(chatRoomId) {
       this.UPDATE_CHAT_ROOM_ID({ chatRoomId: chatRoomId });
-      await this.fetchChatRoomsUsers(chatRoomId);
       this.$emit("select-room");
     },
 
-    async fetchChatRoomsUsers(chatRoomId) {
-      try {
-        const response = await FetchChatRoomUsers(chatRoomId);
+    /**
+     * Set target user to sent message
+     * @param targetUserId
+     */
+    setTargetUser(targetUserId) {
+      this.UPDATE_TARGET_USER_ID({
+        targetUserId: targetUserId,
+      });
+    },
 
-        this.chatRoomUsers = response.data.chat_room_users;
-
-        if (this.userAuthenticated.id === this.chatRoomUsers.source_id) {
-          this.UPDATE_TARGET_USER_ID({
-            targetUserId: this.chatRoomUsers.target_id,
-          });
-        } else {
-          this.UPDATE_TARGET_USER_ID({
-            targetUserId: this.chatRoomUsers.source_id,
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
+    emitRetrieveMessage() {
+      this.$emit("retrieve-message");
+    },
+    emitNotification() {
+      this.$emit("notification");
     },
   },
 };

@@ -171,7 +171,6 @@ export default {
     async fetchUserRoles(userId) {
       try {
         const res = await GetUserWithRoles(userId);
-        console.log("User Roles", res);
         this.userRoles = res.data.roles.map((e) => e.name);
       } catch (e) {
         console.log(e);

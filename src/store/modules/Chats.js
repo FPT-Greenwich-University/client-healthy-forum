@@ -16,7 +16,6 @@ const Chats = {
       state.chatRoomId = payload.chatRoomId;
     },
     [UPDATE_TARGET_USER_ID](state, payload) {
-      console.log("PAYLOAD", payload);
       state.targetUserId = payload.targetUserId;
     },
   },
