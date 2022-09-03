@@ -17,11 +17,10 @@ export default {
   methods: {
     async createRoomChat() {
       try {
-        const sourceId = this.userAuthenticated.id;
-        const targetId = this.$route.params.userId;
+        const targetUserId = this.$route.params.userId;
 
-        const response = await CreateChatRoom(sourceId, targetId);
-        // console.log(response.data);
+        const response = await CreateChatRoom(targetUserId);
+        console.log(response);
 
         await this.$router.push({ name: "Chat" });
       } catch (e) {

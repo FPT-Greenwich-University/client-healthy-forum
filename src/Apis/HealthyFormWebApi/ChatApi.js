@@ -1,21 +1,15 @@
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
 
-const CreateChatRoom = (sourceId, targetId) => {
-  return HealthyFormWebApi().post(`/chat-rooms`, { sourceId, targetId });
+const CreateChatRoom = (targetUserId) => {
+  return HealthyFormWebApi().post(`/chat-rooms`, { targetUserId });
 };
 
 const FetchChatRooms = () => {
   return HealthyFormWebApi().get("/chat-rooms");
 };
-const FetchMessages = (chatRoomId, targetId) => {
-  return HealthyFormWebApi().get(`/chat-rooms/${chatRoomId}/messages`, {
-    params: {
-      targetId: targetId,
-    },
-  });
-};
-const FetchChatRoomUsers = (chatRoomId) => {
-  return HealthyFormWebApi().get(`/chat-rooms/${chatRoomId}/users`);
+
+const FetchMessages = (chatRoomId) => {
+  return HealthyFormWebApi().get(`/chat-rooms/${chatRoomId}/messages`);
 };
 
 const SendMessage = (chatRoomId, formData) => {
@@ -50,7 +44,6 @@ const DownloadAllFile = (payload) => {
 
 export {
   CreateChatRoom,
-  FetchChatRoomUsers,
   FetchChatRooms,
   FetchMessages,
   SendMessage,
