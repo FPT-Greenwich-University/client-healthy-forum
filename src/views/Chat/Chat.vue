@@ -44,7 +44,7 @@
 import ChatForm from "@/components/Chat/ChatForm";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatRooms from "@/components/Chat/ChatRooms";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 import {
   FetchMessages,
   FetchChatRooms,
@@ -53,20 +53,20 @@ import {
 
 export default {
   name: "Chat",
-  components: { ChatRooms, ChatMessages, ChatForm },
+  components: {ChatRooms, ChatMessages, ChatForm},
   mounted() {
     this.fetchChatRooms();
 
     // Listen for new chat room created
     Echo.private(`chat-room.${this.userAuthenticated.id}`).listen(
-      "ChatRoomCreated",
-      (e) => {
-        console.log(e);
-        this.fetchChatRooms();
-        setTimeout(() => {
-          this.playSound();
-        }, 3000);
-      }
+        "ChatRoomCreated",
+        (e) => {
+          console.log(e);
+          this.fetchChatRooms();
+          setTimeout(() => {
+            this.playSound();
+          }, 3000);
+        }
     );
   },
   computed: {
@@ -113,7 +113,7 @@ export default {
       try {
         let formData = new FormData();
         formData.append("message", message.message);
-        formData.append("targetUserId", this.targetId);
+        formData.append("targetUserId", this.targetUserId);
         formData.append("chatRoomId", this.chatRoomId);
 
         if (message.files.length > 0) {
