@@ -44,29 +44,30 @@
 import ChatForm from "@/components/Chat/ChatForm";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatRooms from "@/components/Chat/ChatRooms";
-import {mapState} from "vuex";
+import { mapMutations, mapState } from "vuex";
 import {
   FetchMessages,
   FetchChatRooms,
   SendMessage,
 } from "@/Apis/HealthyFormWebApi/ChatApi";
+import { UPDATE_LOADING_STATUS } from "@/store/mutation-types/chat-mutation-types";
 
 export default {
   name: "Chat",
-  components: {ChatRooms, ChatMessages, ChatForm},
+  components: { ChatRooms, ChatMessages, ChatForm },
   mounted() {
     this.fetchChatRooms();
 
     // Listen for new chat room created
     Echo.private(`chat-room.${this.userAuthenticated.id}`).listen(
-        "ChatRoomCreated",
-        (e) => {
-          console.log(e);
-          this.fetchChatRooms();
-          setTimeout(() => {
-            this.playSound();
-          }, 3000);
-        }
+      "ChatRoomCreated",
+      (e) => {
+        console.log(e);
+        this.fetchChatRooms();
+        setTimeout(() => {
+          this.playSound();
+        }, 3000);
+      }
     );
   },
   computed: {
@@ -89,6 +90,8 @@ export default {
   },
 
   methods: {
+    ...mapMutations("CHATS", [UPDATE_LOADING_STATUS]),
+
     async fetchChatRooms() {
       try {
         const response = await FetchChatRooms();
@@ -124,12 +127,19 @@ export default {
 
         const response = await SendMessage(this.chatRoomId, formData);
 
-        this.snackbar = {
-          content: response.data.status,
-          color: "success",
-          status: true,
-        };
-        this.errors = {};
+        if (response.status === 201) {
+          setTimeout(()=> {
+            this.UPDATE_LOADING_STATUS(false);
+          }, 2000)
+
+
+          this.snackbar = {
+            content: response.data.status,
+            color: "success",
+            status: true,
+          };
+          this.errors = {};
+        }
       } catch (e) {
         console.log(e);
         if (e.response.status === 422) {
