@@ -1,8 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-card outlined rounded>
-        <!--<v-card-title>Chat Form</v-card-title>-->
+      <v-card :loading="isLoading" outlined rounded>
         <v-card-text>
           <v-text-field
             v-model="newMessage"
@@ -54,7 +53,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import { UPDATE_LOADING_STATUS } from "@/store/mutation-types/chat-mutation-types";
 
 export default {
   name: "ChatForm",
@@ -66,6 +66,7 @@ export default {
   },
   computed: {
     ...mapState("AUTH", ["userAuthenticated"]),
+    ...mapState("CHATS", ["isLoading"]), // Loading status for send the message
   },
   data() {
     return {
@@ -74,12 +75,16 @@ export default {
     };
   },
   methods: {
+    ...mapMutations("CHATS", [UPDATE_LOADING_STATUS]),
+
     sendMessage() {
       this.$emit("message-sent", {
         user: this.userAuthenticated,
         message: this.newMessage,
         files: this.files,
       });
+
+      this.UPDATE_LOADING_STATUS(true);
 
       //Clear the input
       this.newMessage = "";
