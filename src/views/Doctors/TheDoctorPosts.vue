@@ -4,9 +4,16 @@
       <PostItem v-for="post in posts" :key="post.id" :post="post" />
     </v-row>
 
-    <v-row>
+    <v-row v-if="posts.length > 0">
       <v-col>
         <Paginate @change-page="fetchDoctorPosts" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col class="text-center">
+        <p>No posts</p>
+        <v-btn color="white1" :to="{ name: 'CreatePost' }">Create post now</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -22,6 +29,7 @@ import Paginate from "@/components/Paginate.vue";
  * Apis
  */
 import { DoctorGetOwnPosts } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi.js";
+
 export default {
   name: "TheDoctorPosts",
   components: {

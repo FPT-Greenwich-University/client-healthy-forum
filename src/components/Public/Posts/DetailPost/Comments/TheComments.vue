@@ -15,7 +15,11 @@
 
             <v-list-item :key="item.id">
               <v-list-item-avatar>
-                <img v-if="item.user.image" :src="item.user.image.path"/>
+                <img
+                    v-if="item.user.image"
+                    :src="item.user.image.path"
+                    alt="avatar"
+                />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-subtitle
