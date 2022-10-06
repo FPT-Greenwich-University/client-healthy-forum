@@ -4,19 +4,19 @@
       <!-- List of chat rooms -->
       <v-col class="col-3">
         <ChatRooms
-          :chat-rooms="chatRooms"
-          @notification="playSound"
-          @select-room="fetchMessages"
-          @retrieve-message="fetchMessages"
+            :chat-rooms="chatRooms"
+            @notification="playSound"
+            @select-room="fetchMessages"
+            @retrieve-message="fetchMessages"
         />
       </v-col>
 
       <v-col v-if="messages.length > 0" class="col-9">
         <!-- List of messages -->
-        <ChatMessages :messages="messages" />
+        <ChatMessages :messages="messages"/>
 
         <!-- Form input -->
-        <ChatForm :errors="errors" @message-sent="addMessage" />
+        <ChatForm :errors="errors" @message-sent="addMessage"/>
       </v-col>
     </v-row>
 
@@ -24,9 +24,9 @@
     <v-row>
       <v-col>
         <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -44,30 +44,30 @@
 import ChatForm from "@/components/Chat/ChatForm";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatRooms from "@/components/Chat/ChatRooms";
-import { mapMutations, mapState } from "vuex";
+import {mapMutations, mapState} from "vuex";
 import {
   FetchMessages,
   FetchChatRooms,
   SendMessage,
 } from "@/Apis/HealthyFormWebApi/ChatApi";
-import { UPDATE_LOADING_STATUS } from "@/store/mutation-types/chat-mutation-types";
+import {UPDATE_LOADING_STATUS} from "@/store/mutation-types/chat-mutation-types";
 
 export default {
   name: "Chat",
-  components: { ChatRooms, ChatMessages, ChatForm },
+  components: {ChatRooms, ChatMessages, ChatForm},
   mounted() {
     this.fetchChatRooms();
 
     // Listen for new chat room created
     Echo.private(`chat-room.${this.userAuthenticated.id}`).listen(
-      "ChatRoomCreated",
-      (e) => {
-        console.log(e);
-        this.fetchChatRooms();
-        setTimeout(() => {
-          this.playSound();
-        }, 3000);
-      }
+        "ChatRoomCreated",
+        (e) => {
+          console.log(e);
+          this.fetchChatRooms();
+          setTimeout(() => {
+            this.playSound();
+          }, 3000);
+        }
     );
   },
   computed: {
@@ -128,10 +128,9 @@ export default {
         const response = await SendMessage(this.chatRoomId, formData);
 
         if (response.status === 201) {
-          setTimeout(()=> {
+          setTimeout(() => {
             this.UPDATE_LOADING_STATUS(false);
-          }, 2000)
-
+          }, 2000);
 
           this.snackbar = {
             content: response.data.status,
