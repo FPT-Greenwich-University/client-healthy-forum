@@ -7,6 +7,7 @@ import PostRoutes from "@/router/modules/Posts/PostRoutes";
 import AdminRoutes from "@/router/modules/Admin/AdminRoutes";
 import Favorites from "@/router/modules/Users/Favorites";
 import Chat from "@/views/Chat/Chat";
+import VideoCallScreen from "@/views/VideoCall/VideoCallScreen";
 import { checkAuthenticated } from "@/router/guards";
 
 Vue.use(VueRouter);
@@ -38,6 +39,12 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: Chat,
+    beforeEnter: checkAuthenticated,
+  },
+  {
+    path: "/video-call",
+    name: "VideoCall",
+    component: VideoCallScreen,
     beforeEnter: checkAuthenticated,
   },
 

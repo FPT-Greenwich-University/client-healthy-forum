@@ -29,6 +29,7 @@ export default {
       immediate: true,
     },
   },
+
   methods: {
     ...mapActions("AUTH", ["fetchUserAuthInfo"]),
   },
