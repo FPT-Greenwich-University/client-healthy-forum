@@ -84,6 +84,7 @@
 </template>
 <script>
 import { Register } from "@/Apis/HealthyFormWebApi/AuthApi/AuthApi";
+import { CometChat } from "@cometchat-pro/chat";
 
 const initState = {
   name: "",
@@ -110,19 +111,44 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        await Register(this.formRegister);
+        const response = await Register(this.formRegister);
 
-        this.isSuccess = true;
-        this.errorResponse = {};
-        this.formRegister = { ...initState }; // reset state form register
+        if (response.status === 201) {
+          const userInfo = { id: response.data.id.toString(), name: response.data.name };
+          this.isSuccess = true;
+          this.errorResponse = {};
+          this.formRegister = { ...initState }; // reset state form register
 
-        setTimeout(() => {
-          this.$router.push({ name: "Login" });
-        }, 5000);
-      } catch (error) {
-        if (error.response.status === 422) {
-          this.errorResponse = error.response.data;
+          this.createUserCometChat(userInfo);
+          setTimeout(() => {
+            this.$router.push({ name: "Login" });
+          }, 5000);
         }
+      } catch (e) {
+        if (e) {
+          if (e.response.status === 422) {
+            this.errorResponse = e.response.data;
+          }
+        }
+      }
+    },
+
+    createUserCometChat(userInfo) {
+      {
+        const authKey = process.env.VUE_APP_COMETCHAT_AUTH_KEY;
+        const uid = userInfo.id.toString();
+        const name = userInfo.name;
+
+        const user = new CometChat.User(uid);
+        user.setName(name);
+        CometChat.createUser(user, authKey).then(
+          (user) => {
+            console.log("user created comet chat", user);
+          },
+          (error) => {
+            console.log("error", error);
+          }
+        );
       }
     },
   },

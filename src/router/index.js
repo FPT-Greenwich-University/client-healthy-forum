@@ -1,12 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import AuthRoutes from "@/router/modules/AuthRoutes";
 import ProfileRoutes from "@/router/modules/Profiles/ProfileRoutes";
 import PostRoutes from "@/router/modules/Posts/PostRoutes";
 import AdminRoutes from "@/router/modules/Admin/AdminRoutes";
 import Favorites from "@/router/modules/Users/Favorites";
-import Chat from "@/views/Chat/Chat";
 import { checkAuthenticated } from "@/router/guards";
 
 Vue.use(VueRouter);
@@ -15,13 +13,13 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import("@/views/Home"),
   },
 
   {
     path: "/search",
     name: "Search",
-    component: () => import("@/views/Search.vue"),
+    component: () => import("@/views/Search"),
   },
 
   {
@@ -37,7 +35,14 @@ const routes = [
   {
     path: "/chat",
     name: "Chat",
-    component: Chat,
+    component: () => import("@/views/Chat/Chat"),
+    beforeEnter: checkAuthenticated,
+  },
+
+  {
+    path: "/video-call",
+    name: "CometVideoCall",
+    component: () => import("@/views/VideoCall/CometVideoCall"),
     beforeEnter: checkAuthenticated,
   },
 
