@@ -10,7 +10,11 @@
 
         <v-tab :to="{ name: 'Search' }" class="black--text">Search</v-tab>
 
-        <v-tab v-if="isAuthenticated" :to="{ name: 'Chat' }" class="black--text"
+        <v-tab
+          v-if="isAuthenticated"
+          target="_blank"
+          :to="{ name: 'CometVideoCall' }"
+          class="black--text"
           >Chat
         </v-tab>
 
@@ -23,6 +27,7 @@
           v-if="isAdmin"
           :to="{ name: 'AdminDashBoard' }"
           class="black--text"
+          target="_blank"
         >
           Dashboard
         </v-tab>
