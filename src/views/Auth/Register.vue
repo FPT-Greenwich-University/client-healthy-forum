@@ -113,29 +113,33 @@ export default {
       try {
         const response = await Register(this.formRegister);
 
+        console.log(response);
         if (response.status === 201) {
-          const userInfo = { id: response.data.id.toString(), name: response.data.name };
+          const userInfo = {
+            id: response.data.id,
+            name: response.data.name,
+          };
+
+          this.createUserCometChat(userInfo);
+
           this.isSuccess = true;
           this.errorResponse = {};
           this.formRegister = { ...initState }; // reset state form register
 
-          this.createUserCometChat(userInfo);
           setTimeout(() => {
             this.$router.push({ name: "Login" });
           }, 5000);
         }
       } catch (e) {
-        if (e) {
-          if (e.response.status === 422) {
-            this.errorResponse = e.response.data;
-          }
+        if (e.response.status === 422) {
+          this.errorResponse = e.response.data;
         }
       }
     },
 
     createUserCometChat(userInfo) {
       {
-        const authKey = process.env.VUE_APP_COMETCHAT_AUTH_KEY;
+        const authKey = process.env.VUE_APP_COMETCHAT_API_KEY;
         const uid = userInfo.id.toString();
         const name = userInfo.name;
 
