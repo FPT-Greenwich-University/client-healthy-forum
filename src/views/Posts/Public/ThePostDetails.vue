@@ -16,23 +16,23 @@
       </v-col>
     </v-row>
 
-    <AddFavoritePost />
+    <AddFavoritePost/>
 
     <!--  Tags  -->
     <v-row justify="center">
-      <TheTags :postId="postId" />
+      <TheTags :postId="postId"/>
     </v-row>
 
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-btn
-          :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
-          color="white2"
-          primary
-          rounded
-          x-small
+            :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
+            color="white2"
+            primary
+            rounded
+            x-small
         >
           Category: {{ postDetail.category.name }}
         </v-btn>
@@ -43,25 +43,25 @@
     <v-row>
       <!--Post Title-->
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
-        <p class="text-capitalize text-h6 text-center">
+        <p class="text-capitalize text-h1 text-center">
           {{ postDetail.title }}
         </p>
         <p class="text-capitalize text-xl-subtitle-1 text-center">
-          {{ postDetail.description }}
+          Description: {{ postDetail.description }}
         </p>
       </v-col>
     </v-row>
 
     <!--  Image  -->
     <v-row>
-      <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
+      <v-col class="mx-auto col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
         <v-img
-          v-if="postDetail.image"
-          :src="`${backEndURL}/${postDetail.image.path}`"
-          alt="post image"
-          class="rounded-lg"
+            v-if="postDetail.image"
+            :src="`${backEndURL}/${postDetail.image.path}`"
+            alt="post image"
+            class="rounded-lg mx-auto"
+            max-height="200"
+            max-width="200"
         >
         </v-img>
       </v-col>
@@ -70,7 +70,7 @@
     <!--  Divider  -->
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-divider></v-divider>
       </v-col>
@@ -79,32 +79,30 @@
     <!--  Body text  -->
     <v-row>
       <v-col
-        class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
+          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
       >
         <v-card elevation="0">
-          <v-card-text class="text-left">
-            {{ postDetail.body }}
-          </v-card-text>
+          <v-card-text class="text-left" v-html="postDetail.body"></v-card-text>
         </v-card>
       </v-col>
     </v-row>
 
     <!--  Delete button  -->
-    <DeletePostButton v-if="isThePostOwner" :postId="postId" />
+    <DeletePostButton v-if="isThePostOwner" :postId="postId"/>
 
     <!--  Total like  -->
     <TotalLike> {{ totalLikes }}</TotalLike>
     <!--  Like button  -->
-    <LikeButton :postId="postId" />
+    <LikeButton :postId="postId"/>
 
     <!--  Form comment  -->
-    <FormInputComment :postId="postId" />
+    <FormInputComment :postId="postId"/>
 
     <!--List Comments-->
-    <TheComments :postId="postId" />
+    <TheComments :postId="postId"/>
 
     <!-- The related posts-->
-    <RelatedPosts :category-id="postDetail.category_id" />
+    <RelatedPosts :category-id="postDetail.category_id"/>
   </v-container>
 </template>
 
@@ -112,8 +110,8 @@
 /**
  * Vue x
  */
-import { mapActions, mapGetters, mapState } from "vuex";
-import { SET_DETAIL_POST } from "@/store/mutation-types/post-mutation-types";
+import {mapActions, mapGetters, mapState} from "vuex";
+import {SET_DETAIL_POST} from "@/store/mutation-types/post-mutation-types";
 /**
  * Components
  */
@@ -129,7 +127,7 @@ import AddFavoritePost from "@/components/Favorites/Posts/AddFavoritePost";
 /**
  * Api
  */
-import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "ThePostDetails",
@@ -205,7 +203,7 @@ export default {
      */
     async doctorGetDetailPost(userId, postId) {
       try {
-        const response = await DoctorGetDetailPost({ userId, postId });
+        const response = await DoctorGetDetailPost({userId, postId});
         this.$store.commit(`POSTS/${SET_DETAIL_POST}`, response.data);
       } catch (e) {
         console.log(e);

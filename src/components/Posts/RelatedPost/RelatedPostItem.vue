@@ -5,6 +5,8 @@
         v-if="post.image.path"
         :src="`${backEndURL}/${post.image.path}`"
         aspect-ratio="2"
+        max-height="200"
+        max-width="200"
       ></v-img>
     </v-card-text>
 

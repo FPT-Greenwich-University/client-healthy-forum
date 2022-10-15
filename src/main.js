@@ -7,6 +7,7 @@ import GAuth from "vue-google-oauth2";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import Vue2Editor from "vue2-editor";
 
 Vue.config.productionTip = false;
 
@@ -20,6 +21,9 @@ const gauthOption = {
 };
 
 Vue.use(GAuth, gauthOption);
+
+// Using vue2editor
+Vue.use(Vue2Editor);
 
 window.Pusher = Pusher;
 
