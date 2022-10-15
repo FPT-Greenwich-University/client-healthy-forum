@@ -23,12 +23,9 @@
               {{ errors.description[0] }}
             </div>
 
-            <v-textarea
-              v-model="formData.body"
-              Body
-              label="Content"
-              name=""
-            ></v-textarea>
+            <p class="font-weight-bold">Content</p>
+            <vue-editor v-model="formData.body"></vue-editor>
+            <div v-html="formData.body"></div>
             <div v-if="errors.body" class="red--text">
               {{ errors.body[0] }}
             </div>
@@ -120,15 +117,22 @@
   </v-container>
 </template>
 <script>
+// api call
 import { CreatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
+// vuex manager state
 import { mapActions, mapGetters } from "vuex";
+// components
+import { VueEditor } from "vue2-editor";
 
 export default {
   name: "CreatePost",
+  components: {
+    VueEditor,
+  },
   computed: {
     ...mapGetters("AUTH", ["isDoctor", "canCreateAPost"]),
   },

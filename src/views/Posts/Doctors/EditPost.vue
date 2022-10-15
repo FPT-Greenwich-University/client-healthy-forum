@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container class="container--fluid">
     <v-row class="mt-10" justify="center">
-      <v-col class="col-8">
+      <v-col>
         <v-card class="pa-5" elevation="1">
           <v-card-title>Edit Post</v-card-title>
           <v-form>
@@ -24,12 +24,8 @@
               {{ errors.description[0] }}
             </div>
 
-            <v-textarea
-              v-model="formData.body"
-              Body
-              label="Body Post"
-              name=""
-            ></v-textarea>
+            <p class="font-weight-bold">Content</p>
+            <vue-editor v-model="formData.body"></vue-editor>
             <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
 
             <!-- Select Category-->
