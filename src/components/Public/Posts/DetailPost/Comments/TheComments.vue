@@ -2,7 +2,7 @@
   <section class="comments">
     <v-row v-if="comments.length === 0">
       <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto"
-      >This post not have comments
+        >This post not have comments
       </v-col>
     </v-row>
 
@@ -15,37 +15,38 @@
 
             <v-list-item :key="item.id">
               <v-list-item-avatar>
-                <img v-if="item.user.image" :src="item.user.image.path"/>
+                <img v-if="item.user.image" :src="item.user.image.path" />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-subtitle
-                    v-html="item.user.email"
+                  v-html="item.user.email"
                 ></v-list-item-subtitle>
                 <v-list-item-title v-html="item.content"></v-list-item-title>
 
                 <div class="flex flex-row">
                   <v-btn
-                      v-if="isAuthenticated"
-                      class="mr-2"
-                      max-width="20%"
-                      x-small
-                      @click="handleOpenDialog(item.id)"
-                  >Reply
+                    v-if="isAuthenticated"
+                    class="mx-2"
+                    max-width="20%"
+                    x-small
+                    rounded
+                    @click="handleOpenDialog(item.id)"
+                    >Reply
                   </v-btn>
 
                   <!-- Edit comment component -->
                   <template v-if="item.user_id === userAuthenticated.id">
                     <EditComment
-                        :comment-id="item.id"
-                        @handle-fetch-comments="handleFetchComments(1)"
+                      :comment-id="item.id"
+                      @handle-fetch-comments="handleFetchComments(1)"
                     />
                   </template>
 
                   <!-- Delete comment -->
                   <template v-if="item.user_id === userAuthenticated.id">
                     <DeleteComment
-                        :comment-id="item.id"
-                        @handle-fetch-comments="handleFetchComments(1)"
+                      :comment-id="item.id"
+                      @handle-fetch-comments="handleFetchComments(1)"
                     />
                   </template>
                 </div>
@@ -55,15 +56,15 @@
             <!-- The reply comment -->
             <!-- When click list group, this will open the reply comment component and fetching reply comment  -->
             <v-list-group>
-              <TheReplyComments :commentId="item.id" :postId="postId"/>
+              <TheReplyComments :commentId="item.id" :postId="postId" />
             </v-list-group>
           </template>
         </v-list>
 
         <v-dialog
-            v-model="dialog"
-            max-width="600"
-            transition="dialog-top-transition"
+          v-model="dialog"
+          max-width="600"
+          transition="dialog-top-transition"
         >
           <v-card>
             <v-card-text>
@@ -72,19 +73,19 @@
                   <v-col>
                     <!--   Input content   -->
                     <v-textarea
-                        v-model="formData.content"
-                        auto-grow
-                        background-color="grey lighten-5"
-                        clear-icon="mdi-close-circle"
-                        clearable
-                        filled
-                        label="Your reply comment"
+                      v-model="formData.content"
+                      auto-grow
+                      background-color="grey lighten-5"
+                      clear-icon="mdi-close-circle"
+                      clearable
+                      filled
+                      label="Your reply comment"
                     >
                     </v-textarea>
                     <template v-if="errors">
                       <p
-                          v-if="errors.content"
-                          class="text-subtitle-1 red--text"
+                        v-if="errors.content"
+                        class="text-subtitle-1 red--text"
                       >
                         {{ errors.content[0] }}
                       </p>
@@ -95,19 +96,29 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="handleCloseDialog">
+              <v-btn
+                color="green darken-1"
+                rounded
+                text
+                @click="handleCloseDialog"
+              >
                 Close
               </v-btn>
-              <v-btn color="green darken-1" text @click="handleReplyComment">
+              <v-btn
+                color="green darken-1"
+                rounded
+                text
+                @click="handleReplyComment"
+              >
                 Submit
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
         <v-snackbar
-            v-model="snackbar.status"
-            :color="snackbar.color"
-            :timeout="snackbar.timeout"
+          v-model="snackbar.status"
+          :color="snackbar.color"
+          :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -122,23 +133,23 @@
     <v-row v-show="comments.length !== 0">
       <v-col>
         <!-- Paginate -->
-        <Paginate @change-page="handleFetchComments"/>
+        <Paginate @change-page="handleFetchComments" />
       </v-col>
     </v-row>
   </section>
 </template>
 <script>
-import {mapActions, mapMutations, mapState} from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import Paginate from "@/components/Paginate";
 import TheReplyComments from "@/components/Public/Posts/DetailPost/Comments/TheReplyComments";
-import {SET_COMMENT_ID} from "@/store/mutation-types/comment-mutation-types";
-import {ReplyComment} from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
+import { SET_COMMENT_ID } from "@/store/mutation-types/comment-mutation-types";
+import { ReplyComment } from "@/Apis/HealthyFormWebApi/CustomerApi/CustomerApi";
 import EditComment from "@/components/Comments/EditComment";
 import DeleteComment from "@/components/Comments/DeleteComment";
 
 export default {
   name: "TheComments",
-  components: {DeleteComment, EditComment, TheReplyComments, Paginate},
+  components: { DeleteComment, EditComment, TheReplyComments, Paginate },
   props: {
     postId: {
       type: Number,
@@ -192,7 +203,7 @@ export default {
      * @param commentId
      */
     handleOpenDialog(commentId) {
-      this.SET_COMMENT_ID({commentId});
+      this.SET_COMMENT_ID({ commentId });
       this.dialog = true;
     },
 
@@ -207,14 +218,14 @@ export default {
     async handleReplyComment() {
       try {
         const res = await ReplyComment(
-            this.postId,
-            this.commentId,
-            this.formData
+          this.postId,
+          this.commentId,
+          this.formData
         );
 
         if (res) {
           this.formData = {};
-          this.snackbar = {color: "success", content: res.data, status: true};
+          this.snackbar = { color: "success", content: res.data, status: true };
           this.errors = {};
           this.dialog = false;
 

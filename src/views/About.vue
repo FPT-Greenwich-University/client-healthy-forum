@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>
+    <v-row class="mt-12">
+      <v-col class="col-12">
         <v-card class="mx-auto" max-width="344">
           <v-img :src="userInfo.avatar_url" height="200px"></v-img>
 
@@ -14,13 +14,13 @@
 
           <v-card-actions>
             <v-btn
-              @click="redirectGitHubProfile"
-              rounded
               color="blackBrown"
+              rounded
               text
+              @click="redirectGitHubProfile"
             >
-              Explore</v-btn
-            >
+              Explore
+            </v-btn>
 
             <v-spacer></v-spacer>
 

@@ -3,69 +3,68 @@
     <v-row class="d-flex flex-row mx-auto">
       <v-col class="col-3">
         <v-select
-          v-model="categoryId"
-          :attach="true"
-          :items="categories"
-          chips
-          item-text="name"
-          item-value="id"
-          label="Category"
-          multiple
+            v-model="categoryId"
+            :attach="true"
+            :items="categories"
+            chips
+            item-text="name"
+            item-value="id"
+            label="Category"
+            multiple
         ></v-select>
       </v-col>
 
       <!--   Select tag   -->
       <v-col class="col-3">
         <v-select
-          v-model="tagId"
-          :attach="true"
-          :items="tags"
-          chips
-          item-text="name"
-          item-value="id"
-          label="Tags"
-          multiple
+            v-model="tagId"
+            :attach="true"
+            :items="tags"
+            chips
+            item-text="name"
+            item-value="id"
+            label="Tags"
+            multiple
         ></v-select>
       </v-col>
 
       <v-col class="text-end d-flex align-center">
         <v-btn
-          class="white--text mr-3"
-          color="blackBrown"
-          rounded
-          @click="handleGetPosts(1)"
-          >filter
+            class="white--text mr-3"
+            color="blackBrown"
+            rounded
+            @click="handleGetPosts(1)"
+        >filter
           <v-icon>mdi-filter</v-icon>
         </v-btn>
         <v-btn color="gray" rounded @click="resetFilter"
-          >reset
+        >reset
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
       </v-col>
     </v-row>
 
-    <!--  No posts  -->
-    <v-row v-show="posts.length === 0">
-      <v-col class="col-12">
-        <p>No posts</p>
-      </v-col>
-    </v-row>
-
     <!--  List posts item  -->
     <v-row>
-      <PostItem v-for="post in posts" :key="post.id" :post="post" />
+      <PostItem v-for="post in posts" :key="post.id" :post="post"/>
     </v-row>
 
     <!-- Paginate -->
     <v-row v-if="posts.length > 0">
       <v-col>
-        <Paginate @change-page="handleGetPosts" />
+        <Paginate @change-page="handleGetPosts"/>
+      </v-col>
+    </v-row>
+
+    <v-row v-else>
+      <v-col class="text-center">
+        <p class="">No posts found</p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 import Paginate from "@/components/Paginate";
 import CreatePost from "@/views/Posts/Doctors/CreatePost";
 import PostItem from "@/components/Posts/PostItem";
@@ -189,7 +188,7 @@ export default {
 
       // If url include query category then refresh url
       if (this.$route.query.category) {
-        this.$router.push({ name: "Posts" });
+        this.$router.push({name: "Posts"});
       }
     },
   },

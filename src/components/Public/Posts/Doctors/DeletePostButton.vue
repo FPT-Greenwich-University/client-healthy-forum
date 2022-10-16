@@ -3,15 +3,9 @@
     <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
       <v-dialog v-model="dialog" max-width="290" persistent>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="red"
-            v-bind="attrs"
-            x-small
-            @click="dialog === true"
-            v-on="on"
-          >
+          <v-btn color="red" v-bind="attrs" @click="dialog === true" v-on="on">
             Delete Post
-            <v-icon right x-small> fas fa-trash</v-icon>
+            <v-icon right> fas fa-trash</v-icon>
           </v-btn>
         </template>
         <v-card>
@@ -25,9 +19,9 @@
               Disagree
             </v-btn>
             <v-btn
-              color="green darken-1"
-              text
-              @click="handleDeletePost(postId)"
+                color="green darken-1"
+                text
+                @click="handleDeletePost(postId)"
             >
               Agree
             </v-btn>
@@ -39,8 +33,8 @@
 </template>
 <script>
 import router from "@/router";
-import { mapActions, mapState } from "vuex";
-import { DoctorDeletePost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import {mapActions, mapState} from "vuex";
+import {DoctorDeletePost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DeletePostButton",
@@ -71,13 +65,13 @@ export default {
       try {
         let userId = this.userAuthenticated.id;
 
-        const response = await DoctorDeletePost({ userId, postId });
+        const response = await DoctorDeletePost({userId, postId});
 
         if (response) {
           this.dialog = false;
           await router.push({
             name: "UserProfiles",
-            params: { userId: this.userAuthenticated.id },
+            params: {userId: this.userAuthenticated.id},
           });
         }
       } catch (e) {

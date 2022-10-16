@@ -22,7 +22,7 @@ const gauthOption = {
 
 Vue.use(GAuth, gauthOption);
 
-// Using vue2editor
+// Using vue2 editor
 Vue.use(Vue2Editor);
 
 window.Pusher = Pusher;
