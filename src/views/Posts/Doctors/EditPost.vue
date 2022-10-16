@@ -2,42 +2,37 @@
   <v-container class="container--fluid">
     <v-row class="mt-10" justify="center">
       <v-col>
-        <v-card class="pa-5" elevation="1">
-          <v-card-title>Edit Post</v-card-title>
+        <v-card class="pa-5" elevation="0">
           <v-form>
             <v-text-field
-              v-model="formData.title"
-              label="Title"
-              required
+                v-model="formData.title"
+                label="Title"
+                required
             ></v-text-field>
             <div v-if="errors.title" class="red--text">
               {{ errors.title[0] }}
             </div>
 
             <v-text-field
-              v-model="formData.description"
-              label="Description"
-              required
+                v-model="formData.description"
+                label="Description"
+                required
             >
             </v-text-field>
             <div v-if="errors.description" class="red--text">
               {{ errors.description[0] }}
             </div>
 
-            <p class="font-weight-bold">Content</p>
-            <vue-editor v-model="formData.body"></vue-editor>
-            <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
-
             <!-- Select Category-->
             <v-select
-              v-model="formData.category_id"
-              :items="categories"
-              chips
-              hint="Pick the category for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Category"
-              small-chips
+                v-model="formData.category_id"
+                :items="categories"
+                chips
+                hint="Pick the category for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Category"
+                small-chips
             ></v-select>
             <div v-if="errors.category_id" class="red--text">
               {{ errors.category_id[0] }}
@@ -45,38 +40,61 @@
 
             <!-- Select Tags -->
             <v-select
-              v-model="formData.tags"
-              :items="tags"
-              chips
-              hint="Pick the tags for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Tags"
-              multiple
-              small-chips
+                v-model="formData.tags"
+                :items="tags"
+                chips
+                hint="Pick the tags for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Tags"
+                multiple
+                small-chips
             ></v-select>
             <div v-if="errors.tags" class="red--text">{{ errors.tags[0] }}</div>
 
-            <v-img
-              v-if="post.image"
-              :src="`${backEndURL}/${post.image.path}`"
-            ></v-img>
+            <v-row>
+              <v-col class="col-12">
+                <p class="text-h6">Thumbnail</p>
+              </v-col>
+              <v-col class="col-12">
+                <v-img
+                    v-if="post.image"
+                    :src="`${backEndURL}/${post.image.path}`"
+                    class="mx-auto"
+                    max-height="500"
+                    max-width="500"
+                ></v-img>
+              </v-col>
+            </v-row>
+
             <v-file-input
-              v-model="formData.thumbnail"
-              accept="image/*"
-              chips
-              class="mt-5"
-              filled
-              label="Select new thumbnail (Optional)"
-              placeholder="Select your thumbnail"
-              prepend-icon="mdi-camera"
-              show-size
+                v-model="formData.thumbnail"
+                accept="image/*"
+                chips
+                class="mt-5"
+                filled
+                label="Select new thumbnail (Optional)"
+                placeholder="Select your thumbnail"
+                prepend-icon="mdi-camera"
+                show-size
             ></v-file-input>
             <div v-if="errors.thumbnail" class="red--text">
               {{ errors.thumbnail[0] }}
             </div>
 
-            <v-btn class="mx-auto" @click="updatePost">Submit</v-btn>
+            <!--Editor  content-->
+            <p class="font-weight-bold">Content</p>
+            <vue-editor v-model="formData.body"></vue-editor>
+            <div v-if="errors.body" class="red--text">{{ errors.body[0] }}</div>
+
+            <v-row class="mt-5">
+              <v-col class="col-12 text-center">
+                <v-btn class="mx-auto" color="white2" rounded @click="updatePost"
+                >Submit
+                </v-btn
+                >
+              </v-col>
+            </v-row>
           </v-form>
         </v-card>
       </v-col>
@@ -86,9 +104,9 @@
       <v-col>
         <!-- Error -->
         <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -102,13 +120,13 @@
   </v-container>
 </template>
 <script>
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
-import { UpdatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
-import { DoctorGetDetailPost } from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import {UpdatePost} from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
 
 export default {
   name: "DoctorEditPosts",
@@ -186,9 +204,9 @@ export default {
           formData.append(`tags[${index}]`, element);
         });
         const res = await UpdatePost(
-          this.userAuthenticated.id,
-          this.postId,
-          formData
+            this.userAuthenticated.id,
+            this.postId,
+            formData
         );
 
         if (res.status === 204) {

@@ -5,10 +5,8 @@
       <v-btn
         v-if="!isFollowed"
         block
-        class="white--text"
-        color="blackBrown"
+        color="white2"
         elevation="2"
-        x-small
         @click="addFollow(postId)"
       >
         {{ followStatus.message }}
@@ -21,15 +19,13 @@
       <v-btn
         v-else
         block
-        class="white--text"
-        rounded
-        color="blackBrown"
+        color="white2"
         elevation="2"
-        x-small
+        rounded
         @click="removePostFavorite(postId)"
       >
         {{ followStatus.message }}
-        <v-icon color="white" right x-small>
+        <v-icon color="red" right x-small>
           {{ followStatus.icon }}
         </v-icon>
       </v-btn>

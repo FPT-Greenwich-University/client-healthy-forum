@@ -7,6 +7,7 @@
         color="red"
         dark
         max-width="20%"
+        rounded
         v-bind="attrs"
         x-small
         v-on="on"
@@ -26,8 +27,12 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="cancelDelete"> Cancel</v-btn>
-        <v-btn color="primary" text @click="deleteComment"> I accept</v-btn>
+        <v-btn color="primary" rounded text @click="cancelDelete">
+          Cancel
+        </v-btn>
+        <v-btn color="primary" rounded text @click="deleteComment">
+          I accept
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

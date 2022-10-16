@@ -2,43 +2,37 @@
   <v-container>
     <v-row>
       <v-col class="col-12">
-        <v-card outlined rounded tile>
+        <v-card elevation="0" tile>
           <v-form class="pa-5">
             <v-text-field
-              v-model="formData.title"
-              label="Title"
-              required
+                v-model="formData.title"
+                label="Title"
+                required
             ></v-text-field>
             <div v-if="errors.title" class="red--text">
               {{ errors.title[0] }}
             </div>
 
             <v-text-field
-              v-model="formData.description"
-              label="Description"
-              required
+                v-model="formData.description"
+                label="Description"
+                required
             >
             </v-text-field>
             <div v-if="errors.description" class="red--text">
               {{ errors.description[0] }}
             </div>
 
-            <p class="font-weight-bold">Content</p>
-            <vue-editor v-model="formData.body"></vue-editor>
-            <div v-html="formData.body"></div>
-            <div v-if="errors.body" class="red--text">
-              {{ errors.body[0] }}
-            </div>
-
             <!-- Select Category-->
             <v-select
-              v-model="formData.category_id"
-              :items="categories"
-              chips
-              hint="Pick the category for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Category"
+                v-model="formData.category_id"
+                :items="categories"
+                chips
+                class="mt-10"
+                hint="Pick the category for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Category"
             ></v-select>
             <div v-if="errors.category_id" class="red--text">
               {{ errors.category_id[0] }}
@@ -46,64 +40,80 @@
 
             <!-- Select Tags -->
             <v-select
-              v-model="formData.tags"
-              :items="tags"
-              chips
-              hint="Pick the tags for this post"
-              item-text="name"
-              item-value="id"
-              label="Select Tags"
-              multiple
+                v-model="formData.tags"
+                :items="tags"
+                chips
+                hint="Pick the tags for this post"
+                item-text="name"
+                item-value="id"
+                label="Select Tags"
+                multiple
             ></v-select>
             <div v-if="errors.tags" class="red--text">
               {{ errors.tags[0] }}
             </div>
 
             <v-file-input
-              v-model="formData.thumbnail"
-              accept="image/*"
-              chips
-              filled
-              label="Select your thumbnail"
-              placeholder="Select your thumbnail"
-              prepend-icon="mdi-camera"
-              show-size
+                v-model="formData.thumbnail"
+                accept="image/*"
+                chips
+                filled
+                label="Select your thumbnail"
+                placeholder="Select your thumbnail"
+                prepend-icon="mdi-camera"
+                show-size
             ></v-file-input>
             <div v-if="errors.thumbnail" class="red--text">
               {{ errors.thumbnail[0] }}
             </div>
 
-            <v-btn
-              class="mx-2 white--text"
-              color="blackBrown"
-              rounded
-              @click="resetForm"
-              >Reset Form
-              <v-icon>mdi-refresh</v-icon>
-            </v-btn>
-            <v-btn
-              :disabled="!canCreateAPost"
-              class="mx-auto"
-              color="white1"
-              rounded
-              @click="createPost"
-              >Create
-              <v-icon>mdi-plus-box</v-icon>
-            </v-btn>
+            <p class="font-weight-bold">Content</p>
+            <vue-editor v-model="formData.body"></vue-editor>
+            <div v-if="errors.body" class="red--text">
+              {{ errors.body[0] }}
+            </div>
+
+            <!--Submit and reset Buttons-->
+            <v-row class="mt-2">
+              <v-col class="col-12 d-flex flex-row justify-center">
+                <div>
+                  <v-btn
+                      class="white--text"
+                      color="blackBrown mx-2"
+                      rounded
+                      @click="resetForm"
+                  >Reset Form
+                    <v-icon>mdi-refresh</v-icon>
+                  </v-btn>
+                </div>
+
+                <div>
+                  <v-btn
+                      :disabled="!canCreateAPost"
+                      class="mx-2"
+                      color="white1"
+                      rounded
+                      @click="createPost"
+                  >Create
+                    <v-icon>mdi-plus-box</v-icon>
+                  </v-btn>
+                </div>
+              </v-col>
+            </v-row>
           </v-form>
           <v-card-subtitle
-            v-if="!canCreateAPost"
-            class="red--text text-uppercase"
-            >You don't have permission to create a new post, please contact to
+              v-if="!canCreateAPost"
+              class="red--text text-uppercase"
+          >You don't have permission to create a new post, please contact to
             admin of website.
           </v-card-subtitle>
         </v-card>
 
         <!--  Toast notification  -->
         <v-snackbar
-          v-model="snackbar.status"
-          :color="snackbar.color"
-          :timeout="snackbar.timeout"
+            v-model="snackbar.status"
+            :color="snackbar.color"
+            :timeout="snackbar.timeout"
         >
           {{ snackbar.content }}
           <template v-slot:action="{ attrs }">
@@ -118,21 +128,17 @@
 </template>
 <script>
 // api call
-import { CreatePost } from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
+import {CreatePost} from "@/Apis/HealthyFormWebApi/PostApi/PostApi";
 import {
   GetCategories,
   GetTags,
 } from "@/Apis/HealthyFormWebApi/PublicApi/PublicApi";
 // vuex manager state
-import { mapActions, mapGetters } from "vuex";
-// components
-import { VueEditor } from "vue2-editor";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "CreatePost",
-  components: {
-    VueEditor,
-  },
+  components: {},
   computed: {
     ...mapGetters("AUTH", ["isDoctor", "canCreateAPost"]),
   },

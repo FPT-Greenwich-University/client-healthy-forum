@@ -6,6 +6,7 @@
         color="deep-purple lighten-2"
         dark
         max-width="20%"
+        rounded
         v-bind="attrs"
         x-small
         v-on="on"
@@ -32,8 +33,10 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" text @click="cancelEdit"> Cancel</v-btn>
-        <v-btn color="primary" text @click="updateComment"> I accept</v-btn>
+        <v-btn color="red" rounded text @click="cancelEdit"> Cancel</v-btn>
+        <v-btn color="primary" rounded text @click="updateComment">
+          I accept
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

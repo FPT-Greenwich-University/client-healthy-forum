@@ -1,67 +1,28 @@
 <template>
   <v-container>
-    <!-- Category name -->
-    <v-row justify="center">
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
-        <v-card class="mx-auto text-center" elevation="0">
-          <v-card-subtitle v-if="isPublishedPost">
-            Published At {{ postDetail.published_at }}
-          </v-card-subtitle>
-
-          <v-card-subtitle v-else>Not Published</v-card-subtitle>
-          <v-card-subtitle>
-            Total view: {{ postDetail.total_view }}
-          </v-card-subtitle>
-        </v-card>
+    <!--  Introduce title and description  -->
+    <v-row>
+      <!--Post Title-->
+      <v-col class="col-12 mx-auto text-center">
+        <p class="text-capitalize text-h1">
+          {{ postDetail.title }}
+        </p>
+      </v-col>
+      <v-col>
+        <p>Total view: {{ postDetail.total_view }}</p>
       </v-col>
     </v-row>
 
     <AddFavoritePost/>
 
-    <!--  Tags  -->
-    <v-row justify="center">
-      <TheTags :postId="postId"/>
-    </v-row>
-
-    <v-row>
-      <v-col
-          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
-        <v-btn
-            :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
-            color="white2"
-            primary
-            rounded
-            x-small
-        >
-          Category: {{ postDetail.category.name }}
-        </v-btn>
-      </v-col>
-    </v-row>
-
-    <!--  Introduce title and description  -->
-    <v-row>
-      <!--Post Title-->
-      <v-col class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
-        <p class="text-capitalize text-h1 text-center">
-          {{ postDetail.title }}
-        </p>
-        <p class="text-capitalize text-xl-subtitle-1 text-center">
-          Description: {{ postDetail.description }}
-        </p>
-      </v-col>
-    </v-row>
-
     <!--  Image  -->
     <v-row>
-      <v-col class="mx-auto col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10">
+      <v-col class="mx-auto col-12">
         <v-img
             v-if="postDetail.image"
             :src="`${backEndURL}/${postDetail.image.path}`"
             alt="post image"
             class="rounded-lg mx-auto"
-            max-height="200"
-            max-width="200"
         >
         </v-img>
       </v-col>
@@ -69,18 +30,14 @@
 
     <!--  Divider  -->
     <v-row>
-      <v-col
-          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
+      <v-col class="col-12 mx-auto text-center">
         <v-divider></v-divider>
       </v-col>
     </v-row>
 
     <!--  Body text  -->
     <v-row>
-      <v-col
-          class="col-12 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto text-center"
-      >
+      <v-col class="col-12 mx-auto text-center">
         <v-card elevation="0">
           <v-card-text class="text-left" v-html="postDetail.body"></v-card-text>
         </v-card>
@@ -100,6 +57,40 @@
 
     <!--List Comments-->
     <TheComments :postId="postId"/>
+
+    <!--Post status-->
+    <v-row>
+      <v-col class="col-12">
+        <v-card class="mx-auto text-end" elevation="0">
+          <v-card-subtitle v-if="isPublishedPost">
+            Published At {{ postDetail.published_at }}
+          </v-card-subtitle>
+
+          <v-card-subtitle v-else>Not Published</v-card-subtitle>
+          <v-card-subtitle></v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!--  Tags  -->
+    <v-row justify="center">
+      <TheTags :postId="postId"/>
+    </v-row>
+
+    <!--    Category-->
+    <v-row>
+      <v-col class="col-12 mx-auto text-center">
+        <v-btn
+            :to="{ name: 'Posts', query: { category: postDetail.category.id } }"
+            color="white2"
+            primary
+            rounded
+            x-small
+        >
+          Category: {{ postDetail.category.name }}
+        </v-btn>
+      </v-col>
+    </v-row>
 
     <!-- The related posts-->
     <RelatedPosts :category-id="postDetail.category_id"/>
