@@ -2,23 +2,25 @@
   <v-dialog v-model="dialog" width="800px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-          block
-          class="mb-2 text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block white--text"
-          color="blackBrown"
-          v-bind="attrs"
-          v-on="on"
+        rounded
+        block
+        class="mb-2 text-caption text-xl-subtitle-1 text-lg-subtitle-1 d-none d-xl-block d-lg-block d-md-block d-sm-block white--text"
+        color="blackBrown"
+        v-bind="attrs"
+        v-on="on"
       >
         Change Information
         <v-icon right> fas fa-address-card</v-icon>
       </v-btn>
       <v-btn
-          class="mx-2 mb-2 d-block d-xl-none d-lg-none d-md-none d-sm-none"
-          color="cyan"
-          dark
-          fab
-          v-bind="attrs"
-          x-small
-          v-on="on"
+        rounded
+        class="mx-2 mb-2 d-block d-xl-none d-lg-none d-md-none d-sm-none"
+        color="cyan"
+        dark
+        fab
+        v-bind="attrs"
+        x-small
+        v-on="on"
       >
         <v-icon> mdi-pencil</v-icon>
       </v-btn>
@@ -32,30 +34,30 @@
           <v-row>
             <v-col cols="12" md="4" sm="6">
               <v-text-field
-                  v-model="firstName"
-                  hint="example: Phuoc"
-                  label="Legal first name*"
-                  required
+                v-model="firstName"
+                hint="example: Phuoc"
+                label="Legal first name*"
+                required
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" sm="6">
               <v-text-field
-                  v-model="middleName"
-                  hint="example: Ngoc"
-                  label="Legal middle name"
-                  required
+                v-model="middleName"
+                hint="example: Ngoc"
+                label="Legal middle name"
+                required
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" sm="6">
               <v-text-field
-                  v-model="lastName"
-                  hint="example: Tran"
-                  label="Legal last name*"
-                  required
+                v-model="lastName"
+                hint="example: Tran"
+                label="Legal last name*"
+                required
               ></v-text-field>
             </v-col>
             <v-col cols="12"
-            ><small>{{ fullName }}</small></v-col
+              ><small>{{ fullName }}</small></v-col
             >
             <v-col cols="12">
               <v-textarea v-model="description" color="teal">
@@ -66,37 +68,37 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                  v-model="phone"
-                  hint="example: 099999999"
-                  label="Phone*"
-                  required
+                v-model="phone"
+                hint="example: 099999999"
+                label="Phone*"
+                required
               ></v-text-field>
               <small v-if="errorResponse.phone" class="red--text">{{
-                  errorResponse.phone[0]
-                }}</small>
+                errorResponse.phone[0]
+              }}</small>
             </v-col>
             <v-col cols="12" md="4" sm="6">
               <v-select
-                  v-model="city"
-                  :items="apiCities"
-                  item-text="title"
-                  item-value="title"
-                  label="City*"
-                  required
+                v-model="city"
+                :items="apiCities"
+                item-text="title"
+                item-value="title"
+                label="City*"
+                required
               ></v-select>
               {{ city }}
               <small v-if="errorResponse.city" class="red--text">{{
-                  errorResponse.city[0]
-                }}</small>
+                errorResponse.city[0]
+              }}</small>
             </v-col>
             <v-col cols="12" md="4" sm="6">
               <v-select
-                  v-model="district"
-                  :items="apiDistricts"
-                  item-text="title"
-                  item-value="title"
-                  label="District*"
-                  required
+                v-model="district"
+                :items="apiDistricts"
+                item-text="title"
+                item-value="title"
+                label="District*"
+                required
               ></v-select>
               <small v-if="errorResponse.district" class="red--text" cols="12">
                 {{ errorResponse.district[0] }}
@@ -104,54 +106,54 @@
             </v-col>
             <v-col cols="12" md="4" sm="6">
               <v-select
-                  v-model="ward"
-                  :items="apiWards"
-                  item-text="title"
-                  item-value="title"
-                  label="Ward*"
-                  required
+                v-model="ward"
+                :items="apiWards"
+                item-text="title"
+                item-value="title"
+                label="Ward*"
+                required
               ></v-select>
               <small v-if="errorResponse.ward" class="red--text">{{
-                  errorResponse.ward[0]
-                }}</small>
+                errorResponse.ward[0]
+              }}</small>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                  v-model="street"
-                  hint="example: 213 Cua Dai"
-                  label="Street*"
-                  required
-                  type="text"
+                v-model="street"
+                hint="example: 213 Cua Dai"
+                label="Street*"
+                required
+                type="text"
               ></v-text-field>
               <small v-if="errorResponse.street" class="red--text">{{
-                  errorResponse.street[0]
-                }}</small>
+                errorResponse.street[0]
+              }}</small>
             </v-col>
 
             <v-col cols="12" sm="6">
               <v-text-field
-                  v-model.number="age"
-                  hint="example: 35"
-                  label="Age*"
-                  required
-                  type="text"
+                v-model.number="age"
+                hint="example: 35"
+                label="Age*"
+                required
+                type="text"
               ></v-text-field>
               <small v-if="errorResponse.age" class="red--text">{{
-                  errorResponse.age[0]
-                }}</small>
+                errorResponse.age[0]
+              }}</small>
             </v-col>
 
             <v-col cols="12" sm="6">
               <v-select
-                  v-model="gender"
-                  :items="genders"
-                  item-text="title"
-                  item-value="value"
-                  label="Gender*"
+                v-model="gender"
+                :items="genders"
+                item-text="title"
+                item-value="value"
+                label="Gender*"
               ></v-select>
               <small v-if="errorResponse.gender" class="red--text">{{
-                  errorResponse.gender[0]
-                }}</small>
+                errorResponse.gender[0]
+              }}</small>
             </v-col>
           </v-row>
         </v-container>
@@ -170,7 +172,7 @@
 </template>
 
 <script>
-import {UpdateProfile} from "@/Apis/HealthyFormWebApi/AuthApi/AuthApi";
+import { UpdateProfile } from "@/Apis/HealthyFormWebApi/AuthApi/AuthApi";
 import {
   GetCites,
   GetDistricts,
@@ -185,8 +187,8 @@ export default {
       apiDistricts: [],
       apiWards: [],
       genders: [
-        {value: 0, title: "Male"},
-        {value: 1, title: "Female"},
+        { value: 0, title: "Male" },
+        { value: 1, title: "Female" },
       ],
       firstName: "",
       middleName: "",
@@ -225,7 +227,7 @@ export default {
       handler() {
         if (this.district.length !== 0) {
           let result = this.apiDistricts.filter(
-              (e) => e.title === this.district
+            (e) => e.title === this.district
           );
           // console.log('find districts', result);
           this.fetchApiWards(result[0].id);
