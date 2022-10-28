@@ -4,6 +4,7 @@
       <v-col>
         <!--Doctor get more posts-->
         <v-btn
+          rounded
           v-if="isOwnProfile"
           :to="{
             name: 'TheDoctorPosts',
@@ -19,6 +20,7 @@
         <!--Another user get more posts-->
         <v-btn
           v-else
+          rounded
           :to="{
             name: 'PublishDoctorPosts',
             params: { userId: $route.params.userId },
