@@ -46,6 +46,13 @@ const routes = [
     beforeEnter: checkAuthenticated,
   },
 
+  {
+    path: "/notification",
+    name: "Notification",
+    component: () => import("@/views/Notification"),
+    beforeEnter: checkAuthenticated,
+  },
+
   // 404 not found page
   {
     path: "*",

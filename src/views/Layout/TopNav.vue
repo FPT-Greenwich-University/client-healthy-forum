@@ -4,24 +4,48 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-tabs center-active centered>
-        <v-tab class="black--text" to="/">Home</v-tab>
+        <v-tab class="black--text" to="/">
+          <v-btn icon>
+            <v-icon color="black">mdi-home</v-icon>
+          </v-btn>
+        </v-tab>
 
-        <v-tab :to="{ name: 'Posts' }" class="black--text">Posts</v-tab>
+        <!--    Notification    -->
+        <v-tab class="black--text" v-if="isAuthenticated">
+          <v-btn icon :to="{ name: 'Notification' }">
+            <v-icon @click="resetColor" :color="notificationColor">
+              mdi-bell
+            </v-icon>
+          </v-btn>
+        </v-tab>
 
-        <v-tab :to="{ name: 'Search' }" class="black--text">Search</v-tab>
+        <v-tab :to="{ name: 'Posts' }" class="black--text">
+          <v-btn icon>
+            <v-icon color="black">mdi-book-open</v-icon>
+          </v-btn>
+        </v-tab>
+
+        <v-tab :to="{ name: 'Search' }" class="black--text">
+          <v-btn icon>
+            <v-icon color="black">mdi-magnify</v-icon>
+          </v-btn>
+        </v-tab>
 
         <v-tab
           v-if="isAuthenticated"
           target="_blank"
           :to="{ name: 'CometVideoCall' }"
           class="black--text"
-          >Chat
+        >
+          <v-btn icon>
+            <v-icon color="black">mdi-message</v-icon>
+          </v-btn>
         </v-tab>
 
-        <v-tab :to="{ name: 'About' }" class="black--text">About</v-tab>
-
-        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="black--text"
-          >Create Post
+        <v-tab v-if="isDoctor" :to="{ name: 'CreatePost' }" class="black--text">
+          <v-btn icon>
+            <v-icon color="black">mdi-pencil</v-icon>
+          </v-btn>
         </v-tab>
         <v-tab
           v-if="isAdmin"
@@ -31,6 +55,8 @@
         >
           Dashboard
         </v-tab>
+
+        <v-tab :to="{ name: 'About' }" class="black--text">About</v-tab>
       </v-tabs>
 
       <ItemMenu />
@@ -88,6 +114,15 @@ export default {
     ...mapState("AUTH", ["isAuthenticated"]),
     ...mapGetters("AUTH", ["isCustomer", "isDoctor", "isAdmin"]),
   },
+
+  mounted() {
+    Echo.private(`posts.notification`).listen("NewPostNotification", (e) => {
+      console.log(e);
+      // alert("OK");
+      this.notificationColor = "red";
+    });
+  },
+
   watch: {
     group() {
       this.drawer = false;
@@ -97,7 +132,13 @@ export default {
     return {
       drawer: false,
       group: null,
+      notificationColor: "black",
     };
+  },
+  methods: {
+    resetColor() {
+      this.notificationColor = "black";
+    },
   },
 };
 </script>

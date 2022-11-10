@@ -62,6 +62,7 @@ export default {
       isShowTab: true,
     };
   },
+
   methods: {
     ...mapActions("AUTH", ["fetchUserAuthInfo"]),
 
