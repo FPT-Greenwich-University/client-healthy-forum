@@ -52,7 +52,7 @@ export default {
         const userId = this.$route.params.userId;
         const response = await GetPublishedPostsByUser(userId, page);
         this.posts = response.data.data;
-        console.log(this.posts);
+        // console.log(this.posts);
         this.$store.commit("setCurrentPage", response.data.current_page);
         this.$store.commit("setLastPage", response.data.last_page);
       } catch (e) {
