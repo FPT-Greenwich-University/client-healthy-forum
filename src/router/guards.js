@@ -33,9 +33,12 @@ export const checkIsDoctor = (to, from, next) => {
 };
 
 export const checkIsAdmin = (to, from, next) => {
-  if (localStorage.getItem("token") && to.name === "Register") {
-    router.go(-1);
-  } else {
+  if (
+    store.state.AUTH.isAuthenticated &&
+    store.state.AUTH.userRoles.includes("admin")
+  ) {
     next();
+  } else {
+    router.go(-1);
   }
 };
