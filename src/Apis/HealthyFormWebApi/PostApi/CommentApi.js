@@ -1,20 +1,20 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 const GetDetailComment = (payload) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/posts/${payload.postId}/comments/${payload.commentId}`
   );
 };
 
 const UpdateComment = (payload) => {
-  return HealthyFormWebApi().put(
+  return HealthySocialWebApi().put(
     `/posts/${payload.postId}/comments/${payload.commentId}`,
     { content: payload.content }
   );
 };
 
 const DeleteComment = (payload) => {
-  return HealthyFormWebApi().delete(
+  return HealthySocialWebApi().delete(
     `/posts/${payload.postId}/comments/${payload.commentId}`
   );
 };

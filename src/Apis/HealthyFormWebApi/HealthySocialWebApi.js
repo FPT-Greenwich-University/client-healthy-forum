@@ -6,7 +6,7 @@ const axiosClient = axios.create({
 
 axiosClient.defaults.headers.post["Content-Type"] = "application/json";
 
-const HealthyFormWebApi = () => {
+const HealthySocialWebApi = () => {
   const token = JSON.parse(localStorage.getItem("token"));
 
   if (token) {
@@ -15,4 +15,4 @@ const HealthyFormWebApi = () => {
 
   return axiosClient;
 };
-export default HealthyFormWebApi;
+export default HealthySocialWebApi;

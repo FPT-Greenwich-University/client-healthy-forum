@@ -1,7 +1,7 @@
-import HealthyFormWebApi from "../HealthyFormWebApi";
+import HealthySocialWebApi from "../HealthySocialWebApi";
 
 const DoctorGetOwnPosts = (userId, page) => {
-  return HealthyFormWebApi().get(`/users/${userId}/posts?page=${page}`);
+  return HealthySocialWebApi().get(`/users/${userId}/posts?page=${page}`);
 };
 
 /**
@@ -10,13 +10,13 @@ const DoctorGetOwnPosts = (userId, page) => {
  * @returns
  */
 const DoctorGetDetailPost = (payload) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/users/${payload.userId}/posts/${payload.postId}`
   );
 };
 
 const DoctorDeletePost = (payload) => {
-  return HealthyFormWebApi().delete(
+  return HealthySocialWebApi().delete(
     `/users/${payload.userId}/posts/${payload.postId}`
   );
 };

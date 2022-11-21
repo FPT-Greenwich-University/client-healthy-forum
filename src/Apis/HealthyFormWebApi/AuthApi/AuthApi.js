@@ -1,4 +1,4 @@
-import HealthyFormWebApi from "../HealthyFormWebApi";
+import HealthySocialWebApi from "../HealthySocialWebApi";
 
 // Auth
 
@@ -6,29 +6,29 @@ import HealthyFormWebApi from "../HealthyFormWebApi";
  * Register new account
  */
 const Register = (formRegister) => {
-  return HealthyFormWebApi().post("/register", formRegister);
+  return HealthySocialWebApi().post("/register", formRegister);
 };
 
 const Login = (formData) => {
-  return HealthyFormWebApi().post("/login", formData);
+  return HealthySocialWebApi().post("/login", formData);
 };
 
 const GoogleLogin = (formData) => {
-  return HealthyFormWebApi().post("/login/google", formData);
+  return HealthySocialWebApi().post("/login/google", formData);
 };
 
 /**
  * User logout the backend api
  */
 const Logout = () => {
-  return HealthyFormWebApi().post("/logout");
+  return HealthySocialWebApi().post("/logout");
 };
 
 /**
  * User get auth profile
  */
 const GetAuthProfile = () => {
-  return HealthyFormWebApi().get("/user");
+  return HealthySocialWebApi().get("/user");
 };
 
 /**
@@ -36,7 +36,7 @@ const GetAuthProfile = () => {
  * @param formData
  */
 const UpdateProfile = (userId, formData) => {
-  return HealthyFormWebApi().put(`/users/${userId}/profiles`, formData);
+  return HealthySocialWebApi().put(`/users/${userId}/profiles`, formData);
 };
 
 /**
@@ -44,7 +44,7 @@ const UpdateProfile = (userId, formData) => {
  * @param  formData
  */
 const ForgotPassword = (formData) => {
-  return HealthyFormWebApi().post("/forgot-password", formData);
+  return HealthySocialWebApi().post("/forgot-password", formData);
 };
 
 /**
@@ -53,11 +53,11 @@ const ForgotPassword = (formData) => {
  * @param formResetPassword
  */
 const ResetPassword = (formResetPassword) => {
-  return HealthyFormWebApi().put("/reset-password", formResetPassword);
+  return HealthySocialWebApi().put("/reset-password", formResetPassword);
 };
 
 const SendMailVerifyAccount = (email) => {
-  return HealthyFormWebApi().post("/email/verification-notification", {
+  return HealthySocialWebApi().post("/email/verification-notification", {
     email: email,
   });
 };
@@ -66,11 +66,11 @@ const SendMailVerifyAccount = (email) => {
  * Handle Update status Verify Account
  */
 const VerifyAccount = (formData) => {
-  return HealthyFormWebApi().put(`/verify-account`, formData);
+  return HealthySocialWebApi().put(`/verify-account`, formData);
 };
 
 const UpdatePassword = (userId, formData) => {
-  return HealthyFormWebApi().put(`/users/${userId}/passwords`, formData);
+  return HealthySocialWebApi().put(`/users/${userId}/passwords`, formData);
 };
 
 export {

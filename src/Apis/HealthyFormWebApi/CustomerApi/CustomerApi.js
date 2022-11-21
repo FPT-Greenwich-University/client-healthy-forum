@@ -1,10 +1,10 @@
-import HealthyFormWebApi from "../HealthyFormWebApi";
+import HealthySocialWebApi from "../HealthySocialWebApi";
 
 /**
  * Add doctor to favorite list
  */
 const AddFollow = (doctorId) => {
-  return HealthyFormWebApi().post("/users/favorites/doctors", {
+  return HealthySocialWebApi().post("/users/favorites/doctors", {
     doctor_id: doctorId,
   });
 };
@@ -13,7 +13,7 @@ const AddFollow = (doctorId) => {
  * Remove doctor in favorite
  */
 const UnFollow = (userId, doctorId) => {
-  return HealthyFormWebApi().delete(
+  return HealthySocialWebApi().delete(
     `/users/${userId}/favorites/doctors/${doctorId}`
   );
 };
@@ -22,7 +22,7 @@ const UnFollow = (userId, doctorId) => {
  * Handle reply comment
  */
 const ReplyComment = (postId, commentId, formData) => {
-  return HealthyFormWebApi().post(
+  return HealthySocialWebApi().post(
     `/posts/${postId}/comments/${commentId}/reply`,
     formData
   );
@@ -32,42 +32,42 @@ const ReplyComment = (postId, commentId, formData) => {
  * Check user is follow the doctor
  */
 const CheckIsFollowDoctor = (userId, doctorId) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/users/${userId}/favorites/doctors/${doctorId}`
   );
 };
 
 const GetReplyComments = (postId, commentId) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/posts/${postId}/comments/${commentId}/reply`
   );
 };
 
 const GetFavoritePosts = (userId, page) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/users/${userId}/favorites/posts?page=${page}`
   );
 };
 
 const GetFavoriteDoctors = (userId, page) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `/users/${userId}/favorites/doctors?page=${page}`
   );
 };
 
 const AddPostToFavorite = (postId) => {
-  return HealthyFormWebApi().post("/users/favorites/posts", {
+  return HealthySocialWebApi().post("/users/favorites/posts", {
     postId: postId,
   });
 };
 const RemovePostFromFavorite = (userId, postId) => {
-  return HealthyFormWebApi().delete(
+  return HealthySocialWebApi().delete(
     `/users/${userId}/favorites/posts/${postId}`
   );
 };
 
 const CheckPostFavoriteExisted = (userId, postId) => {
-  return HealthyFormWebApi().get(`/users/${userId}/favorites/posts/${postId}`);
+  return HealthySocialWebApi().get(`/users/${userId}/favorites/posts/${postId}`);
 };
 export {
   CheckIsFollowDoctor,

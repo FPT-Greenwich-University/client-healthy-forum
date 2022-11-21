@@ -47,7 +47,7 @@
   </v-card>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 import Paginate from "@/components/Paginate";
 
 export default {
@@ -74,7 +74,7 @@ export default {
      */
     async fetchListRegisterDoctor(page) {
       try {
-        const res = await HealthyFormWebApi().get(
+        const res = await HealthySocialWebApi().get(
           `/register/doctor-role?page=${page}`
         );
         console.log(res);
@@ -88,7 +88,7 @@ export default {
 
     async handleAcceptDoctorRole(userId) {
       try {
-        const res = await HealthyFormWebApi().put(
+        const res = await HealthySocialWebApi().put(
           `/register/doctor-role/${userId}`
         );
         console.log("Accept role", res);

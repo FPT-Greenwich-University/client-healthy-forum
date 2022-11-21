@@ -1,11 +1,11 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 /**
  * Doctor Create Post
  * @param formData
  */
 const CreatePost = (formData) => {
-  return HealthyFormWebApi().post("/posts", formData, {
+  return HealthySocialWebApi().post("/posts", formData, {
     header: {
       "Content-Type": "multipart/form-data",
     },
@@ -20,7 +20,7 @@ const CreatePost = (formData) => {
  * @param formData
  */
 const UpdatePost = (userId, postId, formData) => {
-  return HealthyFormWebApi().post(
+  return HealthySocialWebApi().post(
     `/users/${userId}/posts/${postId}`,
     formData,
     {

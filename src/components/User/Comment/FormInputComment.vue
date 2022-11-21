@@ -54,7 +54,7 @@
   </v-row>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -86,7 +86,7 @@ export default {
 
     async handleComment() {
       try {
-        const res = await HealthyFormWebApi().post(
+        const res = await HealthySocialWebApi().post(
           `/posts/${this.postId}/comments`,
           {
             content: this.content,

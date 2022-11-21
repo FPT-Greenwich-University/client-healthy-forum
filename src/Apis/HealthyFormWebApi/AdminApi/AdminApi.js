@@ -1,42 +1,42 @@
-import HealthyFormWebApi from "../HealthyFormWebApi";
+import HealthySocialWebApi from "../HealthySocialWebApi";
 
 // Admin api
 const CreateNewCategory = (formData) => {
-  return HealthyFormWebApi().post("/admins/categories", formData);
+  return HealthySocialWebApi().post("/admins/categories", formData);
 };
 
 const UpdateCategory = (categoryId, formData) => {
-  return HealthyFormWebApi().put(`/admins/categories/${categoryId}`, formData);
+  return HealthySocialWebApi().put(`/admins/categories/${categoryId}`, formData);
 };
 
 const GetNotPublishedPosts = (page) => {
-  return HealthyFormWebApi().get(`/admins/posts/not-published?page=${page}`);
+  return HealthySocialWebApi().get(`/admins/posts/not-published?page=${page}`);
 };
 const GetPostsMostLike = (page) => {
-  return HealthyFormWebApi().get(`/admins/statistic/posts?page=${page}`);
+  return HealthySocialWebApi().get(`/admins/statistic/posts?page=${page}`);
 };
 const DeleteCategory = (categoryId) => {
-  return HealthyFormWebApi().delete(`/admins/categories/${categoryId}`);
+  return HealthySocialWebApi().delete(`/admins/categories/${categoryId}`);
 };
 
 const DeletePost = (postId) => {
-  return HealthyFormWebApi().delete(`/posts/${postId}`);
+  return HealthySocialWebApi().delete(`/posts/${postId}`);
 };
 
 const AdminGetDetailPost = (postId) => {
-  return HealthyFormWebApi().get(`/admins/posts/${postId}`);
+  return HealthySocialWebApi().get(`/admins/posts/${postId}`);
 };
 
 const AdminUpdateStatusPost = (postId) => {
-  return HealthyFormWebApi().put(`/admins/posts/${postId}/publish`);
+  return HealthySocialWebApi().put(`/admins/posts/${postId}/publish`);
 };
 
 const GetListPermissionsByRole = (roleId) => {
-  return HealthyFormWebApi().post(`/admins/permissions`, { role_id: roleId });
+  return HealthySocialWebApi().post(`/admins/permissions`, { role_id: roleId });
 };
 
 const UpdatePermissions = (userId, formData) => {
-  return HealthyFormWebApi().put(
+  return HealthySocialWebApi().put(
     `/admins/users/${userId}/permissions`,
     formData
   );

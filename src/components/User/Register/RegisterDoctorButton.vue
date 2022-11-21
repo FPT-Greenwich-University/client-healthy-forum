@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 export default {
   name: "RegisterDoctorButton",
@@ -53,7 +53,7 @@ export default {
   methods: {
     async handleRegisterDoctorRole() {
       try {
-        const res = await HealthyFormWebApi().post(`register/doctor-role`);
+        const res = await HealthySocialWebApi().post(`register/doctor-role`);
 
         if (res) {
           this.responseText = res.data;

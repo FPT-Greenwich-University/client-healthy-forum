@@ -1,19 +1,19 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 const CreateChatRoom = (targetUserId) => {
-  return HealthyFormWebApi().post(`/chat-rooms`, { targetUserId });
+  return HealthySocialWebApi().post(`/chat-rooms`, { targetUserId });
 };
 
 const FetchChatRooms = () => {
-  return HealthyFormWebApi().get("/chat-rooms");
+  return HealthySocialWebApi().get("/chat-rooms");
 };
 
 const FetchMessages = (chatRoomId) => {
-  return HealthyFormWebApi().get(`/chat-rooms/${chatRoomId}/messages`);
+  return HealthySocialWebApi().get(`/chat-rooms/${chatRoomId}/messages`);
 };
 
 const SendMessage = (chatRoomId, formData) => {
-  return HealthyFormWebApi().post(
+  return HealthySocialWebApi().post(
     `/chat-rooms/${chatRoomId}/messages`,
     formData,
     {
@@ -25,7 +25,7 @@ const SendMessage = (chatRoomId, formData) => {
 };
 
 const DownloadFile = (payload) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files/${payload.fileId}`,
     {
       responseType: "blob",
@@ -34,7 +34,7 @@ const DownloadFile = (payload) => {
 };
 
 const DownloadAllFile = (payload) => {
-  return HealthyFormWebApi().get(
+  return HealthySocialWebApi().get(
     `${process.env.VUE_APP_BACKEND_API_URL}/chat-rooms/${payload.chatRoomId}/messages/${payload.messageId}/files`,
     {
       responseType: "blob",

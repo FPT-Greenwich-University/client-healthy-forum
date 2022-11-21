@@ -1,7 +1,7 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 const SendMailContract = (formContract) => {
-  return HealthyFormWebApi().post(`/contract-doctor`, formContract);
+  return HealthySocialWebApi().post(`/contract-doctor`, formContract);
 };
 
 export { SendMailContract };

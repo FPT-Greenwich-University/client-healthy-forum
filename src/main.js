@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import GAuth from "vue-google-oauth2";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 import Vue2Editor from "vue2-editor";
 
 Vue.config.productionTip = false;
@@ -38,7 +38,7 @@ window.Echo = new Echo({
   authorizer: (channel, options) => {
     return {
       authorize: (socketId, callback) => {
-        HealthyFormWebApi()
+        HealthySocialWebApi()
           .post(`http://localhost:8000/api/broadcasting/auth`, {
             socket_id: socketId,
             channel_name: channel.name,

@@ -35,10 +35,6 @@ export default {
     },
   },
 
-  data() {
-    return {};
-  },
-
   methods: {
     ...mapMutations(["setCurrentPage"]),
 

@@ -1,7 +1,7 @@
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 
 const getAllNotifications = (page) => {
-  return HealthyFormWebApi().get(`/notifications?page=${page}`);
+  return HealthySocialWebApi().get(`/notifications?page=${page}`);
 };
 
 export { getAllNotifications };

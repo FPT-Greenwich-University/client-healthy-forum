@@ -27,7 +27,7 @@
   </v-card>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 import Paginate from "@/components/Paginate";
 import DetailUser from "@/components/Admin/User/DetailUser";
 import { mapGetters } from "vuex";
@@ -61,7 +61,7 @@ export default {
     async fetchListUsers(page = 1) {
       if (this.isAdmin) {
         try {
-          const res = await HealthyFormWebApi().get(
+          const res = await HealthySocialWebApi().get(
             `/admins/users/?page=${page}&role_id=${this.roleID}`
           );
           this.users = res.data.data;

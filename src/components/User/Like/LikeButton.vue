@@ -32,7 +32,7 @@
   </v-row>
 </template>
 <script>
-import HealthyFormWebApi from "@/Apis/HealthyFormWebApi/HealthyFormWebApi";
+import HealthySocialWebApi from "@/Apis/HealthyFormWebApi/HealthySocialWebApi";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -70,7 +70,7 @@ export default {
     async checkLikeIsExist() {
       if (this.isAuthenticated) {
         try {
-          const res = await HealthyFormWebApi().get(
+          const res = await HealthySocialWebApi().get(
             `/posts/${this.postId}/likes/is-exist`
           );
           // console.log("check Like", res);
@@ -92,7 +92,7 @@ export default {
      */
     async handleLikePost() {
       try {
-        await HealthyFormWebApi().post(`/posts/${this.postId}/likes`);
+        await HealthySocialWebApi().post(`/posts/${this.postId}/likes`);
         await this.checkLikeIsExist();
         await this.getTotalLikeOfPost(this.postId);
       } catch (e) {
@@ -107,7 +107,7 @@ export default {
      */
     async handleUnlikePost() {
       try {
-        await HealthyFormWebApi().delete(`/posts/${this.postId}/likes`);
+        await HealthySocialWebApi().delete(`/posts/${this.postId}/likes`);
         await this.checkLikeIsExist();
         await this.getTotalLikeOfPost(this.postId);
       } catch (e) {

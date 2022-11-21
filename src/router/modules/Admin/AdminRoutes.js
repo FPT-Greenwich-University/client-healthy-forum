@@ -1,5 +1,4 @@
-import store from "@/store";
-import router from "@/router";
+import { checkIsAdmin } from "@/router/guards";
 
 const AdminRoutes = () => {
   return [
@@ -7,19 +6,13 @@ const AdminRoutes = () => {
       path: "/admins/dashboard",
       name: "AdminDashBoard",
       component: () => import("@/views/Admins/TheDashboard"),
-      beforeEnter: (to, from, next) => {
-        if (
-          store.state.AUTH.isAuthenticated &&
-          store.state.AUTH.userRoles.includes("admin")
-        )
-          next();
-        else router.go(-1);
-      },
+      beforeEnter: checkIsAdmin,
     },
     {
       path: "/admins/posts",
       name: "AdminPosts",
       component: () => import("@/components/Admin/Post/AdminPosts"),
+      beforeEnter: checkIsAdmin,
     },
   ];
 };

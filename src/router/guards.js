@@ -31,3 +31,11 @@ export const checkIsDoctor = (to, from, next) => {
     next();
   }
 };
+
+export const checkIsAdmin = (to, from, next) => {
+  if (localStorage.getItem("token") && to.name === "Register") {
+    router.go(-1);
+  } else {
+    next();
+  }
+};
