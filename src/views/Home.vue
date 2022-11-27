@@ -3,7 +3,6 @@
     <!-- Top Nav   -->
     <TopNav v-if="isShowTab" />
 
-    <!--  Body  -->
     <v-main>
       <router-view />
     </v-main>
