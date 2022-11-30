@@ -142,7 +142,7 @@ export default {
             this.roleIDs = [];
             this.snackbar = {
               color: "success",
-              content: response.data,
+              content: "Update permission success",
               status: true,
             };
             this.$emit("fetch-user-detail"); // callback function

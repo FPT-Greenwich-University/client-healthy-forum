@@ -64,7 +64,7 @@
               <v-list-group :value="true" no-action sub-group>
                 <template v-slot:activator>
                   <v-list-item-content>
-                    <v-list-item-title>Post not publised</v-list-item-title>
+                    <v-list-item-title>Post not published</v-list-item-title>
                   </v-list-item-content>
                 </template>
 
