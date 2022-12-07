@@ -1,13 +1,13 @@
 <template>
   <v-row>
     <v-btn color="primary" dark x-small @click="fetchDetailPost">
-      <v-icon x-small> fas fa-eye </v-icon>
+      <v-icon x-small> fas fa-eye</v-icon>
     </v-btn>
     <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
     >
       <v-card>
         <v-toolbar color="primary" dark>
@@ -17,7 +17,7 @@
           <v-toolbar-title>Post Detail Setting</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false"> Close </v-btn>
+            <v-btn dark text @click="dialog = false"> Close</v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-list>
@@ -26,25 +26,24 @@
           </v-list-item>
 
           <v-subheader class="text-center text-h5 text-capitalize">{{
-            post.title
-          }}</v-subheader>
+              post.title
+            }}
+          </v-subheader>
 
           <v-list-item>
             <v-img
-              v-if="post.image"
-              :src="`${backEndURL}/${post.image.path}`"
-              alt="post image"
-              class="mx-auto"
-              max-width="600"
+                v-if="post.image"
+                :src="`${backEndURL}/${post.image.path}`"
+                alt="post image"
+                class="mx-auto"
+                max-width="600"
             >
             </v-img>
           </v-list-item>
 
           <v-list-item>
             <v-list-item-content>
-              <p class="text-body-1 text-center">
-                {{ post.body }}
-              </p>
+              <p v-html="post.body" class="text-body-1 text-center"></p>
             </v-list-item-content>
           </v-list-item>
 
