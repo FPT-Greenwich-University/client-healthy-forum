@@ -80,7 +80,7 @@
           <v-divider class="m-4"></v-divider>
 
           <v-card-text v-if="userInfo.profile !== null">
-            <p>Live at:</p>
+            <p>Live at: {{userInfo.profile.ward}}, {{userInfo.profile.district}}, {{userInfo.profile.city}}</p>
             <p>
               Join at
               <span class="font-weight-bold">{{ userInfo.created_at }}</span>
