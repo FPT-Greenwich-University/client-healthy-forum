@@ -44,6 +44,8 @@
       </v-col>
     </v-row>
 
+    <!-- Edit post button -->
+    <EditPostButton v-if="isThePostOwner" :postId="postId"/>
     <!--  Delete button  -->
     <DeletePostButton v-if="isThePostOwner" :postId="postId"/>
 
@@ -119,10 +121,12 @@ import AddFavoritePost from "@/components/Favorites/Posts/AddFavoritePost";
  * Api
  */
 import {DoctorGetDetailPost} from "@/Apis/HealthyFormWebApi/DoctorApi/DoctorApi";
+import EditPostButton from "@/components/Buttons/Posts/Profile/EditPostButton";
 
 export default {
   name: "ThePostDetails",
   components: {
+    EditPostButton,
     AddFavoritePost,
     DeletePostButton,
     TotalLike,
