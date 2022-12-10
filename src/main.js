@@ -29,12 +29,11 @@ window.Pusher = Pusher;
 
 window.Echo = new Echo({
   broadcaster: "pusher",
-  key: process.env.VUE_APP_WEBSOCKET_KEY,
+  key: "s3cr3t",
   wsHost: "localhost",
   wsPort: 6001,
   forceTLS: false,
   disableStats: true,
-  encrypted: true,
   authorizer: (channel, options) => {
     return {
       authorize: (socketId, callback) => {

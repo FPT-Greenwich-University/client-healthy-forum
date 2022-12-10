@@ -32,10 +32,10 @@
         </v-tab>
 
         <v-tab
-            v-if="isAuthenticated"
-            target="_blank"
-            :to="{ name: 'CometVideoCall' }"
-            class="black--text"
+          v-if="isAuthenticated"
+          target="_blank"
+          :to="{ name: 'CometVideoCall' }"
+          class="black--text"
         >
           <v-btn icon>
             <v-icon color="black">mdi-message</v-icon>
@@ -48,10 +48,10 @@
           </v-btn>
         </v-tab>
         <v-tab
-            v-if="isAdmin"
-            :to="{ name: 'AdminDashBoard' }"
-            class="black--text"
-            target="_blank"
+          v-if="isAdmin"
+          :to="{ name: 'AdminDashBoard' }"
+          class="black--text"
+          target="_blank"
         >
           Dashboard
         </v-tab>
@@ -59,33 +59,33 @@
         <v-tab :to="{ name: 'About' }" class="black--text">About</v-tab>
       </v-tabs>
 
-      <ItemMenu/>
+      <ItemMenu />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" bottom fixed temporary>
       <v-list dense nav>
         <v-list-item-group
-            v-model="group"
-            active-class="deep-purple--text text--accent-4"
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
         >
           <!--    Guest      -->
           <v-list-item v-if="!isDoctor && !isAdmin && isCustomer">
             <v-list-item-title>
-              <RegisterDoctorButton/>
+              <RegisterDoctorButton />
             </v-list-item-title>
           </v-list-item>
 
           <v-list-item v-if="isAuthenticated">
             <v-list-item-title>
               <v-btn :to="{ name: 'DoctorFavoriteList' }" plain text
-              >Favorite Doctor
+                >Favorite Doctor
               </v-btn>
             </v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isAuthenticated">
             <v-list-item-title>
               <v-btn :to="{ name: 'PostFavoriteList' }" plain text
-              >Favorite Post
+                >Favorite Post
               </v-btn>
             </v-list-item-title>
           </v-list-item>
@@ -97,7 +97,7 @@
 
 <script>
 import ItemMenu from "@/components/TopNav/ItemMenu";
-import {mapGetters, mapState} from "vuex";
+import { mapGetters, mapState } from "vuex";
 import CreatePost from "@/views/Posts/Doctors/CreatePost";
 import ListRegisterDoctorRole from "@/components/Admin/User/Doctor/ListRegisterDoctorRole";
 import RegisterDoctorButton from "@/components/User/Register/RegisterDoctorButton";
@@ -118,6 +118,7 @@ export default {
   created() {
     if (this.isAuthenticated) {
       Echo.private(`posts.notification`).listen("NewPostNotification", (e) => {
+        alert("New post published");
         this.notificationColor = "red";
       });
     }
